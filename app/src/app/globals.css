@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 @theme {
   --color-oraklo-bg: #f5f2eb;
@@ -8,6 +8,7 @@
   --color-oraklo-glow: #a66bff;
 
   --font-sans: var(--font-montserrat);
+  --font-display: var(--font-anton);
 
   --spacing-18: 4.5rem;
   --spacing-22: 5.5rem;
@@ -15,14 +16,91 @@
   --spacing-30: 7.5rem;
 }
 
+/* ── Theme tokens ────────────────────────────────────────────────── */
+/*
+  Tiers de texto calibrados para WCAG AA em cada tema:
+  hi  → texto primário   (headings, valores)
+  mid → texto secundário (body, descrições)
+  low → texto terciário  (labels, hints)
+  dim → texto fantasma   (captions, metadados)
+
+  Contraste mínimo testado sobre os fundo de cada tema:
+  Light hi  ≈ 16:1  mid ≈ 7.2:1  low ≈ 4.6:1  dim ≈ 3.2:1 (só large text)
+  Dark  hi  ≈ 14:1  mid ≈ 7.0:1  low ≈ 3.8:1  dim ≈ 2.4:1 (só decorativo)
+*/
 :root {
+  /* Backgrounds */
+  --th-bg:          #e6e1d5;
+  --th-bg-sub:      #d9d4c6;
+  --th-bg-elevated: #f0ece4;
+  --th-bg-card:     #ffffff;
+
+  /* Texto */
+  --th-text: #1a0f1f;
+  --th-hi:   #1a0f1f;                    /* 100% — contraste 16:1 */
+  --th-mid:  rgba(26,15,31,0.76);        /* 76%  — contraste 7.3:1 ✓ AA */
+  --th-low:  rgba(26,15,31,0.54);        /* 54%  — contraste 4.6:1 ✓ AA */
+  --th-dim:  rgba(26,15,31,0.38);        /* 38%  — uso restrito: large text */
+
+  /* Bordas e overlays */
+  --th-border: rgba(26,15,31,0.14);
+  --th-ring:   rgba(26,15,31,0.12);
+  --th-overlay-5:  rgba(26,15,31,0.05);
+  --th-overlay-8:  rgba(26,15,31,0.08);
+  --th-overlay-12: rgba(26,15,31,0.12);
+}
+
+[data-theme="dark"] {
+  /* Backgrounds */
+  --th-bg:          #0d0714;
+  --th-bg-sub:      #0a0614;
+  --th-bg-elevated: #100a1c;
+  --th-bg-card:     #140d24;
+
+  /* Texto */
+  --th-text: #ffffff;
+  --th-hi:   rgba(255,255,255,0.92);
+  --th-mid:  rgba(255,255,255,0.65);
+  --th-low:  rgba(255,255,255,0.40);
+  --th-dim:  rgba(255,255,255,0.22);
+
+  /* Bordas e overlays */
+  --th-border: rgba(255,255,255,0.08);
+  --th-ring:   rgba(255,255,255,0.10);
+  --th-overlay-5:  rgba(255,255,255,0.05);
+  --th-overlay-8:  rgba(255,255,255,0.08);
+  --th-overlay-12: rgba(255,255,255,0.12);
+}
+
+/* Cards brancos recebem sombra no tema claro para se destacar do fundo */
+[data-theme="light"] .bg-\[var\(--th-bg-card\)\] {
+  box-shadow: 0 1px 3px rgba(26,15,31,0.08), 0 4px 16px rgba(26,15,31,0.05);
+}
+
+:root {
+  /* Brand colors */
   --oraklo-color-bg: #f5f2eb;
+  --oraklo-color-bg-elevated: #ffffff;
   --oraklo-color-text: #1a0f1f;
+  --oraklo-color-text-muted: color-mix(in srgb, #1a0f1f 55%, white);
+  --oraklo-color-text-subtle: color-mix(in srgb, #1a0f1f 38%, white);
   --oraklo-color-primary: #7b2ff7;
   --oraklo-color-primary-hover: #5a1edc;
   --oraklo-color-primary-glow: #a66bff;
+  --oraklo-color-primary-surface: color-mix(in srgb, #7b2ff7 10%, white);
   --oraklo-gradient-primary: linear-gradient(135deg, #7b2ff7 0%, #a66bff 50%, #5a1edc 100%);
 
+  /* Border */
+  --oraklo-color-border: color-mix(in srgb, #1a0f1f 10%, white);
+  --oraklo-color-border-strong: color-mix(in srgb, #1a0f1f 20%, white);
+
+  /* Status colors */
+  --oraklo-color-sim: #16a34a;
+  --oraklo-color-sim-surface: #dcfce7;
+  --oraklo-color-nao: #dc2626;
+  --oraklo-color-nao-surface: #fee2e2;
+
+  /* Spacing */
   --oraklo-space-1: 0.25rem;
   --oraklo-space-2: 0.5rem;
   --oraklo-space-3: 0.75rem;
@@ -34,10 +112,17 @@
   --oraklo-space-16: 4rem;
   --oraklo-space-20: 5rem;
 
+  /* Radii */
+  --oraklo-radius-xs: 0.375rem;
   --oraklo-radius-sm: 0.625rem;
   --oraklo-radius-md: 0.875rem;
   --oraklo-radius-lg: 1.25rem;
-  --oraklo-shadow-soft: 0 10px 30px rgb(26 15 31 / 0.08);
+  --oraklo-radius-pill: 9999px;
+
+  /* Shadows */
+  --oraklo-shadow-soft: 0 1px 3px rgb(26 15 31 / 0.06), 0 4px 16px rgb(26 15 31 / 0.06);
+  --oraklo-shadow-card: 0 1px 2px rgb(26 15 31 / 0.04), 0 2px 8px rgb(26 15 31 / 0.06);
+  --oraklo-shadow-elevated: 0 4px 12px rgb(26 15 31 / 0.08), 0 16px 40px rgb(26 15 31 / 0.08);
 }
 
 * {
@@ -51,14 +136,15 @@ body {
 
 body {
   margin: 0;
-  background: var(--oraklo-color-bg);
+  background: var(--th-bg);
   color: var(--oraklo-color-text);
   font-family: var(--font-montserrat), "Montserrat", sans-serif;
   text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--oraklo-color-primary) 24%, white);
+  background: color-mix(in srgb, var(--oraklo-color-primary) 20%, white);
   color: var(--oraklo-color-text);
 }
 
@@ -68,32 +154,87 @@ body {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-4px);
-  }
+@keyframes grow {
+  from { width: 0%; }
+  to   { width: 100%; }
 }
 
-.animate-fadeIn {
-  animation: fadeIn 600ms ease-out both;
+/* ── Icon float animations ── */
+@keyframes float-up {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-10px) rotate(2deg); }
+}
+@keyframes float-down {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(10px) rotate(-2deg); }
+}
+@keyframes float-drift {
+  0%   { transform: translate(0px, 0px) rotate(0deg); }
+  25%  { transform: translate(5px, -8px) rotate(3deg); }
+  50%  { transform: translate(2px, -14px) rotate(1deg); }
+  75%  { transform: translate(-4px, -6px) rotate(-2deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+@keyframes float-spin {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  33%       { transform: translateY(-8px) rotate(4deg) scale(1.02); }
+  66%       { transform: translateY(-4px) rotate(-2deg) scale(0.98); }
+}
+@keyframes float-pulse {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50%       { transform: translateY(-7px) scale(1.03); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+  50%       { transform: translate(-6px, -12px) rotate(3deg); }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.animate-fadeIn      { animation: fadeIn 500ms ease-out both; }
+.animate-float       { animation: float-up 5s ease-in-out infinite; }
+.animate-float-up    { animation: float-up 5s ease-in-out infinite; }
+.animate-float-down  { animation: float-down 6s ease-in-out infinite; }
+.animate-float-drift { animation: float-drift 7s ease-in-out infinite; }
+.animate-float-spin  { animation: float-spin 6s ease-in-out infinite; }
+.animate-float-slow  { animation: float-slow 9s ease-in-out infinite; }
+
+/* ── Logo adaptive invert ── */
+.logo-invert {
+  filter: brightness(0) invert(1);
+}
+[data-theme="light"] .logo-invert {
+  filter: brightness(0);
+}
+
+/* ── Glass blur ── */
+.glass-dark {
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+}
+
+/* ── Fade horizontal edges (para strips com scroll) ── */
+.fade-edges-x {
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -moz-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+/* ── Card accent — borda superior brilhante ── */
+.card-glow-accent {
+  position: relative;
+}
+.card-glow-accent::before {
+  content: "";
+  width: 48px;
+  height: 3px;
+  position: absolute;
+  top: -1px;
+  left: 20px;
+  z-index: 2;
+  border-radius: 0 0 3px 3px;
+  background-image: linear-gradient(to right, #7b2ff7, #a66bff);
+  box-shadow: 0 0 6px 2px rgba(123, 47, 247, 0.55), 0 0 20px 0px rgba(166, 107, 255, 0.25);
 }

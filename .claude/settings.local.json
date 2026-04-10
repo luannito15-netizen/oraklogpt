@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:cryptix.framer.website)",
+      "WebFetch(domain:kalshi.com)",
+      "Bash(grep -r \"//.*console\\\\|\\\\/\\\\*.*TODO\\\\|\\\\/\\\\*.*FIXME\" /c/Users/lcabr/oraklogpt/app/src --include=\"*.tsx\" --include=\"*.ts\")",
+      "Bash(python3 -)",
+      "Bash(python -)",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}
