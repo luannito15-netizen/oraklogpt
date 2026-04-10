@@ -1,26 +1,99 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
+
+@theme {
+  --color-oraklo-bg: #f5f2eb;
+  --color-oraklo-text: #1a0f1f;
+  --color-oraklo-primary: #7b2ff7;
+  --color-oraklo-primary-hover: #5a1edc;
+  --color-oraklo-glow: #a66bff;
+
+  --font-sans: var(--font-montserrat);
+
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-26: 6.5rem;
+  --spacing-30: 7.5rem;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --oraklo-color-bg: #f5f2eb;
+  --oraklo-color-text: #1a0f1f;
+  --oraklo-color-primary: #7b2ff7;
+  --oraklo-color-primary-hover: #5a1edc;
+  --oraklo-color-primary-glow: #a66bff;
+  --oraklo-gradient-primary: linear-gradient(135deg, #7b2ff7 0%, #a66bff 50%, #5a1edc 100%);
+
+  --oraklo-space-1: 0.25rem;
+  --oraklo-space-2: 0.5rem;
+  --oraklo-space-3: 0.75rem;
+  --oraklo-space-4: 1rem;
+  --oraklo-space-6: 1.5rem;
+  --oraklo-space-8: 2rem;
+  --oraklo-space-10: 2.5rem;
+  --oraklo-space-12: 3rem;
+  --oraklo-space-16: 4rem;
+  --oraklo-space-20: 5rem;
+
+  --oraklo-radius-sm: 0.625rem;
+  --oraklo-radius-md: 0.875rem;
+  --oraklo-radius-lg: 1.25rem;
+  --oraklo-shadow-soft: 0 10px 30px rgb(26 15 31 / 0.08);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--oraklo-color-bg);
+  color: var(--oraklo-color-text);
+  font-family: var(--font-montserrat), "Montserrat", sans-serif;
+  text-rendering: geometricPrecision;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--oraklo-color-primary) 24%, white);
+  color: var(--oraklo-color-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--oraklo-color-primary);
+  outline-offset: 2px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 600ms ease-out both;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }

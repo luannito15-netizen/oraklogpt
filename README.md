@@ -1,83 +1,99 @@
-# ORAKLO
+﻿# ORAKLO
 
-Plataforma brasileira de previsões sobre eventos reais, objetivos e verificáveis.
+ORAKLO é uma plataforma de previsões sobre eventos reais.
 
-Transforme opinião em oportunidade.
-
----
-
-## O que é o ORAKLO
-
-O ORAKLO é um mercado de previsões onde usuários registram sua posição sobre acontecimentos do mundo real — com base em dados públicos, critérios objetivos e validação transparente.
-
-Cada previsão é uma posição.
-
-Cada posição tem valor.
-
-E acerto gera retorno.
+A proposta é transformar opinião coletiva em sinais úteis para tomada de decisão, sem qualquer elemento de aposta ou gambling.
 
 ---
 
-## O que o ORAKLO NÃO é
+## Posicionamento
 
-- Não é aposta  
-- Não é cassino  
-- Não é jogo de sorte  
-- Não é betting app  
-- Não é roleta, jackpot ou sistema de azar  
+ORAKLO NÃO é:
 
-O ORAKLO não depende de sorte.
+- betting app
+- cassino
+- plataforma de trading especulativo
 
-Depende de leitura de cenário.
+ORAKLO é mais próximo de:
 
----
-
-## O que o ORAKLO é
-
-- Um mercado de opinião baseado em dados  
-- Um sistema de previsões verificáveis  
-- Uma plataforma com cotação dinâmica  
-- Um ambiente de decisão racional  
+- fintech
+- data product
+- plataforma de inteligência coletiva
 
 ---
 
-## Como funciona (resumo)
+## Objetivo do produto
 
-1. Um evento é criado com critérios claros e fonte oficial  
-2. O usuário escolhe um lado (SIM ou NÃO)  
-3. Define o valor da sua participação  
-4. Visualiza o retorno estimado  
-5. Confirma sua posição  
-6. O resultado é validado por fonte pública  
-7. O retorno é distribuído proporcionalmente  
+Permitir que usuários:
+
+- criem previsões sobre eventos reais
+- acompanhem probabilidades agregadas
+- tomem decisões baseadas em consenso
 
 ---
 
-## Princípios de produto
+## Referências de mercado
 
-A experiência deve ser:
+Plataformas como **Polymarket** e **Kalshi** operam no mesmo espaço de previsões.
 
-- clara  
-- racional  
-- informativa  
-- baseada em dados  
+No entanto, ORAKLO NÃO segue a mesma abordagem.
 
-A interface nunca deve:
+Diferenças principais:
 
-- induzir decisão  
-- gerar urgência emocional  
-- parecer um sistema de aposta  
+- não possui foco em aposta ou especulação
+- não utiliza linguagem ou mecânicas de trading
+- não apresenta interface técnica (gráficos complexos, candles, etc.)
+
+Essas referências são apenas contextuais, não direcionais.
+
+---
+
+## Princípios de UI
+
+- visual limpo e racional
+- estética próxima de fintech
+- foco em clareza e confiança
+- uso de whitespace e hierarquia
+- evitar qualquer aparência de cassino ou game
+
+---
+
+## Anti-patterns (proibido)
+
+- gráficos estilo trading (candles, order book)
+- cores neon agressivas
+- animações chamativas ou gamificadas
+- linguagem de aposta (ganhar, odds, apostar, etc.)
+
+---
+
+## Stack
+
+- Next.js (App Router)
+- TypeScript
+- TailwindCSS
 
 ---
 
 ## Estrutura do projeto
 
-```bash
-/docs
-  BRAND_GUIDELINES.md
-  PRODUCT_SPEC.md
-  BUSINESS_RULES.md
-  UI_RULES.md
-  DECISION_SCREEN_RULES.md
+- `/docs` -> regras de produto (fonte da verdade)
+- `/public` -> assets (logo, imagens)
+- `/src/app` -> interface e páginas
 
-/src
+---
+
+## Diretrizes de desenvolvimento
+
+- componentes pequenos e reutilizáveis
+- evitar complexidade desnecessária
+- seguir `/docs` como fonte de verdade
+- não inventar regras de produto
+
+---
+
+## Status atual
+
+- estrutura base criada
+- assets organizados
+- home inicial em desenvolvimento
