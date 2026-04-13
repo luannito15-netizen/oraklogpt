@@ -3,6 +3,7 @@
 import { useEffect, useCallback } from "react";
 import type { EventCardData } from "@/components/ui/event-card";
 import { DecisionPanel } from "@/components/ui/decision-panel";
+import { IconX, IconInfo } from "@/components/ui/icons";
 
 const categoryStyle: Record<string, { bg: string; text: string }> = {
   Clima:    { bg: "bg-sky-500",     text: "text-white" },
@@ -78,9 +79,7 @@ export function EventDrawer({ event, onClose }: EventDrawerProps) {
               aria-label="Fechar"
               className="absolute top-4 right-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--surface)] text-[var(--text-muted)] ring-1 ring-[var(--border)] transition-all hover:bg-[var(--surface-elevated)] hover:text-[var(--text)]"
             >
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-                <path d="M2 2l8 8M10 2L2 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
+              <IconX className="h-4 w-4" />
             </button>
           </div>
 
@@ -95,10 +94,7 @@ export function EventDrawer({ event, onClose }: EventDrawerProps) {
                 ocorre em até 24h após a divulgação do resultado oficial.
               </p>
               <div className="mt-4 flex items-center gap-2 rounded-xl bg-[var(--input-bg)] px-3 py-2.5 ring-1 ring-[var(--border)]">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden className="shrink-0">
-                  <circle cx="6" cy="6" r="5" stroke="var(--ring)" strokeWidth="1.5" />
-                  <path d="M6 4v3M6 8.5v.5" stroke="var(--ring)" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
+                <IconInfo className="h-4 w-4 shrink-0 text-[var(--ring)]" />
                 <span className="text-xs text-[var(--text-muted)]">
                   Fonte oficial:{" "}
                   <span className="font-semibold text-[var(--text-secondary)]">{event.source}</span>

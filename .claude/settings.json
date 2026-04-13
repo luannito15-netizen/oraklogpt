@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"Set-Location 'c:\\\\Users\\\\lcabr\\\\oraklogpt\\\\app'; node -e \\\\\"require\\('child_process'\\).execSync\\('node_modules\\\\\\\\.bin\\\\\\\\tsc.cmd --noEmit', {stdio:'inherit', cwd: 'c:\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\lcabr\\\\\\\\\\\\\\\\oraklogpt\\\\\\\\\\\\\\\\app'}\\)\\\\\" 2>&1\")",
+      "Bash(node \"c:/Users/lcabr/oraklogpt/app/node_modules/typescript/bin/tsc\" --noEmit --project \"c:/Users/lcabr/oraklogpt/app/tsconfig.json\")",
+      "Bash(cmd /c \"cd C:\\\\\\\\Users\\\\\\\\lcabr\\\\\\\\oraklogpt\\\\\\\\app && npx tsc --noEmit\")",
+      "Bash(cmd /c \"cd C:\\\\\\\\Users\\\\\\\\lcabr\\\\\\\\oraklogpt\\\\\\\\app && npx tsc --noEmit 2>&1 | more\")",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(echo \"Exit: $?\")",
+      "Bash(git checkout:*)",
+      "Read(//c/Users/lcabr/.claude/projects/c--Users-lcabr-oraklogpt/**)",
+      "Bash(python3 -c \" import sys, json lines = sys.stdin.readlines\\(\\) for line in lines: try: obj = json.loads\\(line\\) role = obj.get\\('role',''\\) content = obj.get\\('content',''\\) if role == 'user' and isinstance\\(content, list\\): for c in content: if isinstance\\(c, dict\\) and c.get\\('type'\\) == 'text': txt = c.get\\('text',''\\) if len\\(txt\\) > 20 and not txt.startswith\\('<system'\\): print\\(f'USER: {txt[:300]}'\\) print\\('---'\\) elif role == 'assistant' and isinstance\\(content, list\\): for c in content: if isinstance\\(c, dict\\) and c.get\\('type'\\) == 'text': txt = c.get\\('text',''\\) if len\\(txt\\) > 50: print\\(f'ASSISTANT: {txt[:400]}'\\) print\\('---'\\) except: pass \")",
+      "Bash(python3 -c ':*)",
+      "Bash(node -e ':*)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(curl -s 'https://gvsmwoetyadhwuxvmyhu.supabase.co/rest/v1/v_events_with_state?select=id,title,status,sim_percent,volume_total,deadline_at,source,category&status=eq.open' -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2c213b2V0eWFkaHd1eHZteWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTk3ODUsImV4cCI6MjA5MTQ5NTc4NX0.AOjADakOmIZg9n4Iydaj6bBHlHEc22yGlvDsk_ECYpY' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2c213b2V0eWFkaHd1eHZteWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTk3ODUsImV4cCI6MjA5MTQ5NTc4NX0.AOjADakOmIZg9n4Iydaj6bBHlHEc22yGlvDsk_ECYpY')",
+      "Bash(curl -s 'https://gvsmwoetyadhwuxvmyhu.supabase.co/rest/v1/events?select=id,title,status&limit=5' -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2c213b2V0eWFkaHd1eHZteWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTk3ODUsImV4cCI6MjA5MTQ5NTc4NX0.AOjADakOmIZg9n4Iydaj6bBHlHEc22yGlvDsk_ECYpY' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2c213b2V0eWFkaHd1eHZteWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTk3ODUsImV4cCI6MjA5MTQ5NTc4NX0.AOjADakOmIZg9n4Iydaj6bBHlHEc22yGlvDsk_ECYpY')",
+      "Bash(curl -s 'https://gvsmwoetyadhwuxvmyhu.supabase.co/rest/v1/events?select=*&limit=1' -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2c213b2V0eWFkaHd1eHZteWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTk3ODUsImV4cCI6MjA5MTQ5NTc4NX0.AOjADakOmIZg9n4Iydaj6bBHlHEc22yGlvDsk_ECYpY' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2c213b2V0eWFkaHd1eHZteWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTk3ODUsImV4cCI6MjA5MTQ5NTc4NX0.AOjADakOmIZg9n4Iydaj6bBHlHEc22yGlvDsk_ECYpY')",
+      "Bash(curl -s 'https://gvsmwoetyadhwuxvmyhu.supabase.co/rest/v1/market_state?select=*&limit=1' -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2c213b2V0eWFkaHd1eHZteWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTk3ODUsImV4cCI6MjA5MTQ5NTc4NX0.AOjADakOmIZg9n4Iydaj6bBHlHEc22yGlvDsk_ECYpY' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2c213b2V0eWFkaHd1eHZteWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5MTk3ODUsImV4cCI6MjA5MTQ5NTc4NX0.AOjADakOmIZg9n4Iydaj6bBHlHEc22yGlvDsk_ECYpY')",
+      "Bash(supabase --version)",
+      "Bash(curl -s -X POST https://gvsmwoetyadhwuxvmyhu.supabase.co/rest/v1/rpc/exec_sql -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2c213b2V0eWFkaHd1eHZteWh1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTkxOTc4NSwiZXhwIjoyMDkxNDk1Nzg1fQ.UB-RBQ9fVJ-P1xhykjPdX4BcOuoL4nX9py94imUVsBw' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2c213b2V0eWFkaHd1eHZteWh1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTkxOTc4NSwiZXBwIjoyMDkxNDk1Nzg1fQ.UB-RBQ9fVJ-P1xhykjPdX4BcOuoL4nX9py94imUVsBw' -H 'Content-Type: application/json' -d '{\"sql\": __CMDSUB_OUTPUT__')",
+      "Bash(psql --version)",
+      "Read(//c/Users/lcabr/.claude/**)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(git commit -m 'fix: correct HOT bucket filter — use getUrgencyTier consistently:*)",
+      "Bash(find c:\\\\\\\\Users\\\\\\\\lcabr\\\\\\\\oraklogpt\\\\\\\\app\\\\\\\\src -type f -name \"*.ts\" -o -name \"*.tsx\")",
+      "Bash(xargs grep:*)",
+      "Bash(git -C c:/Users/lcabr/oraklogpt commit -m ':*)",
+      "Bash(git -C \"c:/Users/lcabr/oraklogpt\" push origin main)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\lcabr\\oraklogpt\\app\\src\\lib"
+    ]
+  }
+}

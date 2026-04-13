@@ -5,6 +5,7 @@ import type { EventCardData } from "@/components/ui/event-card";
 import { placePosition } from "@/lib/actions/place-position";
 import type { PositionReceiptData } from "@/lib/actions/place-position";
 import { ComprovantePrevisao } from "@/components/ui/comprovante-previsao";
+import { IconCheck, IconX } from "@/components/ui/icons";
 
 const PLATFORM_FEE = 0.05;
 const MIN_VALUE = 1;
@@ -231,9 +232,7 @@ export function DecisionPanel({ event }: DecisionPanelProps) {
             "Fonte de validação",
           ].map((item) => (
             <li key={item} className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden className="shrink-0">
-                <path d="M2 5l2.5 2.5L8 3" stroke="#4ade80" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <IconCheck className="h-3.5 w-3.5 shrink-0 text-emerald-400" />
               {item}
             </li>
           ))}
@@ -261,9 +260,7 @@ export function DecisionPanel({ event }: DecisionPanelProps) {
                 aria-label="Fechar"
                 className="absolute top-4 right-4 z-20 rounded-full bg-[var(--surface-elevated)] p-2 text-[var(--text-muted)] hover:bg-[var(--surface)] hover:text-[var(--text)] transition-colors backdrop-blur-sm ring-1 ring-[var(--border)]"
               >
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
+                <IconX className="h-4 w-4" />
               </button>
 
               {/* LEFT — Comprovante */}

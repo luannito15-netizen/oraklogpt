@@ -1,10 +1,11 @@
-﻿import type { HTMLAttributes, ReactNode } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 
 interface ScreenLayoutProps extends HTMLAttributes<HTMLElement> {
   children: ReactNode;
   containerClassName?: string;
   title?: string;
   description?: string;
+  /** Short uppercase label rendered above the title in accent color */
   eyebrow?: string;
   actions?: ReactNode;
 }
@@ -31,20 +32,20 @@ export function ScreenLayout({
     <section className={sectionClasses} {...props}>
       <div className={containerClasses}>
         {title ? (
-          <header className="mb-8 flex flex-col gap-4 border-b border-[color-mix(in_srgb,var(--oraklo-color-text)_12%,white)] pb-6 sm:flex-row sm:items-end sm:justify-between">
-            <div className="space-y-2">
+          <header className="mb-8 flex flex-col gap-4 border-b border-[var(--border)] pb-6 sm:flex-row sm:items-end sm:justify-between">
+            <div className="space-y-1.5">
               {eyebrow ? (
-                <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[color-mix(in_srgb,var(--oraklo-color-text)_58%,white)]">
+                <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--accent)]">
                   {eyebrow}
                 </p>
               ) : null}
 
-              <h1 className="text-3xl font-semibold tracking-tight text-[var(--oraklo-color-text)] sm:text-4xl">
+              <h1 className="text-3xl font-black text-[var(--text)] sm:text-4xl">
                 {title}
               </h1>
 
               {description ? (
-                <p className="max-w-2xl text-sm leading-6 text-[color-mix(in_srgb,var(--oraklo-color-text)_70%,white)]">
+                <p className="max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
                   {description}
                 </p>
               ) : null}
