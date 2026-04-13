@@ -6,7 +6,9 @@ import { EventCard } from "@/components/ui/event-card";
 import { EventDrawer } from "@/components/ui/event-drawer";
 import { PublicNav, PublicFooter } from "@/components/ui/public-nav";
 import { AdBanner } from "@/components/ui/ad-banner";
-import { MercadosHotHero } from "./mercados-hot-hero";
+import { MercadosHotHero } from "./mercados-hot-hero"
+import { LiveActivityTicker } from "./live-activity-ticker"
+import { getHotIntensity } from "@/lib/urgency";
 
 const categories = ["Todos", "Economia", "Clima", "Esportes", "Política"];
 const sortOptions = [
@@ -213,6 +215,9 @@ export function MercadosClient({ events }: MercadosClientProps) {
                   className="h-10 w-full rounded-xl bg-[var(--input-bg)] pl-8 pr-4 text-sm text-[var(--text)] outline-none ring-1 ring-[var(--border)] transition-all placeholder:text-[var(--text-muted)] focus:ring-[var(--ring)]"
                 />
               </div>
+              <div className="hidden sm:flex">
+                <LiveActivityTicker events={events} />
+              </div>
               <p className="text-xs text-[var(--th-dim)]">
                 {filtered.length} {filtered.length === 1 ? "evento" : "eventos"}
               </p>
@@ -229,7 +234,16 @@ export function MercadosClient({ events }: MercadosClientProps) {
                 {/* ── HOT bucket ── */}
                 {hot.length > 0 && (
                   <section className="flex flex-col gap-4">
-                    <SectionHeader label="HOT — Encerra hoje" count={hot.length} variant="hot" />
+                    <SectionHeader
+                      label={(() => {
+                        const intensity = hot[0]?.deadlineAt ? getHotIntensity(hot[0].deadlineAt) : null
+                        if (intensity === "last-call") return "LAST CALL — Menos de 1 hora"
+                        if (intensity === "super-hot") return "SUPER HOT — Menos de 6 horas"
+                        return "HOT — Encerra hoje"
+                      })()}
+                      count={hot.length}
+                      variant="hot"
+                    />
                     {/* Hero for first HOT event */}
                     {hotHero && (
                       <MercadosHotHero event={hotHero} onOpen={setDrawerEvent} />

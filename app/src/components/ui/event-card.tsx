@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getUrgencyTier, URGENCY_COLORS } from "@/lib/urgency";
+import { getUrgencyTier, URGENCY_COLORS, getHotIntensity, HOT_INTENSITY_COLORS } from "@/lib/urgency";
 
 export type EventStatus = "open" | "closed" | "resolved" | "canceled";
 
@@ -135,6 +135,7 @@ interface EventCardProps {
 export function EventCard({ event, onOpen }: EventCardProps) {
   const nao = 100 - event.simPercent;
   const tier = getUrgencyTier(event.deadlineDays);
+  const intensity = tier === "hot" ? getHotIntensity(event.deadlineAt) : null;
 
   const inner = (
     <>
@@ -171,9 +172,14 @@ export function EventCard({ event, onOpen }: EventCardProps) {
             >
               {event.category}
             </span>
-            {(tier === "hot" || tier === "short") && (
-              <span className={`rounded-full px-2 py-0.5 text-[9px] font-black uppercase tracking-wide ring-1 ${URGENCY_COLORS[tier].badge}`}>
-                {tier === "hot" ? "HOT" : "BREVE"}
+            {tier === "hot" && intensity && (
+              <span className={`rounded-full px-2 py-0.5 text-[9px] font-black uppercase tracking-wide ring-1 animate-pulse ${HOT_INTENSITY_COLORS[intensity].badge}`}>
+                {intensity === "last-call" ? "LAST CALL" : intensity === "super-hot" ? "SUPER HOT" : "HOT"}
+              </span>
+            )}
+            {tier === "short" && (
+              <span className={`rounded-full px-2 py-0.5 text-[9px] font-black uppercase tracking-wide ring-1 ${URGENCY_COLORS["short"].badge}`}>
+                BREVE
               </span>
             )}
           </div>
@@ -224,33 +230,36 @@ export function EventCard({ event, onOpen }: EventCardProps) {
             </svg>
             {formatVolumeCompact(event.totalVolume)} participado
           </span>
-          <span
-            className={`flex items-center gap-1 text-[10px] font-semibold ${
-              tier === "hot"   ? "text-red-400 font-bold" :
-              tier === "short" ? "text-amber-400"         :
-              "text-[var(--text-muted)]"
-            }`}
-          >
-            {tier === "hot" ? (
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-400 animate-pulse shrink-0" />
-            ) : (
+          {tier === "hot" && intensity ? (
+            <span className={`flex items-center gap-1 text-[10px] font-bold ${HOT_INTENSITY_COLORS[intensity].text}`}>
+              <span
+                className="inline-block h-1.5 w-1.5 rounded-full animate-pulse shrink-0"
+                style={{ background: "currentColor" }}
+              />
+              {intensity === "last-call" ? "Último momento!" : intensity === "super-hot" ? "Encerra em horas" : "Encerra hoje"}
+            </span>
+          ) : (
+            <span
+              className={`flex items-center gap-1 text-[10px] font-semibold ${
+                tier === "short" ? "text-amber-400" : "text-[var(--text-muted)]"
+              }`}
+            >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0">
                 <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2"/>
                 <path d="M6 3v3l2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
               </svg>
-            )}
-            {tier === "hot" ? "Encerra hoje" : `Encerra em ${event.deadline}`}
-          </span>
+              {tier === "hot" ? "Encerra hoje" : `Encerra em ${event.deadline}`}
+            </span>
+          )}
         </div>
       </div>
     </>
   );
 
-  const sharedClass = `group block rounded-2xl bg-[var(--surface-elevated)] overflow-hidden ring-1 transition-all transition-shadow duration-200 text-left w-full ${
-    tier === "hot"
-      ? "ring-red-500/30 hover:ring-red-400/60 hover:shadow-[0_0_28px_rgba(239,68,68,0.18)]"
-      : "ring-[var(--border)] hover:ring-[var(--accent)] hover:shadow-[0_0_28px_rgba(168,85,247,0.18)]"
-  }`;
+  const sharedClass =
+    tier === "hot" && intensity
+      ? `group block rounded-2xl bg-[var(--surface-elevated)] overflow-hidden ring-1 transition-all duration-200 text-left w-full ${HOT_INTENSITY_COLORS[intensity].ring} ${HOT_INTENSITY_COLORS[intensity].glow}`
+      : "group block rounded-2xl bg-[var(--surface-elevated)] overflow-hidden ring-1 ring-[var(--border)] transition-all duration-200 text-left w-full hover:ring-[var(--accent)] hover:shadow-[0_0_28px_rgba(168,85,247,0.18)]";
 
   if (onOpen) {
     return (

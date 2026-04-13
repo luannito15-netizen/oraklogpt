@@ -321,3 +321,28 @@ body {
   background-image: linear-gradient(to right, var(--accent), var(--ring));
   box-shadow: 0 0 6px 2px rgba(168,85,247,0.45), 0 0 20px 0px rgba(192,132,252,0.20);
 }
+
+/* ── Urgency animations ── */
+@keyframes pulse-ring {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(239,68,68,0.2); }
+  50%       { box-shadow: 0 0 48px rgba(239,68,68,0.5), 0 0 80px rgba(239,68,68,0.15); }
+}
+@keyframes glow-pulse-orange {
+  0%, 100% { box-shadow: 0 0 20px rgba(249,115,22,0.2); }
+  50%       { box-shadow: 0 0 48px rgba(249,115,22,0.45), 0 0 80px rgba(249,115,22,0.12); }
+}
+@keyframes ticker-slide {
+  0%   { transform: translateY(0);     opacity: 1; }
+  15%  { transform: translateY(0);     opacity: 1; }
+  25%  { transform: translateY(-100%); opacity: 0; }
+  26%  { transform: translateY(100%);  opacity: 0; }
+  36%  { transform: translateY(0);     opacity: 1; }
+  100% { transform: translateY(0);     opacity: 1; }
+}
+.animate-glow-red    { animation: glow-pulse        3s ease-in-out infinite; }
+.animate-glow-orange { animation: glow-pulse-orange 3s ease-in-out infinite; }
+.animate-ticker      { animation: ticker-slide       4s ease-in-out infinite; }
