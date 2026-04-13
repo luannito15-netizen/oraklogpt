@@ -118,8 +118,10 @@ export default function PlatformLayout({ children }: { children: ReactNode }) {
           {/* User greeting */}
           <div className="px-4 py-3 border-b border-[var(--border)]">
             <p className="text-[10px] text-[var(--text-muted)]">Bem-vindo de volta</p>
-            <p className="text-sm font-black text-[var(--text)]">Usuário</p>
-            <p className="text-[10px] text-[var(--text-muted)] mt-0.5">Última visita: hoje</p>
+            <p className="text-sm font-black text-[var(--text)]">Luan</p>
+            <p className="text-[10px] text-[var(--text-muted)] mt-0.5">
+              {new Date().toLocaleString("pt-BR", { weekday: "short", hour: "2-digit", minute: "2-digit" })}
+            </p>
           </div>
 
           {/* Primary nav */}
