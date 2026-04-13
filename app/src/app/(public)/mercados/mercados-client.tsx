@@ -8,7 +8,7 @@ import { PublicNav, PublicFooter } from "@/components/ui/public-nav";
 import { AdBanner } from "@/components/ui/ad-banner";
 import { MercadosHotHero } from "./mercados-hot-hero"
 import { LiveActivityTicker } from "./live-activity-ticker"
-import { getHotIntensity } from "@/lib/urgency";
+import { getUrgencyTier, getHotIntensity } from "@/lib/urgency";
 
 const categories = ["Todos", "Economia", "Clima", "Esportes", "Política"];
 const sortOptions = [
@@ -101,10 +101,11 @@ export function MercadosClient({ events }: MercadosClientProps) {
   }, [events, selectedCategory, searchQuery, sortBy]);
 
   // Urgency buckets — split after filtering + sorting
-  const hot   = filtered.filter((e) => e.deadlineDays <= 0);
-  const short = filtered.filter((e) => e.deadlineDays >= 1 && e.deadlineDays <= 3);
-  const mid   = filtered.filter((e) => e.deadlineDays >= 4 && e.deadlineDays <= 14);
-  const long  = filtered.filter((e) => e.deadlineDays > 14);
+  // Use getUrgencyTier — consistent with event-card.tsx and urgency.ts (hot = deadlineDays <= 1)
+  const hot   = filtered.filter((e) => getUrgencyTier(e.deadlineDays) === "hot");
+  const short = filtered.filter((e) => getUrgencyTier(e.deadlineDays) === "short");
+  const mid   = filtered.filter((e) => getUrgencyTier(e.deadlineDays) === "mid");
+  const long  = filtered.filter((e) => getUrgencyTier(e.deadlineDays) === "long");
 
   // First HOT gets the hero treatment; the rest go into the grid section
   const hotHero  = hot[0] ?? null;
