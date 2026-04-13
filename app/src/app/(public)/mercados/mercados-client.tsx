@@ -6,10 +6,10 @@ import { EventCard } from "@/components/ui/event-card";
 import { EventDrawer } from "@/components/ui/event-drawer";
 import { PublicNav, PublicFooter } from "@/components/ui/public-nav";
 import { AdBanner } from "@/components/ui/ad-banner";
-import { MercadosHotHero, HotSectionFlame } from "./mercados-hot-hero";
 import { LiveActivityTicker } from "./live-activity-ticker";
-import { getUrgencyTier, getHotIntensity } from "@/lib/urgency";
+import { getUrgencyTier } from "@/lib/urgency";
 import { IconSearch, CategoryIcon } from "@/components/ui/icons";
+import { FlameIcon3D } from "@/components/ui/flame-icon";
 
 const categories = ["Todos", "Economia", "Clima", "Esportes", "Política"];
 const sortOptions = [
@@ -46,34 +46,6 @@ function SectionHeader({
     <div className={`flex items-center gap-3 border-l-2 pl-3 ${styles[variant]}`}>
       <span className="text-xs font-black uppercase tracking-[0.1em]">{label}</span>
       <span className="text-[10px] font-semibold opacity-60">
-        {count} {count === 1 ? "evento" : "eventos"}
-      </span>
-    </div>
-  );
-}
-
-// ─── HOT section heading ──────────────────────────────────────────────────────
-
-function HotSectionHeading({
-  intensity,
-  count,
-}: {
-  intensity: "last-call" | "super-hot" | "hot" | null;
-  count: number;
-}) {
-  const label =
-    intensity === "last-call" ? "LAST CALL"
-    : intensity === "super-hot" ? "SUPER HOT"
-    : "MERCADO EM ALTA";
-
-  return (
-    <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2 text-red-400">
-        <HotSectionFlame className="h-4 w-4 shrink-0" />
-        <span className="text-xs font-black uppercase tracking-[0.14em]">{label}</span>
-      </div>
-      <div className="h-px flex-1 bg-red-500/20" />
-      <span className="text-[10px] text-[var(--text-muted)]">
         {count} {count === 1 ? "evento" : "eventos"}
       </span>
     </div>
@@ -128,11 +100,6 @@ export function MercadosClient({ events }: MercadosClientProps) {
   const mid   = filtered.filter((e) => getUrgencyTier(e.deadlineDays) === "mid");
   const long  = filtered.filter((e) => getUrgencyTier(e.deadlineDays) === "long");
 
-  const hotHero = hot[0] ?? null;
-  const hotRest = hot.slice(1);
-
-  const hotIntensity = hotHero ? getHotIntensity(hotHero.deadlineAt) : null;
-
   return (
     <div className="min-h-screen bg-[var(--bg)]">
       <PublicNav />
@@ -173,23 +140,6 @@ export function MercadosClient({ events }: MercadosClientProps) {
           </div>
         </div>
       </div>
-
-      {/* ── HOT Hero — full width, outside sidebar constraint ── */}
-      {hotHero && (
-        <div className="mx-auto max-w-[1200px] px-6 pt-8 lg:px-8">
-          <div className="flex flex-col gap-4">
-            <HotSectionHeading intensity={hotIntensity} count={hot.length} />
-            <MercadosHotHero event={hotHero} onOpen={setDrawerEvent} />
-            {hotRest.length > 0 && (
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {hotRest.map((event) => (
-                  <EventCard key={event.id} event={event} onOpen={setDrawerEvent} />
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* ── Main content — sidebar + grid ── */}
       <div className="mx-auto max-w-[1200px] px-6 py-8 lg:px-8">
@@ -278,6 +228,24 @@ export function MercadosClient({ events }: MercadosClientProps) {
             ) : (
               <div className="flex flex-col gap-10">
 
+                {/* ── HOT bucket ── */}
+                {hot.length > 0 && (
+                  <section className="flex flex-col gap-4">
+                    <div className="flex items-center gap-3 border-l-2 border-red-500/70 pl-3">
+                      <FlameIcon3D className="h-4 w-4" />
+                      <span className="text-xs font-black uppercase tracking-[0.1em] text-red-400">Em alta agora</span>
+                      <span className="text-[10px] font-semibold text-[var(--text-muted)] opacity-60">
+                        {hot.length} {hot.length === 1 ? "evento" : "eventos"}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      {hot.map((event) => (
+                        <EventCard key={event.id} event={event} onOpen={setDrawerEvent} />
+                      ))}
+                    </div>
+                  </section>
+                )}
+
                 {/* ── SHORT bucket ── */}
                 {short.length > 0 && (
                   <section className="flex flex-col gap-4">
@@ -314,12 +282,6 @@ export function MercadosClient({ events }: MercadosClientProps) {
                   </section>
                 )}
 
-                {/* Empty grid (all events are HOT) */}
-                {short.length === 0 && mid.length === 0 && long.length === 0 && hot.length > 0 && (
-                  <p className="text-sm text-[var(--text-muted)]">
-                    Todos os eventos ativos estão na seção HOT.
-                  </p>
-                )}
 
               </div>
             )}

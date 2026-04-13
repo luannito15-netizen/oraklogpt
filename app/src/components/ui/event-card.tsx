@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { getUrgencyTier, URGENCY_COLORS, getHotIntensity, HOT_INTENSITY_COLORS } from "@/lib/urgency";
 import { IconCoins, IconClock, CategoryIcon } from "@/components/ui/icons";
+import { FlameIcon3D } from "@/components/ui/flame-icon";
+import { DigitalCountdown } from "@/components/ui/digital-countdown";
 
 export type EventStatus = "open" | "closed" | "resolved" | "canceled";
 
@@ -165,7 +167,8 @@ export function EventCard({ event, onOpen }: EventCardProps) {
               {event.category}
             </span>
             {tier === "hot" && intensity && (
-              <span className={`rounded-full px-2 py-0.5 text-[9px] font-black uppercase tracking-wide ring-1 animate-pulse ${HOT_INTENSITY_COLORS[intensity].badge}`}>
+              <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-black uppercase tracking-wide ring-1 animate-pulse ${HOT_INTENSITY_COLORS[intensity].badge}`}>
+                <FlameIcon3D className="h-3 w-3" />
                 {intensity === "last-call" ? "LAST CALL" : intensity === "super-hot" ? "SUPER HOT" : "HOT"}
               </span>
             )}
@@ -230,20 +233,17 @@ export function EventCard({ event, onOpen }: EventCardProps) {
         </div>
 
         {/* Footer — volume + deadline */}
-        <div className="mt-3.5 flex items-center justify-between border-t border-[var(--border)]/50 pt-3">
+        <div className={`mt-3.5 border-t border-[var(--border)]/50 pt-3 ${tier === "hot" && intensity ? "flex flex-col gap-2" : "flex items-center justify-between"}`}>
           <span className="flex items-center gap-1 text-[10px] text-[var(--text-muted)]">
             <IconCoins className="h-3.5 w-3.5" />
             {formatVolumeCompact(event.totalVolume)} participado
           </span>
           {tier === "hot" && intensity ? (
-            <span className={`flex items-center gap-1 text-[10px] font-bold ${HOT_INTENSITY_COLORS[intensity].text}`}>
-              <span className="inline-block h-1.5 w-1.5 rounded-full animate-pulse shrink-0 bg-current" />
-              {intensity === "last-call" ? "Último momento!" : intensity === "super-hot" ? "Encerra em horas" : "Encerra hoje"}
-            </span>
+            <DigitalCountdown deadlineAt={event.deadlineAt} />
           ) : (
             <span className={`flex items-center gap-1 text-[10px] font-semibold ${tier === "short" ? "text-amber-400" : "text-[var(--text-muted)]"}`}>
               <IconClock className="h-3.5 w-3.5" />
-              {tier === "hot" ? "Encerra hoje" : `Encerra em ${event.deadline}`}
+              {`Encerra em ${event.deadline}`}
             </span>
           )}
         </div>

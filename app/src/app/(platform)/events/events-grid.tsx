@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import { EventCard, type EventCardData } from "@/components/ui/event-card";
-import { EventHotHero } from "@/components/ui/event-hot-hero";
 import { EventDrawer } from "@/components/ui/event-drawer";
 import { URGENCY_COLORS } from "@/lib/urgency";
 
@@ -290,12 +289,7 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
             {hot.length > 0 && (
               <section>
                 <SectionHeader label="Em Alta" dotClass={`${URGENCY_COLORS.hot.dot} animate-pulse`} accent />
-                <EventHotHero event={hot[0]} onOpen={setDrawerEvent} />
-                {hot.length > 1 && (
-                  <div className="mt-3">
-                    {renderCollection(hot.slice(1))}
-                  </div>
-                )}
+                {renderCollection(hot)}
               </section>
             )}
 
