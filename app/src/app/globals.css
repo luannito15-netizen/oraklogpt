@@ -325,6 +325,15 @@ body {
 .animate-glow-orange { animation: glow-pulse-orange 3s ease-in-out infinite; }
 .animate-ticker      { animation: ticker-slide       4s ease-in-out infinite; }
 
+/* ─── Ticker strip ─────────────────────────────────── */
+.ticker-scroll {
+  animation: ticker-move 40s linear infinite;
+}
+@keyframes ticker-move {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 /* ── EventCard — category → --_cat via data attribute ───────────────────────
    Set data-cat="Economia" (etc.) on the card wrapper instead of inline style.
    CSS resolves --_cat from the attribute so JSX stays free of color logic.    */

@@ -115,6 +115,13 @@ export default function PlatformLayout({ children }: { children: ReactNode }) {
             </span>
           </div>
 
+          {/* User greeting */}
+          <div className="px-4 py-3 border-b border-[var(--border)]">
+            <p className="text-[10px] text-[var(--text-muted)]">Bem-vindo de volta</p>
+            <p className="text-sm font-black text-[var(--text)]">Usuário</p>
+            <p className="text-[10px] text-[var(--text-muted)] mt-0.5">Última visita: hoje</p>
+          </div>
+
           {/* Primary nav */}
           <nav className="flex-1 space-y-0.5 px-3 pt-2">
             <p className="mb-2 px-3 text-[9px] font-black uppercase tracking-[0.18em] text-[var(--text-muted)] opacity-60">
