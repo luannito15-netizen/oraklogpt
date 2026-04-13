@@ -56,50 +56,44 @@ export function DecisionPanel({ event }: DecisionPanelProps) {
           Escolha um lado
         </p>
 
-        <div className="mt-4 grid grid-cols-2 gap-3">
+        <div className="mt-4 flex flex-col gap-3">
           {/* SIM */}
           <button
             type="button"
             onClick={() => setSide("SIM")}
-            className={`group flex flex-col gap-2 rounded-xl p-4 ring-1 transition-all hover:scale-[1.02] active:scale-[0.98] transition-transform duration-150 ${
-              side === "SIM"
-                ? "bg-emerald-500/20 ring-emerald-500"
-                : "bg-emerald-500/10 ring-emerald-500/20 hover:ring-emerald-500/50"
+            className={`pulse-sim-pill flex w-full flex-col gap-2 p-5 text-left transition-all hover:scale-[1.01] active:scale-[0.99] ${
+              side === "SIM" ? "pulse-sim-pill--active" : ""
             }`}
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-emerald-400">SIM</span>
-              <span className="text-[10px] text-emerald-400">▲</span>
+              <span className="pulse-sim-label text-sm font-black tracking-widest">SIM</span>
+              <span className="pulse-cotacao text-2xl font-black">{simCot}×</span>
             </div>
-            <span className="text-xl font-black text-[var(--text)]">{simCot}</span>
-            <span className="text-[10px] text-[var(--text-muted)]">{event.simPercent}% no lado</span>
+            <span className="pulse-sim-pct text-[10px]">{event.simPercent}% no lado</span>
           </button>
 
           {/* NÃO */}
           <button
             type="button"
             onClick={() => setSide("NAO")}
-            className={`group flex flex-col gap-2 rounded-xl p-4 ring-1 transition-all hover:scale-[1.02] active:scale-[0.98] transition-transform duration-150 ${
-              side === "NAO"
-                ? "bg-orange-500/20 ring-orange-500"
-                : "bg-orange-500/10 ring-orange-500/20 hover:ring-orange-500/50"
+            className={`pulse-nao-pill flex w-full flex-col gap-2 p-5 text-left transition-all hover:scale-[1.01] active:scale-[0.99] ${
+              side === "NAO" ? "pulse-nao-pill--active" : ""
             }`}
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-orange-400">NÃO</span>
-              <span className="text-[10px] text-orange-400">▼</span>
+              <span className="pulse-nao-label text-sm font-black tracking-widest">NÃO</span>
+              <span className="pulse-cotacao text-2xl font-black">{naoCot}×</span>
             </div>
-            <span className="text-xl font-black text-[var(--text)]">{naoCot}</span>
-            <span className="text-[10px] text-[var(--text-muted)]">{naoPercent}% no lado</span>
+            <span className="pulse-nao-pct text-[10px]">{naoPercent}% no lado</span>
           </button>
         </div>
 
         {/* Distribution bar */}
         <div className="mt-4">
           <div className="flex h-1.5 overflow-hidden rounded-full">
-            {/* eslint-disable-next-line react/forbid-component-props -- runtime-computed width */}
-            <div className="bg-emerald-500 transition-all" style={{ width: `${event.simPercent}%` }} />
-            <div className="flex-1 bg-orange-500/60" />
+            {/* eslint-disable-next-line react/forbid-component-props -- runtime-computed width, cannot use static Tailwind class */}
+            <div className="pulse-decision-bar-sim transition-all" style={{ width: `${event.simPercent}%` }} />
+            <div className="pulse-decision-bar-nao flex-1" />
           </div>
           <div className="mt-1.5 flex justify-between text-[10px] text-[var(--text-muted)]">
             <span>{event.simPercent}%</span>
@@ -117,7 +111,7 @@ export function DecisionPanel({ event }: DecisionPanelProps) {
         {side ? (
           <p className="mt-2 text-sm text-[var(--text-secondary)]">
             Você escolheu{" "}
-            <strong className={side === "SIM" ? "text-emerald-400" : "text-orange-400"}>
+            <strong className={side === "SIM" ? "pulse-sim-label" : "pulse-nao-label"}>
               {side} ({activeCot})
             </strong>
           </p>
@@ -173,7 +167,7 @@ export function DecisionPanel({ event }: DecisionPanelProps) {
             </div>
             <div className="flex justify-between border-t border-[var(--border)] pt-2">
               <span className="font-semibold text-[var(--text)]">Retorno estimado</span>
-              <span className="font-bold text-emerald-400">
+              <span className="pulse-sim-label font-bold">
                 R$ {estimatedReturn.toFixed(2).replace(".", ",")}
               </span>
             </div>

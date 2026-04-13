@@ -120,6 +120,16 @@
   --oraklo-shadow-soft:     0 1px 3px rgb(11 7 16 / 0.25), 0 4px 16px rgb(11 7 16 / 0.20);
   --oraklo-shadow-card:     0 1px 2px rgb(11 7 16 / 0.18), 0 2px 8px rgb(11 7 16 / 0.20);
   --oraklo-shadow-elevated: 0 4px 12px rgb(11 7 16 / 0.30), 0 16px 40px rgb(11 7 16 / 0.28);
+
+  /* ── Pulse Hybrid Design Tokens ─────────────────────── */
+  --pulse-primary:          #d394ff;
+  --pulse-primary-dim:      #aa30fa;
+  --pulse-sim:              #00fbfb;
+  --pulse-nao:              #ff946e;
+  --pulse-on-surface:       #fce8f8;
+  --pulse-on-surface-muted: #b8a6b5;
+  --pulse-surface-glass:    rgba(48, 33, 48, 0.60);
+  --pulse-border:           rgba(211, 148, 255, 0.12);
 }
 
 [data-theme="light"] {
@@ -492,4 +502,112 @@ body {
     transparent 70%
   );
   background-color: var(--surface-elevated);
+}
+
+/* ─── Pulse Hybrid — Glassmorphism card + pill buttons ──────────────────── */
+
+.pulse-card {
+  background: var(--pulse-surface-glass);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border: 1.5px solid var(--pulse-border);
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.pulse-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 0 48px rgba(211, 148, 255, 0.18), 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+.pulse-card:active { transform: translateY(-2px) scale(0.99); }
+
+.pulse-sim-pill {
+  background: rgba(0, 251, 251, 0.06);
+  border: 1.5px solid rgba(0, 251, 251, 0.14);
+  border-radius: 9999px;
+  transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+  will-change: transform;
+}
+.pulse-sim-pill:hover {
+  background: rgba(0, 251, 251, 0.14);
+  border-color: rgba(0, 251, 251, 0.38);
+  transform: scale(1.01);
+}
+.pulse-sim-pill:active { transform: scale(0.97); }
+
+.pulse-nao-pill {
+  background: rgba(255, 148, 110, 0.04);
+  border: 1.5px solid rgba(255, 148, 110, 0.18);
+  border-radius: 9999px;
+  transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+  will-change: transform;
+}
+.pulse-nao-pill:hover {
+  background: rgba(255, 148, 110, 0.13);
+  border-color: rgba(255, 148, 110, 0.42);
+  transform: scale(1.01);
+}
+.pulse-nao-pill:active { transform: scale(0.97); }
+
+/* ─── Pulse card element classes (replaces inline styles) ────────────────── */
+.pulse-card-glow {
+  background: var(--pulse-primary);
+}
+.pulse-card-title {
+  color: var(--pulse-on-surface);
+}
+.pulse-card-source {
+  color: var(--pulse-on-surface-muted);
+}
+.pulse-card-footer {
+  border-color: rgba(211, 148, 255, 0.10);
+}
+.pulse-card-volume {
+  color: var(--pulse-on-surface-muted);
+}
+.pulse-card-deadline {
+  color: var(--pulse-on-surface-muted);
+}
+.pulse-sim-label {
+  color: var(--pulse-sim);
+}
+.pulse-sim-pct {
+  color: rgba(0, 251, 251, 0.55);
+}
+.pulse-nao-label {
+  color: var(--pulse-nao);
+}
+.pulse-nao-pct {
+  color: rgba(255, 148, 110, 0.55);
+}
+.pulse-cotacao {
+  color: var(--pulse-on-surface);
+}
+.pulse-bar-track {
+  background: rgba(255, 255, 255, 0.06);
+}
+.pulse-bar-sim-pct {
+  color: var(--pulse-sim);
+}
+.pulse-bar-nao-pct {
+  color: var(--pulse-nao);
+}
+
+/* ── Pulse pill active states (decision panel selection) ──────────────────── */
+.pulse-sim-pill--active {
+  background: rgba(0, 251, 251, 0.12);
+  border-color: rgba(0, 251, 251, 0.45);
+  box-shadow: 0 0 16px rgba(0, 251, 251, 0.15);
+}
+.pulse-nao-pill--active {
+  background: rgba(255, 148, 110, 0.10);
+  border-color: rgba(255, 148, 110, 0.50);
+  box-shadow: 0 0 16px rgba(255, 148, 110, 0.12);
+}
+/* ── Pulse decision bar ───────────────────────────────────────────────────── */
+.pulse-decision-bar-sim {
+  background: var(--pulse-sim);
+}
+.pulse-decision-bar-nao {
+  background: rgba(255, 148, 110, 0.55);
 }

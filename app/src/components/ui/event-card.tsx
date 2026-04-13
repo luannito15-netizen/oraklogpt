@@ -72,23 +72,21 @@ export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
       </p>
 
       {/* SIM / NÃO */}
-      <div className="mt-4 flex gap-2">
-        <div className="flex flex-1 items-center justify-between gap-1 rounded-xl bg-emerald-500/15 px-3 py-2 ring-1 ring-emerald-500/25 transition-all duration-200 group-hover:bg-emerald-500/25 group-hover:ring-emerald-500/50">
-          <span className="text-xs font-bold text-emerald-400">SIM</span>
-          <span className="text-xs font-bold text-[var(--text)]">{cotacao(event.simPercent)}</span>
-          <span className="text-[10px] text-emerald-400">▲</span>
+      <div className="mt-4 flex flex-col gap-2">
+        <div className="pulse-sim-pill flex items-center justify-between px-5 py-3">
+          <span className="pulse-sim-label text-xs font-black tracking-widest">SIM</span>
+          <span className="pulse-cotacao text-xs font-black">{cotacao(event.simPercent)}×</span>
         </div>
-        <div className="flex flex-1 items-center justify-between gap-1 rounded-xl bg-orange-500/15 px-3 py-2 ring-1 ring-orange-500/25 transition-all duration-200 group-hover:bg-orange-500/25 group-hover:ring-orange-500/50">
-          <span className="text-xs font-bold text-orange-400">NÃO</span>
-          <span className="text-xs font-bold text-[var(--text)]">{cotacao(nao)}</span>
-          <span className="text-[10px] text-orange-400">▼</span>
+        <div className="pulse-nao-pill flex items-center justify-between px-5 py-3">
+          <span className="pulse-nao-label text-xs font-black tracking-widest">NÃO</span>
+          <span className="pulse-cotacao text-xs font-black">{cotacao(nao)}×</span>
         </div>
       </div>
 
       {/* Distribution bar — category gradient */}
       <div className="mt-3">
         <div className="h-1.5 overflow-hidden rounded-full bg-[var(--surface)]">
-          {/* width is runtime data — no CSS-only alternative exists */}
+          {/* eslint-disable-next-line react/forbid-component-props -- runtime-computed width, cannot use static Tailwind class */}
           <div
             className="event-card-bar h-full rounded-full transition-all duration-500"
             style={{ width: `${event.simPercent}%` }}
@@ -131,19 +129,15 @@ export function EventCard({ event, onOpen }: EventCardProps) {
   const nao       = 100 - event.simPercent;
   const tier      = getUrgencyTier(event.deadlineDays);
   const intensity = tier === "hot" ? getHotIntensity(event.deadlineAt) : null;
-  const [hoveredSide, setHoveredSide] = useState<"sim" | "nao" | null>(null);
-
-  // data-cat on the wrapper sets --_cat via globals.css [data-cat] selectors.
-  // All .event-card-* classes resolve color-mix(var(--_cat)) from there.
 
   const inner = (
     <>
-      {/* Organic radial glow blob — top-right, clipped by card overflow-hidden */}
-      <div aria-hidden className="event-card-glow pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full blur-3xl opacity-50" />
+      {/* Ambient glow */}
+      <div aria-hidden className="pulse-card-glow pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full blur-3xl opacity-10" />
 
-      {/* Thumbnail or category accent strip */}
+      {/* Image or accent strip */}
       {event.imageUrl ? (
-        <div className="relative h-28 w-full overflow-hidden">
+        <div className="relative h-32 w-full overflow-hidden">
           <Image
             src={event.imageUrl}
             alt={event.title}
@@ -151,17 +145,18 @@ export function EventCard({ event, onOpen }: EventCardProps) {
             sizes="(max-width: 768px) 100vw, 400px"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-elevated)]/90 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#150b15] via-[rgba(21,11,21,0.5)] to-transparent" />
         </div>
       ) : (
-        <div className="event-card-strip h-[2px] w-full" />
+        <div className="event-card-strip h-[3px] w-full" />
       )}
 
       {/* Card body */}
-      <div className="relative z-10 p-5">
-        {/* Category pill + urgency badge + source */}
-        <div className="mb-3 flex items-start justify-between gap-3">
-          <div className="flex items-center gap-1.5 flex-wrap">
+      <div className="relative z-10 flex flex-col gap-4 p-5">
+
+        {/* Category + urgency + source */}
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex flex-wrap items-center gap-1.5">
             <span className="event-card-badge inline-flex items-center gap-1 shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em]">
               <CategoryIcon category={event.category} className="h-3 w-3 shrink-0" />
               {event.category}
@@ -178,83 +173,74 @@ export function EventCard({ event, onOpen }: EventCardProps) {
               </span>
             )}
           </div>
-          <span className="truncate text-right text-[10px] text-[var(--text-muted)]">{event.source}</span>
+          <span className="pulse-card-source shrink-0 text-right text-[10px]">
+            {event.source}
+          </span>
         </div>
 
-        {/* Question */}
-        <p className="text-base font-black leading-snug text-[var(--text)] line-clamp-2 group-hover:text-[var(--ring)] transition-colors">
+        {/* Title */}
+        <p className="pulse-card-title line-clamp-2 text-base font-black leading-snug">
           {event.title}
         </p>
 
-        {/* Separator */}
-        <div className="my-3 border-t border-[var(--border)]/50" />
-
-        {/* SIM / NÃO */}
-        <div
-          className="relative flex gap-2"
-          onMouseLeave={() => setHoveredSide(null)}
-        >
-          {/* SIM — border-l-2 é o indicador de seleção */}
-          <div
-            className={`event-card-sim flex flex-1 flex-col items-start gap-1 rounded-xl bg-[var(--surface)] px-3 py-2.5 ring-1 ring-[var(--border)]/70 border-l-2${hoveredSide === "nao" ? " sim-border-off" : ""}`}
-            onMouseEnter={() => setHoveredSide("sim")}
-          >
-            <div className="flex w-full items-center justify-between">
-              <span className="event-card-sim-accent text-xs font-bold">SIM</span>
-              <span className="text-xs font-bold text-[var(--text)]">{cotacao(event.simPercent)}</span>
-              <span className="event-card-sim-accent text-[10px]">▲</span>
+        {/* SIM pill */}
+        <div className="pulse-sim-pill w-full px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="pulse-sim-label text-sm font-black tracking-widest">SIM</span>
+              <span className="pulse-sim-pct text-[10px] font-semibold">{event.simPercent}%</span>
             </div>
-            <span className="text-[11px] font-semibold text-[var(--text-secondary)]">{event.simPercent}%</span>
-          </div>
-
-          {/* NÃO — border-r-2 aparece ao hover */}
-          <div
-            className={`event-card-nao flex flex-1 flex-col items-start gap-1 rounded-xl px-3 py-2.5 ring-1 ring-[var(--border)]/40${hoveredSide === "nao" ? " nao-border-on" : ""}`}
-            onMouseEnter={() => setHoveredSide("nao")}
-          >
-            <div className="flex w-full items-center justify-between">
-              <span className="text-xs font-bold text-[var(--text-secondary)]">NÃO</span>
-              <span className="text-xs font-bold text-[var(--text)]">{cotacao(nao)}</span>
-              <span className="text-[10px] text-[var(--text-muted)]">▼</span>
-            </div>
-            <span className="text-[11px] font-semibold text-[var(--text-muted)]">{nao}%</span>
+            <span className="pulse-cotacao text-2xl font-black">{cotacao(event.simPercent)}×</span>
           </div>
         </div>
 
-        {/* Progress bar — single category gradient */}
-        <div className="mt-3.5">
-          <div className="h-1.5 overflow-hidden rounded-full bg-[var(--surface)]">
-            {/* width is runtime data — no CSS-only alternative exists */}
-            <div
-              className="event-card-bar h-full rounded-full"
-              style={{ width: `${event.simPercent}%` }}
-            />
+        {/* NÃO pill */}
+        <div className="pulse-nao-pill w-full px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="pulse-nao-label text-sm font-black tracking-widest">NÃO</span>
+              <span className="pulse-nao-pct text-[10px] font-semibold">{nao}%</span>
+            </div>
+            <span className="pulse-cotacao text-2xl font-black">{cotacao(nao)}×</span>
           </div>
         </div>
 
-        {/* Footer — volume + deadline */}
-        <div className={`mt-3.5 border-t border-[var(--border)]/50 pt-3 ${tier === "hot" && intensity ? "flex flex-col gap-2" : "flex items-center justify-between"}`}>
-          <span className="flex items-center gap-1 text-[10px] text-[var(--text-muted)]">
+        {/* Progress bar */}
+        <div>
+          <div className="pulse-bar-track h-1.5 overflow-hidden rounded-full">
+            {/* eslint-disable-next-line react/forbid-component-props -- runtime-computed width, cannot use static Tailwind class */}
+            <div className="event-card-bar h-full rounded-full" style={{ width: `${event.simPercent}%` }} />
+          </div>
+          <div className="mt-1 flex justify-between text-[9px] font-bold">
+            <span className="pulse-bar-sim-pct">SIM {event.simPercent}%</span>
+            <span className="pulse-bar-nao-pct">NÃO {nao}%</span>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="pulse-card-footer flex items-center justify-between border-t pt-3">
+          <span className="pulse-card-volume flex items-center gap-1 text-[10px]">
             <IconCoins className="h-3.5 w-3.5" />
             {formatVolumeCompact(event.totalVolume)} participado
           </span>
           {tier === "hot" && intensity ? (
             <DigitalCountdown deadlineAt={event.deadlineAt} />
           ) : (
-            <span className={`flex items-center gap-1 text-[10px] font-semibold ${tier === "short" ? "text-amber-400" : "text-[var(--text-muted)]"}`}>
+            <span className={`flex items-center gap-1 text-[10px] font-semibold ${tier === "short" ? "text-amber-400" : "pulse-card-deadline"}`}>
               <IconClock className="h-3.5 w-3.5" />
               {`Encerra em ${event.deadline}`}
             </span>
           )}
         </div>
+
       </div>
     </>
   );
 
   const sharedClass =
     tier === "hot" && intensity
-      ? `group relative block rounded-2xl overflow-hidden ring-1 text-left w-full event-card-bg event-card-hot ${HOT_INTENSITY_COLORS[intensity].ring} ${HOT_INTENSITY_COLORS[intensity].glow}`
-      : "group relative block rounded-2xl overflow-hidden ring-1 ring-[var(--border)]/60 text-left w-full event-card-bg event-card";
+      ? `group relative block rounded-2xl overflow-hidden text-left w-full pulse-card event-card-bg ${HOT_INTENSITY_COLORS[intensity].ring}`
+      : "group relative block rounded-2xl overflow-hidden text-left w-full pulse-card event-card-bg";
 
   if (onOpen) {
     return (
