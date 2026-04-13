@@ -1,0 +1,44 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="ORAKLO / Introdução" />
+
+# ORAKLO — Design System
+
+Bem-vindo ao Storybook do ORAKLO.
+
+Este espaço documenta os componentes visuais reais do projeto.
+
+## Stack
+
+- **Next.js 16** (App Router)
+- **Tailwind CSS v4**
+- **Supabase** (PostgreSQL + Realtime)
+- Sem Shadcn, Radix ou Framer Motion — tudo feito à mão
+
+## Tokens globais
+
+Os tokens visuais estão em `src/app/globals.css`. Tema escuro é o padrão; tema claro é controlado via `data-theme="light"` no `<html>`.
+
+| Token | Uso |
+|---|---|
+| `--bg` | Fundo da página |
+| `--surface` | Cards, painéis |
+| `--surface-elevated` | Modais, drawers, elevated |
+| `--border` | Divisores, rings |
+| `--text` | Texto primário |
+| `--text-secondary` | Texto secundário |
+| `--text-muted` | Metadados, labels |
+| `--accent` | Cor primária (violeta) |
+| `--ring` | Focus ring, glow |
+| `--success` | SIM / positivo |
+| `--danger` | NÃO / negativo / urgência |
+| `--warning` | Amber / HOT |
+
+## Convenções
+
+- **SIM** = emerald
+- **NÃO** = orange
+- **CTA** = amber
+- **HOT** = red (urgency)
+- Nunca usar `odds` — sempre `cotacao`
+- Terminologia da UI: SIM / NÃO (não YES / NO)
