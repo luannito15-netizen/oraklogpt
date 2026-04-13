@@ -74,11 +74,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--th-bg)]">
+    <div className="min-h-screen bg-[var(--bg)]">
       <div className="grid min-h-screen lg:grid-cols-[1fr_480px]">
 
         {/* ── Left — branding ── */}
-        <div className="relative hidden overflow-hidden bg-[var(--th-bg-sub)] lg:flex lg:flex-col">
+        <div className="relative hidden overflow-hidden bg-[var(--bg)] lg:flex lg:flex-col">
           <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--oraklo-color-primary)] opacity-[0.07] blur-[120px]" />
 
           {/* Logo */}
@@ -93,11 +93,11 @@ export default function LoginPage() {
             <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--oraklo-color-primary-glow)]/60">
               Bem-vindo de volta
             </p>
-            <h1 className="mt-3 font-[family-name:var(--font-anton)] text-4xl leading-[1.08] text-[var(--th-text)] xl:text-5xl">
+            <h1 className="mt-3 font-[family-name:var(--font-anton)] text-4xl leading-[1.08] text-[var(--text)] xl:text-5xl">
               Continue<br />prevendo.<br />
               <span className="text-[var(--oraklo-color-primary-glow)]">Continue ganhando.</span>
             </h1>
-            <p className="mt-5 max-w-xs text-sm leading-7 text-[var(--th-low)]">
+            <p className="mt-5 max-w-xs text-sm leading-7 text-[var(--text-muted)]">
               Acesse sua conta e acompanhe suas posições abertas nos mercados ao vivo.
             </p>
 
@@ -111,8 +111,8 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <div className="relative z-10 border-t border-[var(--th-border)] px-12 py-6">
-            <p className="text-xs text-[var(--th-dim)]">
+          <div className="relative z-10 border-t border-[var(--border)] px-12 py-6">
+            <p className="text-xs text-[var(--text-muted)]">
               Não tem conta?{" "}
               <Link href="/cadastro" className="font-semibold text-[var(--oraklo-color-primary-glow)] hover:underline">
                 Criar agora
@@ -129,17 +129,17 @@ export default function LoginPage() {
             <Link href="/">
               <Image src={logoOraklo} alt="ORAKLO" className="h-7 w-auto brightness-0 invert" />
             </Link>
-            <Link href="/cadastro" className="text-xs text-[var(--th-low)] hover:text-[var(--th-mid)]">
+            <Link href="/cadastro" className="text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)]">
               Criar conta →
             </Link>
           </div>
 
           <div className="mx-auto w-full max-w-sm">
             <div className="mb-8">
-              <h2 className="font-[family-name:var(--font-anton)] text-2xl text-[var(--th-text)]">
+              <h2 className="font-[family-name:var(--font-anton)] text-2xl text-[var(--text)]">
                 Entrar
               </h2>
-              <p className="mt-1 text-sm text-[var(--th-low)]">Acesse sua conta ORAKLO</p>
+              <p className="mt-1 text-sm text-[var(--text-muted)]">Acesse sua conta ORAKLO</p>
             </div>
 
             {/* API error */}
@@ -156,15 +156,15 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
               {/* Email */}
               <div className="space-y-1.5">
-                <label htmlFor="email" className="block text-xs font-semibold text-[var(--th-mid)]">
+                <label htmlFor="email" className="block text-xs font-semibold text-[var(--text-secondary)]">
                   Email
                 </label>
                 <input
                   id="email" type="email" placeholder="voce@email.com"
                   value={email} onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
-                  className={`h-11 w-full rounded-xl bg-[var(--th-overlay-5)] px-4 text-sm text-[var(--th-text)] outline-none ring-1 transition-all placeholder:text-[var(--th-dim)] focus:ring-[var(--oraklo-color-primary)]/60 ${
-                    errors.email ? "ring-red-500/60" : "ring-[var(--th-ring)] hover:ring-[var(--th-ring)]"
+                  className={`h-11 w-full rounded-xl bg-[var(--surface)] px-4 text-sm text-[var(--text)] outline-none ring-1 transition-all placeholder:text-[var(--text-muted)] focus:ring-[var(--oraklo-color-primary)]/60 ${
+                    errors.email ? "ring-red-500/60" : "ring-[var(--border)] hover:ring-[var(--border)]"
                   }`}
                 />
                 {errors.email && <p className="text-[11px] text-red-400">{errors.email}</p>}
@@ -172,7 +172,7 @@ export default function LoginPage() {
 
               {/* Password */}
               <div className="space-y-1.5">
-                <label htmlFor="password" className="block text-xs font-semibold text-[var(--th-mid)]">
+                <label htmlFor="password" className="block text-xs font-semibold text-[var(--text-secondary)]">
                   Senha
                 </label>
                 <div className="relative">
@@ -183,14 +183,14 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
-                    className={`h-11 w-full rounded-xl bg-[var(--th-overlay-5)] px-4 pr-11 text-sm text-[var(--th-text)] outline-none ring-1 transition-all placeholder:text-[var(--th-dim)] focus:ring-[var(--oraklo-color-primary)]/60 ${
-                      errors.password ? "ring-red-500/60" : "ring-[var(--th-ring)] hover:ring-[var(--th-ring)]"
+                    className={`h-11 w-full rounded-xl bg-[var(--surface)] px-4 pr-11 text-sm text-[var(--text)] outline-none ring-1 transition-all placeholder:text-[var(--text-muted)] focus:ring-[var(--oraklo-color-primary)]/60 ${
+                      errors.password ? "ring-red-500/60" : "ring-[var(--border)] hover:ring-[var(--border)]"
                     }`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPass((v) => !v)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--th-dim)] transition-colors hover:text-[var(--th-mid)]"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] transition-colors hover:text-[var(--text-secondary)]"
                   >
                     <EyeIcon open={showPass} />
                   </button>
@@ -218,12 +218,12 @@ export default function LoginPage() {
             </form>
 
             <div className="mt-6 flex items-center gap-3">
-              <div className="flex-1 border-t border-[var(--th-border)]" />
-              <span className="text-[10px] text-[var(--th-dim)]">ou</span>
-              <div className="flex-1 border-t border-[var(--th-border)]" />
+              <div className="flex-1 border-t border-[var(--border)]" />
+              <span className="text-[10px] text-[var(--text-muted)]">ou</span>
+              <div className="flex-1 border-t border-[var(--border)]" />
             </div>
 
-            <p className="mt-5 text-center text-xs text-[var(--th-dim)]">
+            <p className="mt-5 text-center text-xs text-[var(--text-muted)]">
               Não tem conta?{" "}
               <Link href="/cadastro" className="font-semibold text-[var(--oraklo-color-primary-glow)] hover:underline">
                 Criar conta grátis

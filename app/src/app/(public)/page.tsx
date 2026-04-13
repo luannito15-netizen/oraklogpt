@@ -126,7 +126,7 @@ export default async function PublicHomePage() {
 
           {/* Left: copy */}
           <div className="max-w-xl space-y-7 pb-10 pt-10 lg:pb-0 lg:pt-12">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--oraklo-color-border)] bg-[var(--th-overlay-12)] px-3.5 py-1.5 backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--oraklo-color-border)] bg-[var(--surface-elevated)] px-3.5 py-1.5 backdrop-blur-sm">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -173,14 +173,14 @@ export default async function PublicHomePage() {
       {/* ══════════════════════════════════════
           EVENTS STRIP — dark
       ══════════════════════════════════════ */}
-      <section className="bg-[var(--th-bg)] px-6 py-12 lg:px-8">
+      <section className="bg-[var(--bg)] px-6 py-12 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-6 flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--th-dim)]">Eventos em destaque</p>
-              <p className="mt-0.5 text-sm font-semibold text-[var(--th-mid)]">Registre sua posição agora</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">Eventos em destaque</p>
+              <p className="mt-0.5 text-sm font-semibold text-[var(--text-secondary)]">Registre sua posição agora</p>
             </div>
-            <Link href="/mercados" className="text-xs font-bold text-[var(--oraklo-color-primary-glow)] hover:text-[var(--th-text)] transition-colors">
+            <Link href="/mercados" className="text-xs font-bold text-[var(--oraklo-color-primary-glow)] hover:text-[var(--text)] transition-colors">
               Ver todos →
             </Link>
           </div>
@@ -189,14 +189,14 @@ export default async function PublicHomePage() {
       </section>
 
       {/* Banner publicitário — entre seções */}
-      <div className="bg-[var(--th-bg)] px-6 py-6 lg:px-8">
+      <div className="bg-[var(--bg)] px-6 py-6 lg:px-8">
         <AdBanner size="leaderboard" className="mx-auto" />
       </div>
 
       {/* ══════════════════════════════════════
           COMO FUNCIONA — dark
       ══════════════════════════════════════ */}
-      <section id="como-funciona" className="relative overflow-hidden bg-[var(--th-bg)] px-6 py-20 lg:px-8 lg:py-28">
+      <section id="como-funciona" className="relative overflow-hidden bg-[var(--bg)] px-6 py-20 lg:px-8 lg:py-28">
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--oraklo-color-primary)] opacity-[0.06] blur-[100px]" />
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2 lg:gap-20">
@@ -210,7 +210,7 @@ export default async function PublicHomePage() {
           <div className="space-y-9">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--oraklo-color-primary-glow)]/60">Como funciona</p>
-              <h2 className="mt-2 font-[family-name:var(--font-anton)] text-3xl text-[var(--th-text)] lg:text-4xl">
+              <h2 className="mt-2 font-[family-name:var(--font-anton)] text-3xl text-[var(--text)] lg:text-4xl">
                 Simples como opinar.<br />Sério como decidir.
               </h2>
             </div>
@@ -222,12 +222,12 @@ export default async function PublicHomePage() {
                   </div>
                   <div>
                     <h3 className="font-[family-name:var(--font-anton)] text-sm tracking-wide text-[var(--oraklo-color-primary-glow)]">{step.title}</h3>
-                    <p className="mt-1 text-sm leading-6 text-[var(--th-mid)]">{step.description}</p>
+                    <p className="mt-1 text-sm leading-6 text-[var(--text-secondary)]">{step.description}</p>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="border-t border-[var(--th-border)] pt-7">
+            <div className="border-t border-[var(--border)] pt-7">
               <p className="text-sm font-semibold text-[var(--oraklo-color-primary-glow)]">Se acertar, você recebe retorno em dinheiro.</p>
               <Link href="/como-funciona"
                 className="mt-5 inline-flex items-center rounded-full bg-[var(--oraklo-color-primary)] px-7 py-3.5 text-sm font-bold uppercase tracking-[0.06em] text-white shadow-[0_0_24px_rgba(123,47,247,0.4)] transition-all hover:bg-[var(--oraklo-color-primary-hover)]">
@@ -241,7 +241,7 @@ export default async function PublicHomePage() {
       {/* ══════════════════════════════════════
           FOOTER
       ══════════════════════════════════════ */}
-      <footer className="border-t border-[var(--th-border)] bg-[var(--th-bg)] px-6 py-8 lg:px-8">
+      <footer className="border-t border-[var(--border)] bg-[var(--bg)] px-6 py-8 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-6">
           <Image src={logoOraklo} alt="ORAKLO" className="h-6 w-auto logo-invert opacity-40" />
           <nav className="flex flex-wrap gap-5">
@@ -251,10 +251,10 @@ export default async function PublicHomePage() {
               { href: "/ranking",       label: "Ranking"       },
               { href: "/faq",           label: "Ajuda / FAQ"   },
             ].map((l) => (
-              <Link key={l.href} href={l.href} className="text-xs text-[var(--th-dim)] hover:text-[var(--th-mid)] transition-colors">{l.label}</Link>
+              <Link key={l.href} href={l.href} className="text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors">{l.label}</Link>
             ))}
           </nav>
-          <p className="text-xs text-[var(--th-dim)]">© 2025 ORAKLO. Todos os direitos reservados.</p>
+          <p className="text-xs text-[var(--text-muted)]">© 2025 ORAKLO. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>

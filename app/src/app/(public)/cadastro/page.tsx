@@ -78,7 +78,7 @@ function Field({
 }) {
   return (
     <div className="space-y-1.5">
-      <label htmlFor={id} className="block text-xs font-semibold text-[var(--th-mid)]">
+      <label htmlFor={id} className="block text-xs font-semibold text-[var(--text-secondary)]">
         {label}
       </label>
       <div className="relative">
@@ -89,8 +89,8 @@ function Field({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           autoComplete={id}
-          className={`h-11 w-full rounded-xl bg-[var(--th-overlay-5)] px-4 pr-${suffix ? "11" : "4"} text-sm text-[var(--th-text)] outline-none ring-1 transition-all placeholder:text-[var(--th-dim)] focus:ring-[var(--oraklo-color-primary)]/60 ${
-            error ? "ring-red-500/60" : "ring-[var(--th-ring)] hover:ring-[var(--th-ring)]"
+          className={`h-11 w-full rounded-xl bg-[var(--surface)] px-4 pr-${suffix ? "11" : "4"} text-sm text-[var(--text)] outline-none ring-1 transition-all placeholder:text-[var(--text-muted)] focus:ring-[var(--oraklo-color-primary)]/60 ${
+            error ? "ring-red-500/60" : "ring-[var(--border)] hover:ring-[var(--border)]"
           }`}
         />
         {suffix && (
@@ -171,7 +171,7 @@ export default function CadastroPage() {
   // ── Success screen ──────────────────────────────────────────────
   if (submitted) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[var(--th-bg)]">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
         <div className="flex flex-col items-center gap-5 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/15 ring-1 ring-emerald-500/30">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
@@ -179,10 +179,10 @@ export default function CadastroPage() {
             </svg>
           </div>
           <div>
-            <p className="font-[family-name:var(--font-anton)] text-2xl text-[var(--th-text)]">Conta criada!</p>
-            <p className="mt-1 text-sm text-[var(--th-low)]">Redirecionando para o dashboard…</p>
+            <p className="font-[family-name:var(--font-anton)] text-2xl text-[var(--text)]">Conta criada!</p>
+            <p className="mt-1 text-sm text-[var(--text-muted)]">Redirecionando para o dashboard…</p>
           </div>
-          <div className="h-1 w-48 overflow-hidden rounded-full bg-[var(--th-overlay-8)]">
+          <div className="h-1 w-48 overflow-hidden rounded-full bg-[var(--surface-elevated)]">
             <div className="h-full animate-[grow_1.8s_ease-out_forwards] rounded-full bg-[var(--oraklo-color-primary)]" />
           </div>
         </div>
@@ -192,11 +192,11 @@ export default function CadastroPage() {
 
   // ── Form ────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[var(--th-bg)]">
+    <div className="min-h-screen bg-[var(--bg)]">
       <div className="grid min-h-screen lg:grid-cols-[1fr_520px]">
 
         {/* ── Left panel — branding ── */}
-        <div className="relative hidden overflow-hidden bg-[var(--th-bg-sub)] lg:flex lg:flex-col">
+        <div className="relative hidden overflow-hidden bg-[var(--bg)] lg:flex lg:flex-col">
           {/* Glow */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--oraklo-color-primary)] opacity-[0.07] blur-[120px]" />
           <div className="pointer-events-none absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-[var(--oraklo-color-primary)] opacity-[0.12] blur-[80px]" />
@@ -213,11 +213,11 @@ export default function CadastroPage() {
             <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--oraklo-color-primary-glow)]/60">
               Mercado de previsões
             </p>
-            <h1 className="mt-3 font-[family-name:var(--font-anton)] text-4xl leading-[1.08] text-[var(--th-text)] xl:text-5xl">
+            <h1 className="mt-3 font-[family-name:var(--font-anton)] text-4xl leading-[1.08] text-[var(--text)] xl:text-5xl">
               Sua opinião<br />tem valor real<br />
               <span className="text-[var(--oraklo-color-primary-glow)]">aqui.</span>
             </h1>
-            <p className="mt-5 max-w-sm text-sm leading-7 text-[var(--th-low)]">
+            <p className="mt-5 max-w-sm text-sm leading-7 text-[var(--text-muted)]">
               Registre previsões sobre eventos reais e acompanhe seus resultados em tempo real.
             </p>
 
@@ -229,10 +229,10 @@ export default function CadastroPage() {
                 { icon: "📊", text: "Acompanhe seu desempenho no dashboard" },
               ].map((item) => (
                 <div key={item.text} className="flex items-center gap-3">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--th-overlay-5)] text-sm">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--surface)] text-sm">
                     {item.icon}
                   </span>
-                  <span className="text-xs text-[var(--th-low)]">{item.text}</span>
+                  <span className="text-xs text-[var(--text-muted)]">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -245,16 +245,16 @@ export default function CadastroPage() {
                 { value: "100%", label: "Transparente" },
               ].map((s) => (
                 <div key={s.label}>
-                  <p className="font-[family-name:var(--font-anton)] text-2xl text-[var(--th-text)]">{s.value}</p>
-                  <p className="text-[10px] text-[var(--th-dim)]">{s.label}</p>
+                  <p className="font-[family-name:var(--font-anton)] text-2xl text-[var(--text)]">{s.value}</p>
+                  <p className="text-[10px] text-[var(--text-muted)]">{s.label}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Bottom: already have account */}
-          <div className="relative z-10 border-t border-[var(--th-border)] px-12 py-6">
-            <p className="text-xs text-[var(--th-dim)]">
+          <div className="relative z-10 border-t border-[var(--border)] px-12 py-6">
+            <p className="text-xs text-[var(--text-muted)]">
               Já tem conta?{" "}
               <Link href="/login" className="font-semibold text-[var(--oraklo-color-primary-glow)] hover:underline">
                 Entrar
@@ -271,7 +271,7 @@ export default function CadastroPage() {
             <Link href="/">
               <Image src={logoOraklo} alt="ORAKLO" className="h-7 w-auto brightness-0 invert" />
             </Link>
-            <Link href="/login" className="text-xs text-[var(--th-low)] hover:text-[var(--th-mid)]">
+            <Link href="/login" className="text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)]">
               Já tenho conta →
             </Link>
           </div>
@@ -279,10 +279,10 @@ export default function CadastroPage() {
           <div className="mx-auto w-full max-w-sm">
             {/* Header */}
             <div className="mb-8">
-              <h2 className="font-[family-name:var(--font-anton)] text-2xl text-[var(--th-text)]">
+              <h2 className="font-[family-name:var(--font-anton)] text-2xl text-[var(--text)]">
                 Criar conta
               </h2>
-              <p className="mt-1 text-sm text-[var(--th-low)]">
+              <p className="mt-1 text-sm text-[var(--text-muted)]">
                 Preencha os dados abaixo para começar
               </p>
             </div>
@@ -313,7 +313,7 @@ export default function CadastroPage() {
 
               {/* Password */}
               <div className="space-y-1.5">
-                <label htmlFor="password" className="block text-xs font-semibold text-[var(--th-mid)]">
+                <label htmlFor="password" className="block text-xs font-semibold text-[var(--text-secondary)]">
                   Senha
                 </label>
                 <div className="relative">
@@ -324,14 +324,14 @@ export default function CadastroPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="new-password"
-                    className={`h-11 w-full rounded-xl bg-[var(--th-overlay-5)] px-4 pr-11 text-sm text-[var(--th-text)] outline-none ring-1 transition-all placeholder:text-[var(--th-dim)] focus:ring-[var(--oraklo-color-primary)]/60 ${
-                      errors.password ? "ring-red-500/60" : "ring-[var(--th-ring)] hover:ring-[var(--th-ring)]"
+                    className={`h-11 w-full rounded-xl bg-[var(--surface)] px-4 pr-11 text-sm text-[var(--text)] outline-none ring-1 transition-all placeholder:text-[var(--text-muted)] focus:ring-[var(--oraklo-color-primary)]/60 ${
+                      errors.password ? "ring-red-500/60" : "ring-[var(--border)] hover:ring-[var(--border)]"
                     }`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPass((v) => !v)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--th-dim)] transition-colors hover:text-[var(--th-mid)]"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] transition-colors hover:text-[var(--text-secondary)]"
                   >
                     <EyeIcon open={showPass} />
                   </button>
@@ -345,13 +345,13 @@ export default function CadastroPage() {
                         <div
                           key={i}
                           className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-                            i <= strength.score ? strength.color : "bg-[var(--th-overlay-8)]"
+                            i <= strength.score ? strength.color : "bg-[var(--surface-elevated)]"
                           }`}
                         />
                       ))}
                     </div>
-                    <p className="text-[11px] text-[var(--th-dim)]">
-                      Força: <span className="font-semibold text-[var(--th-mid)]">{strength.label}</span>
+                    <p className="text-[11px] text-[var(--text-muted)]">
+                      Força: <span className="font-semibold text-[var(--text-secondary)]">{strength.label}</span>
                     </p>
                   </div>
                 )}
@@ -363,7 +363,7 @@ export default function CadastroPage() {
 
               {/* Confirm password */}
               <div className="space-y-1.5">
-                <label htmlFor="confirm" className="block text-xs font-semibold text-[var(--th-mid)]">
+                <label htmlFor="confirm" className="block text-xs font-semibold text-[var(--text-secondary)]">
                   Confirmar senha
                 </label>
                 <div className="relative">
@@ -374,14 +374,14 @@ export default function CadastroPage() {
                     value={confirm}
                     onChange={(e) => setConfirm(e.target.value)}
                     autoComplete="new-password"
-                    className={`h-11 w-full rounded-xl bg-[var(--th-overlay-5)] px-4 pr-11 text-sm text-[var(--th-text)] outline-none ring-1 transition-all placeholder:text-[var(--th-dim)] focus:ring-[var(--oraklo-color-primary)]/60 ${
-                      errors.confirm ? "ring-red-500/60" : "ring-[var(--th-ring)] hover:ring-[var(--th-ring)]"
+                    className={`h-11 w-full rounded-xl bg-[var(--surface)] px-4 pr-11 text-sm text-[var(--text)] outline-none ring-1 transition-all placeholder:text-[var(--text-muted)] focus:ring-[var(--oraklo-color-primary)]/60 ${
+                      errors.confirm ? "ring-red-500/60" : "ring-[var(--border)] hover:ring-[var(--border)]"
                     }`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConf((v) => !v)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--th-dim)] transition-colors hover:text-[var(--th-mid)]"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] transition-colors hover:text-[var(--text-secondary)]"
                   >
                     <EyeIcon open={showConf} />
                   </button>
@@ -415,7 +415,7 @@ export default function CadastroPage() {
                         ? "bg-[var(--oraklo-color-primary)] ring-[var(--oraklo-color-primary)]"
                         : errors.terms
                           ? "bg-transparent ring-red-500/50"
-                          : "bg-transparent ring-[var(--th-ring)]"
+                          : "bg-transparent ring-[var(--border)]"
                     }`}>
                       {terms && (
                         <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
@@ -424,7 +424,7 @@ export default function CadastroPage() {
                       )}
                     </div>
                   </div>
-                  <span className="text-xs leading-5 text-[var(--th-low)]">
+                  <span className="text-xs leading-5 text-[var(--text-muted)]">
                     Li e aceito os{" "}
                     <Link href="/termos" className="text-[var(--oraklo-color-primary-glow)] hover:underline">
                       termos de uso
@@ -461,11 +461,11 @@ export default function CadastroPage() {
 
             {/* Divider + login link */}
             <div className="mt-6 flex items-center gap-3">
-              <div className="flex-1 border-t border-[var(--th-border)]" />
-              <span className="text-[10px] text-[var(--th-dim)]">ou</span>
-              <div className="flex-1 border-t border-[var(--th-border)]" />
+              <div className="flex-1 border-t border-[var(--border)]" />
+              <span className="text-[10px] text-[var(--text-muted)]">ou</span>
+              <div className="flex-1 border-t border-[var(--border)]" />
             </div>
-            <p className="mt-5 text-center text-xs text-[var(--th-dim)]">
+            <p className="mt-5 text-center text-xs text-[var(--text-muted)]">
               Já tem conta?{" "}
               <Link href="/login" className="font-semibold text-[var(--oraklo-color-primary-glow)] hover:underline">
                 Entrar

@@ -23,20 +23,20 @@ const categories = ["Todos", "Economia", "Clima", "Esportes", "Política"];
 
 export default function RankingPage() {
   return (
-    <div className="min-h-screen bg-[var(--th-bg)]">
+    <div className="min-h-screen bg-[var(--bg)]">
       <PublicNav />
 
       {/* ── Header ── */}
-      <div className="relative overflow-hidden border-b border-[var(--th-border)] bg-[var(--th-bg-elevated)] px-6 py-16 lg:px-8">
+      <div className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--surface-elevated)] px-6 py-16 lg:px-8">
         <div className="pointer-events-none absolute left-0 top-0 h-64 w-64 rounded-full bg-[var(--oraklo-color-primary)] opacity-[0.06] blur-3xl" />
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1fr_auto]">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--th-dim)]">Comunidade</p>
-            <h1 className="mt-2 font-[family-name:var(--font-anton)] text-4xl text-[var(--th-text)] lg:text-5xl">
+            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">Comunidade</p>
+            <h1 className="mt-2 font-[family-name:var(--font-anton)] text-4xl text-[var(--text)] lg:text-5xl">
               Ranking de<br />previsores
             </h1>
-            <p className="mt-3 max-w-md text-sm text-[var(--th-mid)]">
+            <p className="mt-3 max-w-md text-sm text-[var(--text-secondary)]">
               Os usuários com melhor taxa de acerto no ORAKLO. Dados atualizados após cada resolução.
             </p>
           </div>
@@ -44,22 +44,22 @@ export default function RankingPage() {
           {/* Top 3 summary */}
           <div className="hidden lg:flex items-end gap-3">
             {/* 2nd */}
-            <div className="flex flex-col items-center gap-2 rounded-2xl bg-[var(--th-bg-card)] px-5 py-4 ring-1 ring-[var(--th-ring)]" style={{ height: 130 }}>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--th-overlay-8)] text-lg">🥈</div>
-              <p className="text-xs font-semibold text-[var(--th-mid)]">{mockRanking[1].name.split(" ")[0]}</p>
-              <p className="text-xs text-[var(--th-low)]">{mockRanking[1].taxa}</p>
+            <div className="flex flex-col items-center gap-2 rounded-2xl bg-[var(--surface-elevated)] px-5 py-4 ring-1 ring-[var(--border)]" style={{ height: 130 }}>
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface-elevated)] text-lg">🥈</div>
+              <p className="text-xs font-semibold text-[var(--text-secondary)]">{mockRanking[1].name.split(" ")[0]}</p>
+              <p className="text-xs text-[var(--text-muted)]">{mockRanking[1].taxa}</p>
             </div>
             {/* 1st */}
             <div className="flex flex-col items-center gap-2 rounded-2xl bg-[var(--oraklo-color-primary)]/15 px-5 pb-4 pt-2 ring-2 ring-[var(--oraklo-color-primary)]/40 shadow-[0_0_24px_rgba(123,47,247,0.2)]" style={{ height: 155 }}>
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--oraklo-color-primary)]/20 text-2xl">🥇</div>
-              <p className="text-sm font-bold text-[var(--th-text)]">{mockRanking[0].name.split(" ")[0]}</p>
+              <p className="text-sm font-bold text-[var(--text)]">{mockRanking[0].name.split(" ")[0]}</p>
               <p className="text-xs font-semibold text-[var(--oraklo-color-primary-glow)]">{mockRanking[0].taxa}</p>
             </div>
             {/* 3rd */}
-            <div className="flex flex-col items-center gap-2 rounded-2xl bg-[var(--th-bg-card)] px-5 py-4 ring-1 ring-[var(--th-ring)]" style={{ height: 115 }}>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--th-overlay-8)] text-lg">🥉</div>
-              <p className="text-xs font-semibold text-[var(--th-mid)]">{mockRanking[2].name.split(" ")[0]}</p>
-              <p className="text-xs text-[var(--th-low)]">{mockRanking[2].taxa}</p>
+            <div className="flex flex-col items-center gap-2 rounded-2xl bg-[var(--surface-elevated)] px-5 py-4 ring-1 ring-[var(--border)]" style={{ height: 115 }}>
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface-elevated)] text-lg">🥉</div>
+              <p className="text-xs font-semibold text-[var(--text-secondary)]">{mockRanking[2].name.split(" ")[0]}</p>
+              <p className="text-xs text-[var(--text-muted)]">{mockRanking[2].taxa}</p>
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@ export default function RankingPage() {
                     className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-all ${
                       i === 0
                         ? "bg-[var(--oraklo-color-primary)]/20 text-[var(--oraklo-color-primary-glow)] ring-1 ring-[var(--oraklo-color-primary)]/30"
-                        : "text-[var(--th-low)] hover:text-[var(--th-mid)]"
+                        : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
                     }`}>
                     {p}
                   </button>
@@ -90,8 +90,8 @@ export default function RankingPage() {
                   <button key={c}
                     className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.08em] transition-all ${
                       i === 0
-                        ? "bg-[var(--th-overlay-8)] text-[var(--th-text)]"
-                        : "text-[var(--th-dim)] hover:text-[var(--th-mid)]"
+                        ? "bg-[var(--surface-elevated)] text-[var(--text)]"
+                        : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
                     }`}>
                     {c}
                   </button>
@@ -100,45 +100,45 @@ export default function RankingPage() {
             </div>
 
             {/* Table */}
-            <div className="overflow-hidden rounded-2xl bg-[var(--th-bg-card)] ring-1 ring-[var(--th-ring)]">
+            <div className="overflow-hidden rounded-2xl bg-[var(--surface-elevated)] ring-1 ring-[var(--border)]">
               {/* Header */}
-              <div className="grid grid-cols-[40px_1fr_80px_80px_100px] items-center gap-4 border-b border-[var(--th-border)] px-5 py-3">
+              <div className="grid grid-cols-[40px_1fr_80px_80px_100px] items-center gap-4 border-b border-[var(--border)] px-5 py-3">
                 {["#", "Usuário", "Acertos", "Taxa", "Retorno"].map((h) => (
-                  <p key={h} className="text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--th-dim)]">{h}</p>
+                  <p key={h} className="text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--text-muted)]">{h}</p>
                 ))}
               </div>
 
               {mockRanking.map((user, i) => (
                 <div key={i}
-                  className={`grid grid-cols-[40px_1fr_80px_80px_100px] items-center gap-4 px-5 py-4 transition-colors hover:bg-[var(--th-overlay-5)] ${
-                    i < mockRanking.length - 1 ? "border-b border-[var(--th-border)]" : ""
+                  className={`grid grid-cols-[40px_1fr_80px_80px_100px] items-center gap-4 px-5 py-4 transition-colors hover:bg-[var(--surface)] ${
+                    i < mockRanking.length - 1 ? "border-b border-[var(--border)]" : ""
                   }`}>
                   <span className={`text-sm font-bold ${
                     user.pos <= 3
                       ? "text-[var(--oraklo-color-primary-glow)]"
-                      : "text-[var(--th-dim)]"
+                      : "text-[var(--text-muted)]"
                   }`}>
                     {user.badge || user.pos}
                   </span>
                   <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[var(--oraklo-color-primary)] to-[var(--oraklo-color-primary-glow)] text-[10px] font-bold text-[var(--th-text)]">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[var(--oraklo-color-primary)] to-[var(--oraklo-color-primary-glow)] text-[10px] font-bold text-[var(--text)]">
                       {user.name[0]}
                     </div>
-                    <span className="text-sm font-medium text-[var(--th-hi)]">{user.name}</span>
+                    <span className="text-sm font-medium text-[var(--text)]">{user.name}</span>
                   </div>
-                  <span className="text-sm text-[var(--th-mid)]">{user.acertos}/{user.total}</span>
+                  <span className="text-sm text-[var(--text-secondary)]">{user.acertos}/{user.total}</span>
                   <span className={`text-sm font-bold ${
                     parseFloat(user.taxa) >= 80 ? "text-emerald-400" :
-                    parseFloat(user.taxa) >= 70 ? "text-[var(--th-text)]" : "text-[var(--th-mid)]"
+                    parseFloat(user.taxa) >= 70 ? "text-[var(--text)]" : "text-[var(--text-secondary)]"
                   }`}>
                     {user.taxa}
                   </span>
-                  <span className="text-sm font-semibold text-[var(--th-mid)]">{user.retorno}</span>
+                  <span className="text-sm font-semibold text-[var(--text-secondary)]">{user.retorno}</span>
                 </div>
               ))}
             </div>
 
-            <p className="mt-4 text-[10px] text-[var(--th-dim)] text-center">
+            <p className="mt-4 text-[10px] text-[var(--text-muted)] text-center">
               Dados simulados. Ranking real será disponibilizado no lançamento.
             </p>
           </div>
@@ -146,14 +146,14 @@ export default function RankingPage() {
           {/* Sidebar */}
           <div className="space-y-4">
             {/* Você no ranking */}
-            <div className="rounded-2xl bg-[var(--th-bg-card)] p-5 ring-1 ring-[var(--th-ring)]">
-              <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--th-dim)]">Sua posição</p>
+            <div className="rounded-2xl bg-[var(--surface-elevated)] p-5 ring-1 ring-[var(--border)]">
+              <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">Sua posição</p>
               <div className="mt-4 flex flex-col items-center gap-3 py-4 text-center">
                 <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--oraklo-color-primary)]/15 ring-2 ring-[var(--oraklo-color-primary)]/20 text-xl font-bold text-[var(--oraklo-color-primary)]">
                   —
                 </div>
-                <p className="text-sm font-semibold text-[var(--th-mid)]">Entre para o ranking</p>
-                <p className="text-xs text-[var(--th-dim)]">Registre sua primeira previsão</p>
+                <p className="text-sm font-semibold text-[var(--text-secondary)]">Entre para o ranking</p>
+                <p className="text-xs text-[var(--text-muted)]">Registre sua primeira previsão</p>
                 <Link href="/mercados"
                   className="mt-2 inline-flex items-center rounded-full bg-[var(--oraklo-color-primary)] px-5 py-2 text-xs font-bold uppercase tracking-[0.06em] text-white shadow-[0_0_12px_rgba(123,47,247,0.3)] transition-all hover:bg-[var(--oraklo-color-primary-hover)]">
                   Começar agora
@@ -169,10 +169,10 @@ export default function RankingPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#0d0714] via-transparent to-transparent z-10" />
               <Image src={mulherChart} alt="Previsora de destaque" className="h-64 w-full object-cover object-top" />
               <div className="absolute bottom-4 left-4 right-4 z-20">
-                <p className="text-xs font-bold text-[var(--th-hi)]">
+                <p className="text-xs font-bold text-[var(--text)]">
                   "Analisei o cenário e acertei 47 das últimas 54."
                 </p>
-                <p className="mt-1 text-[10px] text-[var(--th-low)]">Fernanda A. · 1ª colocada</p>
+                <p className="mt-1 text-[10px] text-[var(--text-muted)]">Fernanda A. · 1ª colocada</p>
               </div>
             </div>
           </div>

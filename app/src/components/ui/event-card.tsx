@@ -1,6 +1,10 @@
+"use client"
+
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getUrgencyTier, URGENCY_COLORS, getHotIntensity, HOT_INTENSITY_COLORS } from "@/lib/urgency";
+import { IconCoins, IconClock, CategoryIcon } from "@/components/ui/icons";
 
 export type EventStatus = "open" | "closed" | "resolved" | "canceled";
 
@@ -9,13 +13,12 @@ export interface EventCardData {
   title: string;
   category: string;
   status: EventStatus;
-  simPercent: number; // % do volume no lado SIM (0–100) — maps from yes_percent
-  volume: number;     // total volume in BRL — maps from total_volume
+  simPercent: number; // % do volume no lado SIM (0–100)
+  volume: number;     // total volume in BRL
   deadline: string;
-  deadlineDays: number; // integer: 0 = today/HOT, 1 = 1 day, etc.
-  deadlineAt: string;   // ISO 8601 string from DB (deadline_at)
+  deadlineDays: number;
+  deadlineAt: string; // ISO 8601
   source: string;
-  // Raw volume breakdown from v_events_with_state
   yesAmount: number;
   noAmount: number;
   totalVolume: number;
@@ -24,25 +27,13 @@ export interface EventCardData {
   imageUrl: string | null;
 }
 
-/** Retorno decimal: quanto o usuário recebe por R$1 participado (já com taxa de 5%) */
+/** Cotação decimal: quanto o usuário recebe por R$1 participado (já com taxa de 5%) */
 function cotacao(percent: number): string {
   if (percent <= 0) return "—";
   return (0.95 / (percent / 100)).toFixed(2);
 }
 
-/**
- * CSS variable token for category pill background.
- * Applied via inline style — Tailwind cannot resolve arbitrary CSS vars at build time,
- * so this is the only correct approach for dynamic per-category theming.
- */
-const categoryToken: Record<string, string> = {
-  Esportes: "var(--cat-football)",
-  Política: "var(--cat-politics)",
-  Economia: "var(--cat-economy)",
-  Clima:    "var(--cat-geo)",
-};
-
-/** Compact BRL volume formatting (K / M suffix) */
+/** Compact BRL volume formatting */
 function formatVolumeCompact(value: number): string {
   if (value >= 1_000_000) return `R$ ${(value / 1_000_000).toFixed(1)}M`;
   if (value >= 1_000)     return `R$ ${(value / 1_000).toFixed(1)}K`;
@@ -64,10 +55,9 @@ export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
       {/* Category + source */}
       <div className="flex items-start justify-between gap-2">
         <div className="flex flex-col gap-0.5">
-          <span
-            className="self-start rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-white"
-            style={{ background: categoryToken[event.category] ?? "var(--surface-elevated)" }}
-          >
+          {/* event-card-badge reads --_cat set by [data-cat] on the wrapper */}
+          <span className="event-card-badge inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em]">
+            <CategoryIcon category={event.category} className="h-3 w-3 shrink-0" />
             {event.category}
           </span>
           <span className="text-[10px] text-[var(--text-muted)]">{event.source}</span>
@@ -79,7 +69,7 @@ export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
         {event.title}
       </p>
 
-      {/* SIM / NÃO buttons */}
+      {/* SIM / NÃO */}
       <div className="mt-4 flex gap-2">
         <div className="flex flex-1 items-center justify-between gap-1 rounded-xl bg-emerald-500/15 px-3 py-2 ring-1 ring-emerald-500/25 transition-all duration-200 group-hover:bg-emerald-500/25 group-hover:ring-emerald-500/50">
           <span className="text-xs font-bold text-emerald-400">SIM</span>
@@ -93,11 +83,14 @@ export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
         </div>
       </div>
 
-      {/* Distribution bar */}
+      {/* Distribution bar — category gradient */}
       <div className="mt-3">
-        <div className="flex h-1.5 overflow-hidden rounded-full">
-          <div className="bg-emerald-500 transition-all duration-500" style={{ width: `${event.simPercent}%` }} />
-          <div className="flex-1 bg-orange-500/70" />
+        <div className="h-1.5 overflow-hidden rounded-full bg-[var(--surface)]">
+          {/* width is runtime data — no CSS-only alternative exists */}
+          <div
+            className="event-card-bar h-full rounded-full transition-all duration-500"
+            style={{ width: `${event.simPercent}%` }}
+          />
         </div>
         <div className="mt-1.5 flex justify-between text-[10px] text-[var(--text-muted)]">
           <span>{event.simPercent}%</span>
@@ -108,18 +101,18 @@ export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
   );
 
   const sharedClass =
-    "group block rounded-2xl bg-[var(--surface-elevated)] p-4 ring-1 ring-[var(--border)] transition-all transition-shadow duration-200 hover:scale-[1.02] active:scale-[0.99] hover:ring-[var(--accent)] hover:shadow-[0_0_24px_rgba(168,85,247,0.20)] text-left w-full";
+    "group block rounded-2xl bg-[var(--surface-elevated)] p-4 ring-1 ring-[var(--border)] transition-all duration-200 hover:scale-[1.02] active:scale-[0.99] hover:ring-[var(--accent)] hover:shadow-[0_0_24px_rgba(168,85,247,0.20)] text-left w-full";
 
   if (onOpen) {
     return (
-      <button type="button" onClick={() => onOpen(event)} className={sharedClass}>
+      <button type="button" onClick={() => onOpen(event)} className={sharedClass} data-cat={event.category}>
         {inner}
       </button>
     );
   }
 
   return (
-    <Link href={`/events/${event.id}`} className={sharedClass}>
+    <Link href={`/events/${event.id}`} className={sharedClass} data-cat={event.category}>
       {inner}
     </Link>
   );
@@ -133,15 +126,22 @@ interface EventCardProps {
 }
 
 export function EventCard({ event, onOpen }: EventCardProps) {
-  const nao = 100 - event.simPercent;
-  const tier = getUrgencyTier(event.deadlineDays);
+  const nao       = 100 - event.simPercent;
+  const tier      = getUrgencyTier(event.deadlineDays);
   const intensity = tier === "hot" ? getHotIntensity(event.deadlineAt) : null;
+  const [hoveredSide, setHoveredSide] = useState<"sim" | "nao" | null>(null);
+
+  // data-cat on the wrapper sets --_cat via globals.css [data-cat] selectors.
+  // All .event-card-* classes resolve color-mix(var(--_cat)) from there.
 
   const inner = (
     <>
+      {/* Organic radial glow blob — top-right, clipped by card overflow-hidden */}
+      <div aria-hidden className="event-card-glow pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full blur-3xl opacity-50" />
+
       {/* Thumbnail or category accent strip */}
       {event.imageUrl ? (
-        <div className="relative h-28 w-full overflow-hidden rounded-t-2xl">
+        <div className="relative h-28 w-full overflow-hidden">
           <Image
             src={event.imageUrl}
             alt={event.title}
@@ -149,27 +149,19 @@ export function EventCard({ event, onOpen }: EventCardProps) {
             sizes="(max-width: 768px) 100vw, 400px"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface)] to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-elevated)]/90 to-transparent" />
         </div>
       ) : (
-        /* Category accent strip — uses CSS token, not Tailwind hardcoded colors */
-        <div
-          className="h-1.5 w-full rounded-t-2xl"
-          style={{
-            background: `linear-gradient(to right, ${categoryToken[event.category] ?? "var(--border)"}, color-mix(in srgb, ${categoryToken[event.category] ?? "var(--border)"} 60%, transparent))`,
-          }}
-        />
+        <div className="event-card-strip h-[2px] w-full" />
       )}
 
       {/* Card body */}
-      <div className="p-5">
+      <div className="relative z-10 p-5">
         {/* Category pill + urgency badge + source */}
         <div className="mb-3 flex items-start justify-between gap-3">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span
-              className="shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-white"
-              style={{ background: categoryToken[event.category] ?? "var(--surface-elevated)" }}
-            >
+            <span className="event-card-badge inline-flex items-center gap-1 shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em]">
+              <CategoryIcon category={event.category} className="h-3 w-3 shrink-0" />
               {event.category}
             </span>
             {tier === "hot" && intensity && (
@@ -186,68 +178,71 @@ export function EventCard({ event, onOpen }: EventCardProps) {
           <span className="truncate text-right text-[10px] text-[var(--text-muted)]">{event.source}</span>
         </div>
 
-        {/* Question — line-clamp-2 so both football team names are visible */}
+        {/* Question */}
         <p className="text-base font-black leading-snug text-[var(--text)] line-clamp-2 group-hover:text-[var(--ring)] transition-colors">
           {event.title}
         </p>
 
         {/* Separator */}
-        <div className="my-3 border-t border-[var(--border)]" />
+        <div className="my-3 border-t border-[var(--border)]/50" />
 
         {/* SIM / NÃO */}
-        <div className="flex gap-2">
-          <div className="flex flex-1 flex-col items-start gap-1 rounded-xl bg-emerald-500/15 px-3 py-2.5 ring-1 ring-emerald-500/25 transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]">
+        <div
+          className="relative flex gap-2"
+          onMouseLeave={() => setHoveredSide(null)}
+        >
+          {/* SIM — border-l-2 é o indicador de seleção */}
+          <div
+            className={`event-card-sim flex flex-1 flex-col items-start gap-1 rounded-xl bg-[var(--surface)] px-3 py-2.5 ring-1 ring-[var(--border)]/70 border-l-2${hoveredSide === "nao" ? " sim-border-off" : ""}`}
+            onMouseEnter={() => setHoveredSide("sim")}
+          >
             <div className="flex w-full items-center justify-between">
-              <span className="text-xs font-bold text-emerald-400">SIM</span>
+              <span className="event-card-sim-accent text-xs font-bold">SIM</span>
               <span className="text-xs font-bold text-[var(--text)]">{cotacao(event.simPercent)}</span>
-              <span className="text-[10px] text-emerald-400">▲</span>
+              <span className="event-card-sim-accent text-[10px]">▲</span>
             </div>
             <span className="text-[11px] font-semibold text-[var(--text-secondary)]">{event.simPercent}%</span>
           </div>
-          <div className="flex flex-1 flex-col items-start gap-1 rounded-xl bg-orange-500/15 px-3 py-2.5 ring-1 ring-orange-500/25 transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]">
+
+          {/* NÃO — border-r-2 aparece ao hover */}
+          <div
+            className={`event-card-nao flex flex-1 flex-col items-start gap-1 rounded-xl px-3 py-2.5 ring-1 ring-[var(--border)]/40${hoveredSide === "nao" ? " nao-border-on" : ""}`}
+            onMouseEnter={() => setHoveredSide("nao")}
+          >
             <div className="flex w-full items-center justify-between">
-              <span className="text-xs font-bold text-orange-400">NÃO</span>
+              <span className="text-xs font-bold text-[var(--text-secondary)]">NÃO</span>
               <span className="text-xs font-bold text-[var(--text)]">{cotacao(nao)}</span>
-              <span className="text-[10px] text-orange-400">▼</span>
+              <span className="text-[10px] text-[var(--text-muted)]">▼</span>
             </div>
-            <span className="text-[11px] font-semibold text-[var(--text-secondary)]">{nao}%</span>
+            <span className="text-[11px] font-semibold text-[var(--text-muted)]">{nao}%</span>
           </div>
         </div>
 
-        {/* Progress bar */}
+        {/* Progress bar — single category gradient */}
         <div className="mt-3.5">
-          <div className="flex h-1.5 overflow-hidden rounded-full bg-orange-500/60">
-            <div className="bg-emerald-500 transition-all duration-500" style={{ width: `${event.simPercent}%` }} />
+          <div className="h-1.5 overflow-hidden rounded-full bg-[var(--surface)]">
+            {/* width is runtime data — no CSS-only alternative exists */}
+            <div
+              className="event-card-bar h-full rounded-full"
+              style={{ width: `${event.simPercent}%` }}
+            />
           </div>
         </div>
 
-        {/* Footer — volume compact + deadline colored by tier */}
-        <div className="mt-3.5 flex items-center justify-between border-t border-[var(--border)] pt-3">
+        {/* Footer — volume + deadline */}
+        <div className="mt-3.5 flex items-center justify-between border-t border-[var(--border)]/50 pt-3">
           <span className="flex items-center gap-1 text-[10px] text-[var(--text-muted)]">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0">
-              <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2"/>
-              <path d="M4 6h4M6 4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-            </svg>
+            <IconCoins className="h-3.5 w-3.5" />
             {formatVolumeCompact(event.totalVolume)} participado
           </span>
           {tier === "hot" && intensity ? (
             <span className={`flex items-center gap-1 text-[10px] font-bold ${HOT_INTENSITY_COLORS[intensity].text}`}>
-              <span
-                className="inline-block h-1.5 w-1.5 rounded-full animate-pulse shrink-0"
-                style={{ background: "currentColor" }}
-              />
+              <span className="inline-block h-1.5 w-1.5 rounded-full animate-pulse shrink-0 bg-current" />
               {intensity === "last-call" ? "Último momento!" : intensity === "super-hot" ? "Encerra em horas" : "Encerra hoje"}
             </span>
           ) : (
-            <span
-              className={`flex items-center gap-1 text-[10px] font-semibold ${
-                tier === "short" ? "text-amber-400" : "text-[var(--text-muted)]"
-              }`}
-            >
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0">
-                <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2"/>
-                <path d="M6 3v3l2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-              </svg>
+            <span className={`flex items-center gap-1 text-[10px] font-semibold ${tier === "short" ? "text-amber-400" : "text-[var(--text-muted)]"}`}>
+              <IconClock className="h-3.5 w-3.5" />
               {tier === "hot" ? "Encerra hoje" : `Encerra em ${event.deadline}`}
             </span>
           )}
@@ -258,19 +253,19 @@ export function EventCard({ event, onOpen }: EventCardProps) {
 
   const sharedClass =
     tier === "hot" && intensity
-      ? `group block rounded-2xl bg-[var(--surface-elevated)] overflow-hidden ring-1 transition-all duration-200 text-left w-full ${HOT_INTENSITY_COLORS[intensity].ring} ${HOT_INTENSITY_COLORS[intensity].glow}`
-      : "group block rounded-2xl bg-[var(--surface-elevated)] overflow-hidden ring-1 ring-[var(--border)] transition-all duration-200 text-left w-full hover:ring-[var(--accent)] hover:shadow-[0_0_28px_rgba(168,85,247,0.18)]";
+      ? `group relative block rounded-2xl overflow-hidden ring-1 text-left w-full event-card-bg event-card-hot ${HOT_INTENSITY_COLORS[intensity].ring} ${HOT_INTENSITY_COLORS[intensity].glow}`
+      : "group relative block rounded-2xl overflow-hidden ring-1 ring-[var(--border)]/60 text-left w-full event-card-bg event-card";
 
   if (onOpen) {
     return (
-      <button type="button" onClick={() => onOpen(event)} className={sharedClass}>
+      <button type="button" onClick={() => onOpen(event)} className={sharedClass} data-cat={event.category}>
         {inner}
       </button>
     );
   }
 
   return (
-    <Link href={`/events/${event.id}`} className={sharedClass}>
+    <Link href={`/events/${event.id}`} className={sharedClass} data-cat={event.category}>
       {inner}
     </Link>
   );

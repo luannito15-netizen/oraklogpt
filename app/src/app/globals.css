@@ -78,21 +78,6 @@
   --cat-geo:          #67B7CC;
   --cat-economy:      #F59E0B;
 
-  /* Legacy --th-* aliases — keep so untouched pages still work */
-  --th-bg:            #0B0710;
-  --th-bg-sub:        #0B0710;
-  --th-bg-elevated:   #1A1328;
-  --th-bg-card:       #241B35;
-  --th-text:          #F8F4EC;
-  --th-hi:            #F8F4EC;
-  --th-mid:           #E2D9EE;
-  --th-low:           #B8AECA;
-  --th-dim:           rgba(184,174,202,0.55);
-  --th-border:        #443558;
-  --th-ring:          rgba(68,53,88,0.80);
-  --th-overlay-5:     rgba(68,53,88,0.15);
-  --th-overlay-8:     rgba(68,53,88,0.22);
-  --th-overlay-12:    rgba(68,53,88,0.32);
 
   /* Legacy --oraklo-* aliases */
   --oraklo-color-bg:               #0B0710;
@@ -162,21 +147,6 @@
   --cat-geo:          #2E90A6;
   --cat-economy:      #D97706;
 
-  /* Legacy --th-* aliases */
-  --th-bg:            #F4F0E8;
-  --th-bg-sub:        #EAE5D8;
-  --th-bg-elevated:   #FFFDF8;
-  --th-bg-card:       #FFFFFF;
-  --th-text:          #1A1423;
-  --th-hi:            #1A1423;
-  --th-mid:           #3D3349;
-  --th-low:           #7A7188;
-  --th-dim:           rgba(26,20,35,0.38);
-  --th-border:        #C8BDB0;
-  --th-ring:          rgba(200,189,176,0.90);
-  --th-overlay-5:     rgba(26,20,35,0.05);
-  --th-overlay-8:     rgba(26,20,35,0.08);
-  --th-overlay-12:    rgba(26,20,35,0.12);
 
   /* Legacy --oraklo-* aliases */
   --oraklo-color-bg:               #F4F0E8;
@@ -203,7 +173,6 @@
 }
 
 /* Cards no tema claro recebem sombra para se destacar */
-[data-theme="light"] .bg-\[var\(--th-bg-card\)\],
 [data-theme="light"] .bg-\[var\(--surface-elevated\)\] {
   box-shadow: 0 1px 3px rgba(26,20,35,0.08), 0 4px 16px rgba(26,20,35,0.05);
 }
@@ -346,3 +315,161 @@ body {
 .animate-glow-red    { animation: glow-pulse        3s ease-in-out infinite; }
 .animate-glow-orange { animation: glow-pulse-orange 3s ease-in-out infinite; }
 .animate-ticker      { animation: ticker-slide       4s ease-in-out infinite; }
+
+/* ── EventCard — category → --_cat via data attribute ───────────────────────
+   Set data-cat="Economia" (etc.) on the card wrapper instead of inline style.
+   CSS resolves --_cat from the attribute so JSX stays free of color logic.    */
+[data-cat="Esportes"] { --_cat: var(--cat-football); }
+[data-cat="Política"]  { --_cat: var(--cat-politics); }
+[data-cat="Economia"]  { --_cat: var(--cat-economy);  }
+[data-cat="Clima"]     { --_cat: var(--cat-geo);       }
+
+/* ── EventCard — category-aware styles driven by --_cat custom property ──────
+   All color expressions here reference var(--_cat) which is set as an inline
+   CSS custom property on each card element (the only legitimate inline style).
+   This keeps JSX free of color logic while staying fully dynamic per category.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Radial gradient background — category tint fades into surface-elevated */
+.event-card-bg {
+  background: radial-gradient(
+    120% 140% at 20% 0%,
+    color-mix(in srgb, var(--_cat, var(--accent)) 16%, transparent) 0%,
+    var(--surface-elevated) 60%
+  );
+}
+
+/* Shadow system + hover lift — non-HOT cards only */
+.event-card {
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--_cat, var(--accent)) 8%, transparent);
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.event-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 28px 72px color-mix(in srgb, var(--_cat, var(--accent)) 38%, transparent), 0 8px 24px rgba(0,0,0,0.3);
+}
+.event-card:active { transform: translateY(-2px) scale(0.985); }
+
+/* HOT card hover lift — urgency glow is handled via Tailwind ring/shadow */
+.event-card-hot {
+  will-change: transform;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.event-card-hot:hover  { transform: translateY(-8px) scale(1.02); box-shadow: 0 28px 72px rgba(239,68,68,0.35), 0 8px 24px rgba(0,0,0,0.3); }
+.event-card-hot:active { transform: translateY(-2px) scale(0.985); }
+
+/* Organic radial glow blob — top-right corner, clipped by overflow-hidden */
+.event-card-glow {
+  background: radial-gradient(
+    circle at 100% 0%,
+    color-mix(in srgb, var(--_cat, var(--accent)) 28%, transparent) 0%,
+    transparent 65%
+  );
+}
+
+/* Category accent strip (no-image variant) */
+.event-card-strip {
+  background: linear-gradient(
+    to right,
+    var(--_cat, var(--accent)),
+    color-mix(in srgb, var(--_cat, var(--accent)) 30%, transparent)
+  );
+}
+
+/* Category badge — glassy pill with category tint */
+.event-card-badge {
+  background: color-mix(in srgb, var(--_cat, var(--accent)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--_cat, var(--accent)) 28%, transparent);
+  color: var(--_cat, var(--accent));
+}
+
+/* SIM box — left accent border + hover tint */
+.event-card-sim {
+  border-left-color: var(--_cat, var(--accent));
+  will-change: transform;
+  transition:
+    border-color     200ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 160ms ease,
+    transform        160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.event-card-sim:hover {
+  transform: scale(1.03);
+  background-color: color-mix(in srgb, var(--_cat, var(--accent)) 14%, var(--surface));
+}
+.event-card-sim:active { transform: scale(0.96); }
+/* fades when NÃO is selected — double-class specificity (0,2,0) beats Tailwind utilities */
+.event-card-sim.sim-border-off { border-left-color: transparent; }
+
+/* SIM label + arrow color */
+.event-card-sim-accent { color: var(--_cat, var(--accent)); }
+
+/* NÃO box — right accent border + hover tint.
+   border-right-width declarado aqui (não via Tailwind) para evitar que o
+   base style do Tailwind sobreponha border-right-color com uma cor visível. */
+.event-card-nao {
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+  border-right-width: 2px;
+  border-right-color: transparent;
+  will-change: transform;
+  transition:
+    border-color     200ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 160ms ease,
+    transform        160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.event-card-nao:hover {
+  transform: scale(1.03);
+  background-color: color-mix(in srgb, var(--surface) 85%, transparent);
+}
+.event-card-nao:active { transform: scale(0.96); }
+/* double-class specificity (0,2,0) beats Tailwind utilities */
+.event-card-nao.nao-border-on { border-right-color: var(--_cat, var(--accent)); }
+
+/* Progress bar fill — category gradient + breathing pulse */
+@keyframes event-card-bar-breathe {
+  0%, 100% { opacity: 1; transform: scaleX(1); }
+  50%       { opacity: 0.55; transform: scaleX(0.97); }
+}
+.event-card-bar {
+  background: linear-gradient(
+    to right,
+    var(--_cat, var(--accent)),
+    color-mix(in srgb, var(--_cat, var(--accent)) 55%, transparent)
+  );
+  transform-origin: left center;
+  /* width change animated via transition; opacity via animation — no conflict */
+  transition: width 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  animation: event-card-bar-breathe 2.2s ease-in-out infinite;
+}
+
+/* ─── HOT Hero campaign block backgrounds ───────────────────────────────────
+   Urgency radial gradients; background-color provides the base surface.
+   ring, shadow, and glow blobs are applied via Tailwind in JSX. */
+
+.hot-hero-hot {
+  background-image: radial-gradient(
+    ellipse 120% 90% at 85% -10%,
+    rgba(239, 68, 68, 0.22) 0%,
+    transparent 60%
+  );
+  background-color: var(--surface-elevated);
+}
+
+.hot-hero-super-hot {
+  background-image: radial-gradient(
+    ellipse 120% 90% at 85% -10%,
+    rgba(249, 115, 22, 0.28) 0%,
+    transparent 60%
+  );
+  background-color: var(--surface-elevated);
+}
+
+.hot-hero-last-call {
+  background-image: radial-gradient(
+    ellipse 130% 100% at 70% -5%,
+    rgba(220, 38, 38, 0.38) 0%,
+    rgba(153, 27, 27, 0.12) 45%,
+    transparent 70%
+  );
+  background-color: var(--surface-elevated);
+}

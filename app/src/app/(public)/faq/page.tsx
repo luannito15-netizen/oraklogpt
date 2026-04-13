@@ -88,29 +88,29 @@ const sections = [
 
 export default function FaqPage() {
   return (
-    <div className="min-h-screen bg-[var(--th-bg)]">
+    <div className="min-h-screen bg-[var(--bg)]">
       <PublicNav />
 
       {/* Header */}
-      <div className="relative overflow-hidden border-b border-[var(--th-border)] bg-[var(--th-bg-elevated)] px-6 py-16 text-center lg:px-8">
+      <div className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--surface-elevated)] px-6 py-16 text-center lg:px-8">
         <div className="pointer-events-none absolute left-1/2 top-0 h-56 w-56 -translate-x-1/2 rounded-full bg-[var(--oraklo-color-primary)] opacity-[0.07] blur-3xl" />
         <div className="relative mx-auto max-w-2xl">
-          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--th-dim)]">Ajuda</p>
-          <h1 className="mt-2 font-[family-name:var(--font-anton)] text-4xl text-[var(--th-text)] lg:text-5xl">
+          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">Ajuda</p>
+          <h1 className="mt-2 font-[family-name:var(--font-anton)] text-4xl text-[var(--text)] lg:text-5xl">
             Perguntas frequentes
           </h1>
-          <p className="mt-4 text-sm leading-6 text-[var(--th-mid)]">
+          <p className="mt-4 text-sm leading-6 text-[var(--text-secondary)]">
             Tudo que você precisa saber sobre o ORAKLO antes de registrar sua primeira previsão.
           </p>
 
           {/* Search */}
           <div className="relative mx-auto mt-8 max-w-md">
-            <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--th-dim)]" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+            <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
               <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.4" />
               <path d="m10 10 2.5 2.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
             </svg>
             <input type="search" placeholder="Buscar pergunta..."
-              className="h-12 w-full rounded-full bg-[var(--th-overlay-5)] pl-10 pr-5 text-sm text-[var(--th-text)] outline-none ring-1 ring-[var(--th-ring)] transition-all placeholder:text-[var(--th-dim)] focus:ring-[var(--oraklo-color-primary)]" />
+              className="h-12 w-full rounded-full bg-[var(--surface)] pl-10 pr-5 text-sm text-[var(--text)] outline-none ring-1 ring-[var(--border)] transition-all placeholder:text-[var(--text-muted)] focus:ring-[var(--oraklo-color-primary)]" />
           </div>
         </div>
       </div>
@@ -128,19 +128,19 @@ export default function FaqPage() {
               <div className="space-y-3">
                 {section.items.map((item, i) => (
                   <details key={i}
-                    className="group rounded-2xl bg-[var(--th-bg-card)] ring-1 ring-[var(--th-ring)] transition-all open:ring-[var(--oraklo-color-primary)]/30">
+                    className="group rounded-2xl bg-[var(--surface-elevated)] ring-1 ring-[var(--border)] transition-all open:ring-[var(--oraklo-color-primary)]/30">
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5">
-                      <span className="text-sm font-semibold text-[var(--th-hi)] group-open:text-[var(--th-text)]">
+                      <span className="text-sm font-semibold text-[var(--text)] group-open:text-[var(--text)]">
                         {item.q}
                       </span>
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--th-overlay-5)] text-[var(--th-low)] transition-all group-open:rotate-45 group-open:bg-[var(--oraklo-color-primary)]/20 group-open:text-[var(--oraklo-color-primary-glow)]">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--text-muted)] transition-all group-open:rotate-45 group-open:bg-[var(--oraklo-color-primary)]/20 group-open:text-[var(--oraklo-color-primary-glow)]">
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
                           <path d="M5 1v8M1 5h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                         </svg>
                       </span>
                     </summary>
-                    <div className="border-t border-[var(--th-border)] px-5 pb-5 pt-4">
-                      <p className="text-sm leading-6 text-[var(--th-mid)]">{item.a}</p>
+                    <div className="border-t border-[var(--border)] px-5 pb-5 pt-4">
+                      <p className="text-sm leading-6 text-[var(--text-secondary)]">{item.a}</p>
                     </div>
                   </details>
                 ))}
@@ -150,11 +150,11 @@ export default function FaqPage() {
         </div>
 
         {/* Still have questions */}
-        <div className="mt-16 rounded-2xl bg-[var(--th-bg-card)] p-8 text-center ring-1 ring-[var(--th-ring)]">
-          <p className="font-[family-name:var(--font-anton)] text-xl text-[var(--th-text)]">
+        <div className="mt-16 rounded-2xl bg-[var(--surface-elevated)] p-8 text-center ring-1 ring-[var(--border)]">
+          <p className="font-[family-name:var(--font-anton)] text-xl text-[var(--text)]">
             Ainda tem dúvidas?
           </p>
-          <p className="mt-2 text-sm text-[var(--th-low)]">
+          <p className="mt-2 text-sm text-[var(--text-muted)]">
             Entre em contato com nosso suporte ou explore os eventos diretamente.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -163,7 +163,7 @@ export default function FaqPage() {
               Explorar mercados
             </Link>
             <Link href="mailto:contato@oraklo.com.br"
-              className="inline-flex items-center rounded-full border border-[var(--th-border)] px-6 py-2.5 text-sm font-semibold text-[var(--th-mid)] transition-all hover:border-[var(--th-border)] hover:text-[var(--th-text)]">
+              className="inline-flex items-center rounded-full border border-[var(--border)] px-6 py-2.5 text-sm font-semibold text-[var(--text-secondary)] transition-all hover:border-[var(--border)] hover:text-[var(--text)]">
               Falar com suporte
             </Link>
           </div>
