@@ -23,6 +23,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const next: Theme = theme === "dark" ? "light" : "dark";
     setTheme(next);
     localStorage.setItem("oraklo-theme", next);
+    document.cookie = `oraklo-theme=${next}; path=/; max-age=31536000; SameSite=Lax`;
     document.documentElement.dataset.theme = next;
   };
 

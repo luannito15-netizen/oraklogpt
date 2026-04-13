@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Anton, Montserrat } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/theme-provider";
 
@@ -26,21 +27,21 @@ export const metadata: Metadata = {
     "Plataforma de previsoes sobre eventos reais, com foco em clareza, racionalidade e validacao objetiva.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const theme = cookieStore.get("oraklo-theme")?.value === "light" ? "light" : "dark";
+
   return (
-    <html lang="pt-BR" suppressHydrationWarning className={`${anton.variable} ${montserrat.variable} h-full antialiased`}>
-      <head>
-        {/* Set theme before first paint to avoid flash */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var t=localStorage.getItem('oraklo-theme');document.documentElement.dataset.theme=t==='light'?'light':'dark';})()`,
-          }}
-        />
-      </head>
+    <html
+      lang="pt-BR"
+      data-theme={theme}
+      suppressHydrationWarning
+      className={`${anton.variable} ${montserrat.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col">
         <ThemeProvider>{children}</ThemeProvider>
       </body>

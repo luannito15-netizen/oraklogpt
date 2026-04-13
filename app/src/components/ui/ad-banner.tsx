@@ -37,7 +37,7 @@ const defaults: Record<AdSize, {
     cta:      "Começar agora",
     href:     "/cadastro",
     image:    homemImg,
-    imgClass: "absolute -right-2 bottom-0 h-[110%] w-auto object-contain object-bottom drop-shadow-xl",
+    imgClass: "absolute -right-2 bottom-0 h-48 w-auto object-contain object-bottom drop-shadow-xl sm:h-56",
   },
   rectangle: {
     headline: "Método comprovado",
@@ -73,33 +73,36 @@ export function AdBanner({
   const resolvedCta      = cta      ?? d.cta;
   const resolvedHref     = href     ?? d.href;
 
-  /* ── Leaderboard — thin horizontal strip ────────────────────── */
+  /* ── Leaderboard — full hero strip ─────────────────────────── */
   if (size === "leaderboard") {
     return (
       <Link href={resolvedHref} aria-label={resolvedHeadline}
-        className={`relative mx-auto flex w-full max-w-[728px] overflow-hidden rounded-xl
+        className={`relative mx-auto flex w-full max-w-[900px] overflow-hidden rounded-2xl
           bg-gradient-to-r from-[#3b1270] via-[#5a1eb0] to-[#7b2ff7]
-          shadow-[0_0_24px_rgba(123,47,247,0.35)] transition-opacity hover:opacity-90 ${className}`}
-        style={{ height: 90 }}
+          shadow-[0_0_40px_rgba(123,47,247,0.45)] transition-opacity hover:opacity-95 ${className}`}
+        style={{ minHeight: 180 }}
       >
         {/* Subtle noise overlay */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.06]"
           style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' fill='%23fff'/%3E%3C/svg%3E\")" }}
         />
 
+        {/* Glow blob */}
+        <div className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-[#c084fc] opacity-20 blur-3xl" />
+
         {/* Copy */}
-        <div className="relative z-10 flex flex-col justify-center gap-0.5 pl-5 pr-4" style={{ maxWidth: 420 }}>
-          <p className="font-[family-name:var(--font-anton)] text-xl leading-tight text-white">
+        <div className="relative z-10 flex flex-col justify-center gap-2 py-8 pl-10 pr-4" style={{ maxWidth: 500 }}>
+          <p className="font-[family-name:var(--font-anton)] text-3xl font-black leading-tight text-white">
             {resolvedHeadline}
           </p>
-          <p className="text-[11px] text-white/70 leading-snug">{resolvedSubtext}</p>
-          <span className="mt-1 inline-flex w-fit items-center rounded-full bg-white/15 px-3 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-white ring-1 ring-white/20">
+          <p className="text-base text-white/75 leading-snug">{resolvedSubtext}</p>
+          <span className="mt-1 inline-flex w-fit items-center rounded-full bg-white/15 py-3 px-8 text-sm font-bold uppercase tracking-[0.08em] text-white ring-1 ring-white/20">
             {resolvedCta} →
           </span>
         </div>
 
         {/* Image */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-xl">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
           <Image
             src={resolvedImage}
             alt=""
@@ -109,7 +112,7 @@ export function AdBanner({
         </div>
 
         {/* "Ad" label */}
-        <span className="absolute bottom-1.5 right-2 text-[8px] font-bold uppercase tracking-[0.1em] text-white/30">
+        <span className="absolute bottom-2 right-3 text-[8px] font-bold uppercase tracking-[0.1em] text-white/30">
           Publi
         </span>
       </Link>

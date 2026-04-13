@@ -9,7 +9,18 @@ import heroHomem    from "../../../../assets/illustrations/hero-homem.png";
 import mulherChart  from "../../../../assets/illustrations/image.png";
 import { PublicNav, PublicFooter } from "@/components/ui/public-nav";
 import { EventCardCompact } from "@/components/ui/event-card";
-import { mockEvents } from "@/lib/mock-events";
+import type { EventCardData } from "@/components/ui/event-card";
+
+const exampleEvent: EventCardData = {
+  id: "ipca-abaixo-0-40",
+  title: "IPCA de abril fica abaixo de 0,40%?",
+  category: "Economia",
+  status: "open",
+  simPercent: 42,
+  volume: 12800,
+  deadline: "18 dias",
+  source: "IBGE",
+};
 
 const steps = [
   {
@@ -143,7 +154,7 @@ export default function ComoFuncionaPage() {
             {/* Sample event */}
             <div className="pt-2">
               <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--th-dim)]">Exemplo de evento</p>
-              <EventCardCompact event={mockEvents[1]} />
+              <EventCardCompact event={exampleEvent} />
             </div>
           </div>
         </div>

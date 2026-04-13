@@ -9,10 +9,10 @@ import iconeX        from "../../../assets/icons/ICONE X.svg";
 import icone1        from "../../../assets/icons/ICONE 1.svg";
 import heroHomem     from "../../../assets/illustrations/hero-homem.png";
 import metodoMulher  from "../../../assets/illustrations/metodo-mulher.png";
-import { EventCardCompact } from "@/components/ui/event-card";
-import { mockEvents } from "@/lib/mock-events";
+import { getOpenEvents } from "@/lib/events";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { AdBanner } from "@/components/ui/ad-banner";
+import { EventsHeroSection } from "./events-hero-section";
 
 const navItems = [
   { href: "/como-funciona", label: "Como funciona" },
@@ -28,7 +28,8 @@ const steps = [
   { icon: iconeX,       title: "Espere o resultado oficial", description: "Quando o evento acabar, a validação é feita por uma fonte oficial." },
 ];
 
-export default function PublicHomePage() {
+export default async function PublicHomePage() {
+  const events = await getOpenEvents();
   return (
     <div className="min-h-screen">
 
@@ -37,8 +38,7 @@ export default function PublicHomePage() {
       ══════════════════════════════════════ */}
       <section className="relative overflow-hidden bg-[var(--oraklo-color-bg)]" style={{ minHeight: 680 }}>
 
-        {/* ── Glow sutil ── */}
-        <div className="pointer-events-none absolute -right-40 -top-40 h-[560px] w-[560px] rounded-full bg-[var(--oraklo-color-primary)] opacity-[0.07] blur-[120px]" />
+        {/* ── Glow sutil removido para não interferir nas cores dos cards ── */}
 
         {/* ════════════════════════════════════
             ÍCONES — posicionados conforme home.png
@@ -132,7 +132,7 @@ export default function PublicHomePage() {
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
               </span>
               <span className="text-xs font-semibold text-[var(--oraklo-color-text-muted)]">
-                Mercado aberto · 6 eventos ao vivo
+                Mercado aberto · {events.length} {events.length === 1 ? "evento ao vivo" : "eventos ao vivo"}
               </span>
             </div>
 
@@ -164,7 +164,6 @@ export default function PublicHomePage() {
 
           {/* Right: hero image */}
           <div className="relative hidden h-[760px] lg:block">
-            <div className="absolute bottom-0 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[var(--oraklo-color-primary)] opacity-20 blur-[80px]" />
             <Image src={heroHomem} alt="Pessoa usando a plataforma ORAKLO" fill priority
               className="object-contain object-bottom" />
           </div>
@@ -185,13 +184,7 @@ export default function PublicHomePage() {
               Ver todos →
             </Link>
           </div>
-          <div className="fade-edges-x -mx-2 flex gap-4 overflow-x-auto px-2 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">
-            {mockEvents.slice(0, 3).map((event) => (
-              <div key={event.id} className="w-[280px] shrink-0 sm:w-auto">
-                <EventCardCompact event={event} />
-              </div>
-            ))}
-          </div>
+          <EventsHeroSection events={events.slice(0, 3)} />
         </div>
       </section>
 

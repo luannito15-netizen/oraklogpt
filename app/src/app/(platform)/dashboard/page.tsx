@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { EventCard } from "@/components/ui/event-card";
 import { DashboardChart } from "./dashboard-chart";
-import { mockEvents } from "@/lib/mock-events";
+import { getOpenEvents } from "@/lib/events";
 
 const metrics = [
   {
@@ -56,10 +56,9 @@ const metrics = [
   },
 ];
 
-const recentEvents = mockEvents.slice(0, 2);
-const trendingEvents = mockEvents.slice(0, 3);
-
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const openEvents = await getOpenEvents();
+  const trendingEvents = openEvents.slice(0, 3);
   return (
     <div className="space-y-6">
 
@@ -215,7 +214,7 @@ export default function DashboardPage() {
         <div className="mb-4 flex items-center justify-between">
           <div>
             <p className="text-sm font-semibold text-white/70">Mercados em destaque</p>
-            <p className="text-[10px] text-white/25">{mockEvents.length} eventos abertos</p>
+            <p className="text-[10px] text-white/25">{openEvents.length} eventos abertos</p>
           </div>
           <Link href="/events" className="text-[10px] font-bold text-[var(--oraklo-color-primary-glow)] hover:underline">
             Ver todos →
