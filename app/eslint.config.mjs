@@ -13,6 +13,14 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    // react/forbid-dom-props blocks `style` as a blanket rule, but dynamic CSS
+    // custom property values (e.g. `var(--cat-football)`) cannot be expressed as
+    // Tailwind classes — inline style is the only correct approach in those cases.
+    rules: {
+      "react/forbid-dom-props": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

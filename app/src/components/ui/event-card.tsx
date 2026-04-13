@@ -24,21 +24,29 @@ export interface EventCardData {
   imageUrl: string | null;
 }
 
-/** Retorno decimal: quanto o apostador recebe por R$1 apostado (já com taxa de 5%) */
-function cotacao(percent: number) {
+/** Retorno decimal: quanto o usuário recebe por R$1 participado (já com taxa de 5%) */
+function cotacao(percent: number): string {
   if (percent <= 0) return "—";
   return (0.95 / (percent / 100)).toFixed(2);
 }
 
-const categoryStyle: Record<string, { bg: string; text: string }> = {
-  Clima:    { bg: "bg-sky-500",     text: "text-white" },
-  Economia: { bg: "bg-violet-600",  text: "text-white" },
-  Esportes: { bg: "bg-emerald-500", text: "text-white" },
-  Política: { bg: "bg-amber-500",   text: "text-white" },
+/**
+ * CSS variable token for category pill background.
+ * Applied via inline style — Tailwind cannot resolve arbitrary CSS vars at build time,
+ * so this is the only correct approach for dynamic per-category theming.
+ */
+const categoryToken: Record<string, string> = {
+  Esportes: "var(--cat-football)",
+  Política: "var(--cat-politics)",
+  Economia: "var(--cat-economy)",
+  Clima:    "var(--cat-geo)",
 };
 
-function getCategoryStyle(cat: string) {
-  return categoryStyle[cat] ?? { bg: "bg-[var(--border)]", text: "text-[var(--text)]" };
+/** Compact BRL volume formatting (K / M suffix) */
+function formatVolumeCompact(value: number): string {
+  if (value >= 1_000_000) return `R$ ${(value / 1_000_000).toFixed(1)}M`;
+  if (value >= 1_000)     return `R$ ${(value / 1_000).toFixed(1)}K`;
+  return `R$ ${value.toLocaleString("pt-BR")}`;
 }
 
 // ─── Variante compacta (landing page) ────────────────────────────────────────
@@ -50,14 +58,16 @@ interface EventCardCompactProps {
 
 export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
   const nao = 100 - event.simPercent;
-  const catStyle = getCategoryStyle(event.category);
 
   const inner = (
     <>
       {/* Category + source */}
       <div className="flex items-start justify-between gap-2">
         <div className="flex flex-col gap-0.5">
-          <span className={`self-start rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] ${catStyle.bg} ${catStyle.text}`}>
+          <span
+            className="self-start rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-white"
+            style={{ background: categoryToken[event.category] ?? "var(--surface-elevated)" }}
+          >
             {event.category}
           </span>
           <span className="text-[10px] text-[var(--text-muted)]">{event.source}</span>
@@ -115,7 +125,7 @@ export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
   );
 }
 
-// ─── Variante padrão (plataforma) ────────────────────────────────────────────
+// ─── Variante padrão (mercados page) ─────────────────────────────────────────
 
 interface EventCardProps {
   event: EventCardData;
@@ -124,7 +134,6 @@ interface EventCardProps {
 
 export function EventCard({ event, onOpen }: EventCardProps) {
   const nao = 100 - event.simPercent;
-  const catStyle = getCategoryStyle(event.category);
   const tier = getUrgencyTier(event.deadlineDays);
 
   const inner = (
@@ -142,20 +151,24 @@ export function EventCard({ event, onOpen }: EventCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface)] to-transparent" />
         </div>
       ) : (
-        <div className={`h-1.5 w-full rounded-t-2xl ${
-          event.category === 'Esportes' ? 'bg-gradient-to-r from-emerald-600 to-emerald-400' :
-          event.category === 'Economia' ? 'bg-gradient-to-r from-sky-600 to-sky-400' :
-          event.category === 'Política' ? 'bg-gradient-to-r from-amber-600 to-amber-400' :
-          'bg-gradient-to-r from-violet-600 to-violet-400'
-        }`} />
+        /* Category accent strip — uses CSS token, not Tailwind hardcoded colors */
+        <div
+          className="h-1.5 w-full rounded-t-2xl"
+          style={{
+            background: `linear-gradient(to right, ${categoryToken[event.category] ?? "var(--border)"}, color-mix(in srgb, ${categoryToken[event.category] ?? "var(--border)"} 60%, transparent))`,
+          }}
+        />
       )}
 
-      {/* Card body padding */}
+      {/* Card body */}
       <div className="p-5">
-        {/* Category + urgency badge + source */}
+        {/* Category pill + urgency badge + source */}
         <div className="mb-3 flex items-start justify-between gap-3">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] ${catStyle.bg} ${catStyle.text}`}>
+            <span
+              className="shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-white"
+              style={{ background: categoryToken[event.category] ?? "var(--surface-elevated)" }}
+            >
               {event.category}
             </span>
             {(tier === "hot" || tier === "short") && (
@@ -167,12 +180,12 @@ export function EventCard({ event, onOpen }: EventCardProps) {
           <span className="truncate text-right text-[10px] text-[var(--text-muted)]">{event.source}</span>
         </div>
 
-        {/* Question */}
-        <p className="text-base font-black leading-snug text-[var(--text)] line-clamp-3 group-hover:text-[var(--ring)] transition-colors">
+        {/* Question — line-clamp-2 so both football team names are visible */}
+        <p className="text-base font-black leading-snug text-[var(--text)] line-clamp-2 group-hover:text-[var(--ring)] transition-colors">
           {event.title}
         </p>
 
-        {/* Separator above SIM/NÃO */}
+        {/* Separator */}
         <div className="my-3 border-t border-[var(--border)]" />
 
         {/* SIM / NÃO */}
@@ -195,46 +208,49 @@ export function EventCard({ event, onOpen }: EventCardProps) {
           </div>
         </div>
 
-        {/* Bar */}
+        {/* Progress bar */}
         <div className="mt-3.5">
-          <div className={`flex h-1.5 overflow-hidden rounded-full [--sim-w:${event.simPercent}%]`}>
-            <div className="bg-emerald-500 transition-all duration-500 w-[var(--sim-w)]" />
-            <div className="flex-1 bg-orange-500/60" />
+          <div className="flex h-1.5 overflow-hidden rounded-full bg-orange-500/60">
+            <div className="bg-emerald-500 transition-all duration-500" style={{ width: `${event.simPercent}%` }} />
           </div>
         </div>
 
-        {/* Footer */}
+        {/* Footer — volume compact + deadline colored by tier */}
         <div className="mt-3.5 flex items-center justify-between border-t border-[var(--border)] pt-3">
           <span className="flex items-center gap-1 text-[10px] text-[var(--text-muted)]">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0">
               <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2"/>
               <path d="M4 6h4M6 4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
             </svg>
-            R$ {event.volume.toLocaleString("pt-BR")} participado
+            {formatVolumeCompact(event.totalVolume)} participado
           </span>
-          <span className={`flex items-center gap-1 text-[10px] ${tier === "hot" ? "text-red-400 font-bold" : "text-[var(--text-muted)]"}`}>
-            {tier === "hot" && (
+          <span
+            className={`flex items-center gap-1 text-[10px] font-semibold ${
+              tier === "hot"   ? "text-red-400 font-bold" :
+              tier === "short" ? "text-amber-400"         :
+              "text-[var(--text-muted)]"
+            }`}
+          >
+            {tier === "hot" ? (
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-400 animate-pulse shrink-0" />
-            )}
-            {tier !== "hot" && (
+            ) : (
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0">
                 <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2"/>
                 <path d="M6 3v3l2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
               </svg>
             )}
-            {tier === "hot" ? "em " : "Encerra em "}{event.deadline}
+            {tier === "hot" ? "Encerra hoje" : `Encerra em ${event.deadline}`}
           </span>
         </div>
       </div>
     </>
   );
 
-  const sharedClass =
-    `group block rounded-2xl bg-[var(--surface-elevated)] overflow-hidden ring-1 transition-all transition-shadow duration-200 text-left w-full ${
-      tier === "hot"
-        ? "ring-red-500/30 hover:ring-red-400/60 hover:shadow-[0_0_28px_rgba(239,68,68,0.18)]"
-        : "ring-[var(--border)] hover:ring-[var(--accent)] hover:shadow-[0_0_28px_rgba(168,85,247,0.18)]"
-    }`;
+  const sharedClass = `group block rounded-2xl bg-[var(--surface-elevated)] overflow-hidden ring-1 transition-all transition-shadow duration-200 text-left w-full ${
+    tier === "hot"
+      ? "ring-red-500/30 hover:ring-red-400/60 hover:shadow-[0_0_28px_rgba(239,68,68,0.18)]"
+      : "ring-[var(--border)] hover:ring-[var(--accent)] hover:shadow-[0_0_28px_rgba(168,85,247,0.18)]"
+  }`;
 
   if (onOpen) {
     return (

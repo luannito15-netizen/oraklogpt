@@ -6,6 +6,7 @@ import { EventCard } from "@/components/ui/event-card";
 import { EventDrawer } from "@/components/ui/event-drawer";
 import { PublicNav, PublicFooter } from "@/components/ui/public-nav";
 import { AdBanner } from "@/components/ui/ad-banner";
+import { MercadosHotHero } from "./mercados-hot-hero";
 
 const categories = ["Todos", "Economia", "Clima", "Esportes", "Política"];
 const sortOptions = [
@@ -15,16 +16,45 @@ const sortOptions = [
   { value: "nao",      label: "Cotação NÃO" },
 ];
 
-const stats = [
-  { label: "Volume total",    value: "R$ 65.280" },
-  { label: "Eventos abertos", value: "6"         },
-  { label: "Participações",   value: "1.240"      },
-  { label: "Usuários ativos", value: "318"        },
-];
-
 function parseDias(deadline: string): number {
   return parseInt(deadline) || 0;
 }
+
+function formatVolumeCompact(value: number): string {
+  if (value >= 1_000_000) return `R$ ${(value / 1_000_000).toFixed(1)}M`;
+  if (value >= 1_000)     return `R$ ${(value / 1_000).toFixed(1)}K`;
+  return `R$ ${value.toLocaleString("pt-BR")}`;
+}
+
+// ─── Section header ────────────────────────────────────────────────────────────
+
+function SectionHeader({
+  label,
+  count,
+  variant,
+}: {
+  label: string;
+  count: number;
+  variant: "hot" | "short" | "mid" | "long";
+}) {
+  const styles: Record<string, string> = {
+    hot:   "border-red-500/60 text-red-400",
+    short: "border-amber-500/60 text-amber-400",
+    mid:   "border-[var(--border)] text-[var(--text-muted)]",
+    long:  "border-[var(--border)] text-[var(--text-muted)]",
+  };
+
+  return (
+    <div className={`flex items-center gap-3 border-l-2 pl-3 ${styles[variant]}`}>
+      <span className="text-xs font-black uppercase tracking-[0.1em]">{label}</span>
+      <span className="text-[10px] font-semibold opacity-60">
+        {count} {count === 1 ? "evento" : "eventos"}
+      </span>
+    </div>
+  );
+}
+
+// ─── Main component ────────────────────────────────────────────────────────────
 
 interface MercadosClientProps {
   events: EventCardData[];
@@ -35,6 +65,17 @@ export function MercadosClient({ events }: MercadosClientProps) {
   const [searchQuery, setSearchQuery]           = useState("");
   const [sortBy, setSortBy]                     = useState("volume");
   const [drawerEvent, setDrawerEvent]           = useState<EventCardData | null>(null);
+
+  // Dynamic stats from events prop
+  const totalVolume = events.reduce((s, e) => s + e.totalVolume, 0);
+  const openCount   = events.length;
+
+  const stats = [
+    { label: "Volume total",    value: formatVolumeCompact(totalVolume) },
+    { label: "Eventos abertos", value: String(openCount) },
+    { label: "Participações",   value: "1.240 *" },
+    { label: "Usuários ativos", value: "318 *"   },
+  ];
 
   const filtered = useMemo(() => {
     let result = events;
@@ -56,6 +97,16 @@ export function MercadosClient({ events }: MercadosClientProps) {
       return 0;
     });
   }, [events, selectedCategory, searchQuery, sortBy]);
+
+  // Urgency buckets — split after filtering + sorting
+  const hot   = filtered.filter((e) => e.deadlineDays <= 0);
+  const short = filtered.filter((e) => e.deadlineDays >= 1 && e.deadlineDays <= 3);
+  const mid   = filtered.filter((e) => e.deadlineDays >= 4 && e.deadlineDays <= 14);
+  const long  = filtered.filter((e) => e.deadlineDays > 14);
+
+  // First HOT gets the hero treatment; the rest go into the grid section
+  const hotHero  = hot[0] ?? null;
+  const hotRest  = hot.slice(1);
 
   return (
     <div className="min-h-screen bg-[var(--th-bg)]">
@@ -86,7 +137,7 @@ export function MercadosClient({ events }: MercadosClientProps) {
             </div>
           </div>
 
-          {/* Stats row */}
+          {/* Stats row — dynamic */}
           <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {stats.map((s) => (
               <div key={s.label} className="rounded-xl bg-[var(--th-overlay-5)] px-4 py-3 ring-1 ring-[var(--th-ring)]">
@@ -146,7 +197,7 @@ export function MercadosClient({ events }: MercadosClientProps) {
           </aside>
 
           {/* Event grid */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             {/* Search bar */}
             <div className="mb-6 flex flex-wrap items-center gap-3">
               <div className="relative flex-1">
@@ -173,10 +224,63 @@ export function MercadosClient({ events }: MercadosClientProps) {
                 <p className="text-xs text-[var(--th-dim)]">Tente ajustar os filtros ou a busca.</p>
               </div>
             ) : (
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {filtered.map((event) => (
-                  <EventCard key={event.id} event={event} onOpen={setDrawerEvent} />
-                ))}
+              <div className="flex flex-col gap-8">
+
+                {/* ── HOT bucket ── */}
+                {hot.length > 0 && (
+                  <section className="flex flex-col gap-4">
+                    <SectionHeader label="HOT — Encerra hoje" count={hot.length} variant="hot" />
+                    {/* Hero for first HOT event */}
+                    {hotHero && (
+                      <MercadosHotHero event={hotHero} onOpen={setDrawerEvent} />
+                    )}
+                    {/* Remaining HOT events as regular cards */}
+                    {hotRest.length > 0 && (
+                      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                        {hotRest.map((event) => (
+                          <EventCard key={event.id} event={event} onOpen={setDrawerEvent} />
+                        ))}
+                      </div>
+                    )}
+                  </section>
+                )}
+
+                {/* ── SHORT bucket ── */}
+                {short.length > 0 && (
+                  <section className="flex flex-col gap-4">
+                    <SectionHeader label="Encerra em breve" count={short.length} variant="short" />
+                    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                      {short.map((event) => (
+                        <EventCard key={event.id} event={event} onOpen={setDrawerEvent} />
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* ── MID bucket ── */}
+                {mid.length > 0 && (
+                  <section className="flex flex-col gap-4">
+                    <SectionHeader label="Esta semana" count={mid.length} variant="mid" />
+                    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                      {mid.map((event) => (
+                        <EventCard key={event.id} event={event} onOpen={setDrawerEvent} />
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* ── LONG bucket ── */}
+                {long.length > 0 && (
+                  <section className="flex flex-col gap-4">
+                    <SectionHeader label="Próximas semanas" count={long.length} variant="long" />
+                    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                      {long.map((event) => (
+                        <EventCard key={event.id} event={event} onOpen={setDrawerEvent} />
+                      ))}
+                    </div>
+                  </section>
+                )}
+
               </div>
             )}
           </div>
