@@ -56,19 +56,17 @@ export function DecisionPanel({ event }: DecisionPanelProps) {
           Escolha um lado
         </p>
 
-        <div className="mt-4 flex flex-col gap-3">
+        <div className="mt-4 grid grid-cols-2 gap-3">
           {/* SIM */}
           <button
             type="button"
             onClick={() => setSide("SIM")}
-            className={`pulse-sim-pill flex w-full flex-col gap-2 p-5 text-left transition-all hover:scale-[1.01] active:scale-[0.99] ${
+            className={`pulse-sim-pill flex flex-col gap-1.5 p-4 text-left transition-all hover:scale-[1.02] active:scale-[0.98] ${
               side === "SIM" ? "pulse-sim-pill--active" : ""
             }`}
           >
-            <div className="flex items-center justify-between">
-              <span className="pulse-sim-label text-sm font-black tracking-widest">SIM</span>
-              <span className="pulse-cotacao text-2xl font-black">{simCot}×</span>
-            </div>
+            <span className="pulse-sim-label text-xs font-black tracking-widest">SIM</span>
+            <span className="pulse-cotacao text-xl font-black">{simCot}×</span>
             <span className="pulse-sim-pct text-[10px]">{event.simPercent}% no lado</span>
           </button>
 
@@ -76,14 +74,12 @@ export function DecisionPanel({ event }: DecisionPanelProps) {
           <button
             type="button"
             onClick={() => setSide("NAO")}
-            className={`pulse-nao-pill flex w-full flex-col gap-2 p-5 text-left transition-all hover:scale-[1.01] active:scale-[0.99] ${
+            className={`pulse-nao-pill flex flex-col gap-1.5 p-4 text-left transition-all hover:scale-[1.02] active:scale-[0.98] ${
               side === "NAO" ? "pulse-nao-pill--active" : ""
             }`}
           >
-            <div className="flex items-center justify-between">
-              <span className="pulse-nao-label text-sm font-black tracking-widest">NÃO</span>
-              <span className="pulse-cotacao text-2xl font-black">{naoCot}×</span>
-            </div>
+            <span className="pulse-nao-label text-xs font-black tracking-widest">NÃO</span>
+            <span className="pulse-cotacao text-xl font-black">{naoCot}×</span>
             <span className="pulse-nao-pct text-[10px]">{naoPercent}% no lado</span>
           </button>
         </div>

@@ -71,13 +71,13 @@ export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
         {event.title}
       </p>
 
-      {/* SIM / NÃO */}
-      <div className="mt-4 flex flex-col gap-2">
-        <div className="pulse-sim-pill flex items-center justify-between px-5 py-3">
+      {/* SIM / NÃO — side by side */}
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        <div className="pulse-sim-pill flex items-center justify-between px-3 py-2">
           <span className="pulse-sim-label text-xs font-black tracking-widest">SIM</span>
           <span className="pulse-cotacao text-xs font-black">{cotacao(event.simPercent)}×</span>
         </div>
-        <div className="pulse-nao-pill flex items-center justify-between px-5 py-3">
+        <div className="pulse-nao-pill flex items-center justify-between px-3 py-2">
           <span className="pulse-nao-label text-xs font-black tracking-widest">NÃO</span>
           <span className="pulse-cotacao text-xs font-black">{cotacao(nao)}×</span>
         </div>
@@ -133,11 +133,11 @@ export function EventCard({ event, onOpen }: EventCardProps) {
   const inner = (
     <>
       {/* Ambient glow */}
-      <div aria-hidden className="pulse-card-glow pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full blur-3xl opacity-10" />
+      <div aria-hidden className="pulse-card-glow pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full blur-2xl opacity-10" />
 
       {/* Image or accent strip */}
       {event.imageUrl ? (
-        <div className="relative h-32 w-full overflow-hidden">
+        <div className="relative h-20 w-full overflow-hidden">
           <Image
             src={event.imageUrl}
             alt={event.title}
@@ -152,12 +152,12 @@ export function EventCard({ event, onOpen }: EventCardProps) {
       )}
 
       {/* Card body */}
-      <div className="relative z-10 flex flex-col gap-4 p-5">
+      <div className="relative z-10 flex flex-col gap-2 p-3">
 
         {/* Category + urgency + source */}
         <div className="flex items-start justify-between gap-2">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="event-card-badge inline-flex items-center gap-1 shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em]">
+          <div className="flex flex-wrap items-center gap-1">
+            <span className="event-card-badge inline-flex items-center gap-1 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em]">
               <CategoryIcon category={event.category} className="h-3 w-3 shrink-0" />
               {event.category}
             </span>
@@ -179,55 +179,45 @@ export function EventCard({ event, onOpen }: EventCardProps) {
         </div>
 
         {/* Title */}
-        <p className="pulse-card-title line-clamp-2 text-base font-black leading-snug">
+        <p className="pulse-card-title line-clamp-2 text-sm font-black leading-snug">
           {event.title}
         </p>
 
-        {/* SIM pill */}
-        <div className="pulse-sim-pill w-full px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="pulse-sim-label text-sm font-black tracking-widest">SIM</span>
-              <span className="pulse-sim-pct text-[10px] font-semibold">{event.simPercent}%</span>
-            </div>
-            <span className="pulse-cotacao text-2xl font-black">{cotacao(event.simPercent)}×</span>
+        {/* SIM / NÃO — side by side */}
+        <div className="grid grid-cols-2 gap-2">
+          <div className="pulse-sim-pill flex items-center justify-between px-3 py-2">
+            <span className="pulse-sim-label text-xs font-black tracking-widest">SIM</span>
+            <span className="pulse-cotacao text-sm font-black">{cotacao(event.simPercent)}×</span>
           </div>
-        </div>
-
-        {/* NÃO pill */}
-        <div className="pulse-nao-pill w-full px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="pulse-nao-label text-sm font-black tracking-widest">NÃO</span>
-              <span className="pulse-nao-pct text-[10px] font-semibold">{nao}%</span>
-            </div>
-            <span className="pulse-cotacao text-2xl font-black">{cotacao(nao)}×</span>
+          <div className="pulse-nao-pill flex items-center justify-between px-3 py-2">
+            <span className="pulse-nao-label text-xs font-black tracking-widest">NÃO</span>
+            <span className="pulse-cotacao text-sm font-black">{cotacao(nao)}×</span>
           </div>
         </div>
 
         {/* Progress bar */}
         <div>
-          <div className="pulse-bar-track h-1.5 overflow-hidden rounded-full">
+          <div className="pulse-bar-track h-1 overflow-hidden rounded-full">
             {/* eslint-disable-next-line react/forbid-component-props -- runtime-computed width, cannot use static Tailwind class */}
             <div className="event-card-bar h-full rounded-full" style={{ width: `${event.simPercent}%` }} />
           </div>
-          <div className="mt-1 flex justify-between text-[9px] font-bold">
+          <div className="mt-0.5 flex justify-between text-[9px] font-bold">
             <span className="pulse-bar-sim-pct">SIM {event.simPercent}%</span>
             <span className="pulse-bar-nao-pct">NÃO {nao}%</span>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="pulse-card-footer flex items-center justify-between border-t pt-3">
+        <div className="pulse-card-footer flex items-center justify-between border-t pt-2">
           <span className="pulse-card-volume flex items-center gap-1 text-[10px]">
-            <IconCoins className="h-3.5 w-3.5" />
+            <IconCoins className="h-3 w-3" />
             {formatVolumeCompact(event.totalVolume)} participado
           </span>
           {tier === "hot" && intensity ? (
             <DigitalCountdown deadlineAt={event.deadlineAt} />
           ) : (
             <span className={`flex items-center gap-1 text-[10px] font-semibold ${tier === "short" ? "text-amber-400" : "pulse-card-deadline"}`}>
-              <IconClock className="h-3.5 w-3.5" />
+              <IconClock className="h-3 w-3" />
               {`Encerra em ${event.deadline}`}
             </span>
           )}
