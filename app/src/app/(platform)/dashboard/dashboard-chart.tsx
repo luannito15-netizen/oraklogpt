@@ -30,6 +30,25 @@ export function DashboardChart() {
     pts.map((p) => `L${p.x},${p.y}`).join(" ") +
     ` L${pts[pts.length - 1].x},${H - PAD.bottom} Z`;
 
+  const isEmpty = mockPortfolioData.every((d) => d.value === 0);
+
+  if (isEmpty) {
+    return (
+      <div className="flex h-48 flex-col items-center justify-center gap-3">
+        <div className="relative">
+          <div className="absolute inset-0 animate-ping rounded-full bg-[var(--accent)] opacity-20" style={{ animationDuration: "2s" }} />
+          <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--accent)_15%,transparent)] ring-1 ring-[color-mix(in_srgb,var(--accent)_30%,transparent)]">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--accent)" strokeWidth="1.5">
+              <path d="M3 14l4-5 3.5 3 4-6 3 2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <p className="text-xs font-semibold text-[var(--text-muted)]">Nenhuma previsão ainda</p>
+        <p className="text-[10px] text-[var(--text-muted)] max-w-[200px] text-center">Registre sua primeira previsão para ver seu histórico aqui</p>
+      </div>
+    );
+  }
+
   return (
     <div className="relative">
       {/* Y grid */}
@@ -45,8 +64,8 @@ export function DashboardChart() {
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 120 }}>
         <defs>
           <linearGradient id="portfolioGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#7b2ff7" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="#7b2ff7" stopOpacity="0" />
+            <stop offset="0%" stopColor="#a855f7" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#a855f7" stopOpacity="0" />
           </linearGradient>
         </defs>
 
@@ -60,22 +79,22 @@ export function DashboardChart() {
               y1={y}
               x2={W - PAD.right}
               y2={y}
-              stroke="rgba(255,255,255,0.04)"
+              stroke="rgba(68,53,88,0.3)"
             />
           );
         })}
 
         {/* Area + line */}
         <path d={areaD} fill="url(#portfolioGrad)" />
-        <path d={lineD} fill="none" stroke="#7b2ff7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d={lineD} fill="none" stroke="#a855f7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
 
-        {/* End dot */}
+        {/* End dot — only shown when there's data */}
         <circle
           cx={pts[pts.length - 1].x}
           cy={pts[pts.length - 1].y}
           r="4"
-          fill="#7b2ff7"
-          stroke="#0d0714"
+          fill="#a855f7"
+          stroke="#0B0710"
           strokeWidth="2"
         />
 
@@ -86,20 +105,13 @@ export function DashboardChart() {
             x={pts[idx].x}
             y={H - 4}
             fontSize="9"
-            fill="rgba(255,255,255,0.2)"
+            fill="rgba(184,174,202,0.5)"
             textAnchor="middle"
           >
             {labels[li]}
           </text>
         ))}
       </svg>
-
-      {/* Empty state overlay */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <p className="text-xs font-semibold text-[var(--text-muted)]">
-          Registre sua primeira previsão para ver o histórico
-        </p>
-      </div>
     </div>
   );
 }
