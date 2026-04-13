@@ -38,7 +38,7 @@ const categoryStyle: Record<string, { bg: string; text: string }> = {
 };
 
 function getCategoryStyle(cat: string) {
-  return categoryStyle[cat] ?? { bg: "bg-[var(--th-overlay-12)]", text: "text-[var(--th-text)]" };
+  return categoryStyle[cat] ?? { bg: "bg-[var(--border)]", text: "text-[var(--text)]" };
 }
 
 // ─── Variante compacta (landing page) ────────────────────────────────────────
@@ -60,12 +60,12 @@ export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
           <span className={`self-start rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] ${catStyle.bg} ${catStyle.text}`}>
             {event.category}
           </span>
-          <span className="text-[10px] text-white/30">{event.source}</span>
+          <span className="text-[10px] text-[var(--text-muted)]">{event.source}</span>
         </div>
       </div>
 
       {/* Question */}
-      <p className="mt-3 text-sm font-black leading-snug text-[var(--th-text)]">
+      <p className="mt-3 text-sm font-black leading-snug text-[var(--text)]">
         {event.title}
       </p>
 
@@ -73,12 +73,12 @@ export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
       <div className="mt-4 flex gap-2">
         <div className="flex flex-1 items-center justify-between gap-1 rounded-xl bg-emerald-500/15 px-3 py-2 ring-1 ring-emerald-500/25 transition-all duration-200 group-hover:bg-emerald-500/25 group-hover:ring-emerald-500/50">
           <span className="text-xs font-bold text-emerald-400">SIM</span>
-          <span className="text-xs font-bold text-[var(--th-text)]">{cotacao(event.simPercent)}</span>
+          <span className="text-xs font-bold text-[var(--text)]">{cotacao(event.simPercent)}</span>
           <span className="text-[10px] text-emerald-400">▲</span>
         </div>
         <div className="flex flex-1 items-center justify-between gap-1 rounded-xl bg-orange-500/15 px-3 py-2 ring-1 ring-orange-500/25 transition-all duration-200 group-hover:bg-orange-500/25 group-hover:ring-orange-500/50">
           <span className="text-xs font-bold text-orange-400">NÃO</span>
-          <span className="text-xs font-bold text-[var(--th-text)]">{cotacao(nao)}</span>
+          <span className="text-xs font-bold text-[var(--text)]">{cotacao(nao)}</span>
           <span className="text-[10px] text-orange-400">▼</span>
         </div>
       </div>
@@ -89,7 +89,7 @@ export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
           <div className="bg-emerald-500 transition-all duration-500" style={{ width: `${event.simPercent}%` }} />
           <div className="flex-1 bg-orange-500/70" />
         </div>
-        <div className="mt-1.5 flex justify-between text-[10px] text-[var(--th-low)]">
+        <div className="mt-1.5 flex justify-between text-[10px] text-[var(--text-muted)]">
           <span>{event.simPercent}%</span>
           <span>{nao}%</span>
         </div>
@@ -98,7 +98,7 @@ export function EventCardCompact({ event, onOpen }: EventCardCompactProps) {
   );
 
   const sharedClass =
-    "group block rounded-2xl bg-[var(--th-bg-card)] p-4 ring-1 ring-[var(--th-ring)] transition-all transition-shadow duration-200 hover:scale-[1.02] active:scale-[0.99] hover:ring-[var(--oraklo-color-primary)] hover:shadow-[0_0_24px_rgb(123_47_247/0.25)] text-left w-full";
+    "group block rounded-2xl bg-[var(--surface-elevated)] p-4 ring-1 ring-[var(--border)] transition-all transition-shadow duration-200 hover:scale-[1.02] active:scale-[0.99] hover:ring-[var(--accent)] hover:shadow-[0_0_24px_rgba(168,85,247,0.20)] text-left w-full";
 
   if (onOpen) {
     return (
@@ -139,7 +139,7 @@ export function EventCard({ event, onOpen }: EventCardProps) {
             sizes="(max-width: 768px) 100vw, 400px"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f2e] to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface)] to-transparent" />
         </div>
       ) : (
         <div className={`h-1.5 w-full rounded-t-2xl ${
@@ -164,34 +164,34 @@ export function EventCard({ event, onOpen }: EventCardProps) {
               </span>
             )}
           </div>
-          <span className="truncate text-right text-[10px] text-[var(--th-low)]">{event.source}</span>
+          <span className="truncate text-right text-[10px] text-[var(--text-muted)]">{event.source}</span>
         </div>
 
         {/* Question */}
-        <p className="text-base font-black leading-snug text-[var(--th-text)] line-clamp-3 group-hover:text-[var(--oraklo-color-primary-glow)] transition-colors">
+        <p className="text-base font-black leading-snug text-[var(--text)] line-clamp-3 group-hover:text-[var(--ring)] transition-colors">
           {event.title}
         </p>
 
         {/* Separator above SIM/NÃO */}
-        <div className="my-3 border-t border-white/[0.06]" />
+        <div className="my-3 border-t border-[var(--border)]" />
 
         {/* SIM / NÃO */}
         <div className="flex gap-2">
           <div className="flex flex-1 flex-col items-start gap-1 rounded-xl bg-emerald-500/15 px-3 py-2.5 ring-1 ring-emerald-500/25 transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]">
             <div className="flex w-full items-center justify-between">
               <span className="text-xs font-bold text-emerald-400">SIM</span>
-              <span className="text-xs font-bold text-[var(--th-text)]">{cotacao(event.simPercent)}</span>
+              <span className="text-xs font-bold text-[var(--text)]">{cotacao(event.simPercent)}</span>
               <span className="text-[10px] text-emerald-400">▲</span>
             </div>
-            <span className="text-[11px] font-semibold text-[var(--th-mid)]">{event.simPercent}%</span>
+            <span className="text-[11px] font-semibold text-[var(--text-secondary)]">{event.simPercent}%</span>
           </div>
           <div className="flex flex-1 flex-col items-start gap-1 rounded-xl bg-orange-500/15 px-3 py-2.5 ring-1 ring-orange-500/25 transition-all duration-150 hover:scale-[1.02] active:scale-[0.98]">
             <div className="flex w-full items-center justify-between">
               <span className="text-xs font-bold text-orange-400">NÃO</span>
-              <span className="text-xs font-bold text-[var(--th-text)]">{cotacao(nao)}</span>
+              <span className="text-xs font-bold text-[var(--text)]">{cotacao(nao)}</span>
               <span className="text-[10px] text-orange-400">▼</span>
             </div>
-            <span className="text-[11px] font-semibold text-[var(--th-mid)]">{nao}%</span>
+            <span className="text-[11px] font-semibold text-[var(--text-secondary)]">{nao}%</span>
           </div>
         </div>
 
@@ -204,15 +204,15 @@ export function EventCard({ event, onOpen }: EventCardProps) {
         </div>
 
         {/* Footer */}
-        <div className="mt-3.5 flex items-center justify-between border-t border-[var(--th-border)] pt-3">
-          <span className="flex items-center gap-1 text-[10px] text-[var(--th-low)]">
+        <div className="mt-3.5 flex items-center justify-between border-t border-[var(--border)] pt-3">
+          <span className="flex items-center gap-1 text-[10px] text-[var(--text-muted)]">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0">
               <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2"/>
               <path d="M4 6h4M6 4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
             </svg>
             R$ {event.volume.toLocaleString("pt-BR")} participado
           </span>
-          <span className={`flex items-center gap-1 text-[10px] ${tier === "hot" ? "text-red-400 font-bold" : "text-white/50"}`}>
+          <span className={`flex items-center gap-1 text-[10px] ${tier === "hot" ? "text-red-400 font-bold" : "text-[var(--text-muted)]"}`}>
             {tier === "hot" && (
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-400 animate-pulse shrink-0" />
             )}
@@ -230,7 +230,11 @@ export function EventCard({ event, onOpen }: EventCardProps) {
   );
 
   const sharedClass =
-    "group block rounded-2xl bg-[var(--th-bg-card)] overflow-hidden ring-1 ring-[var(--th-ring)] transition-all transition-shadow duration-200 hover:ring-[var(--oraklo-color-primary)] hover:shadow-[0_0_28px_rgb(123_47_247/0.2)] text-left w-full";
+    `group block rounded-2xl bg-[var(--surface-elevated)] overflow-hidden ring-1 transition-all transition-shadow duration-200 text-left w-full ${
+      tier === "hot"
+        ? "ring-red-500/30 hover:ring-red-400/60 hover:shadow-[0_0_28px_rgba(239,68,68,0.18)]"
+        : "ring-[var(--border)] hover:ring-[var(--accent)] hover:shadow-[0_0_28px_rgba(168,85,247,0.18)]"
+    }`;
 
   if (onOpen) {
     return (

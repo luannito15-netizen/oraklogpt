@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import type { EventCardData } from "@/components/ui/event-card";
 import { EventCard } from "@/components/ui/event-card";
+import { EventDrawer } from "@/components/ui/event-drawer";
 import { PublicNav, PublicFooter } from "@/components/ui/public-nav";
 import { AdBanner } from "@/components/ui/ad-banner";
 
@@ -33,6 +34,7 @@ export function MercadosClient({ events }: MercadosClientProps) {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [searchQuery, setSearchQuery]           = useState("");
   const [sortBy, setSortBy]                     = useState("volume");
+  const [drawerEvent, setDrawerEvent]           = useState<EventCardData | null>(null);
 
   const filtered = useMemo(() => {
     let result = events;
@@ -113,8 +115,8 @@ export function MercadosClient({ events }: MercadosClientProps) {
                   <button key={cat} onClick={() => setSelectedCategory(cat)}
                     className={`rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all ${
                       active
-                        ? "bg-[var(--oraklo-color-primary)]/20 text-[var(--oraklo-color-primary-glow)] ring-1 ring-[var(--oraklo-color-primary)]/30"
-                        : "text-[var(--th-low)] hover:bg-[var(--th-overlay-5)] hover:text-[var(--th-hi)]"
+                        ? "bg-[var(--accent)]/15 text-[var(--ring)] ring-1 ring-[var(--accent)]/50"
+                        : "text-[var(--th-low)] hover:bg-[var(--surface-elevated)] hover:text-[var(--th-hi)]"
                     }`}>
                     {cat}
                     <span className="ml-2 text-[10px] text-[var(--th-dim)]">{count}</span>
@@ -129,8 +131,8 @@ export function MercadosClient({ events }: MercadosClientProps) {
                 <button key={opt.value} onClick={() => setSortBy(opt.value)}
                   className={`block w-full rounded-xl px-3 py-2 text-left text-sm transition-all ${
                     sortBy === opt.value
-                      ? "text-[var(--oraklo-color-primary-glow)] font-semibold"
-                      : "text-[var(--th-low)] hover:text-[var(--th-mid)]"
+                      ? "bg-[var(--accent)]/15 text-[var(--ring)] font-semibold ring-1 ring-[var(--accent)]/50"
+                      : "text-[var(--th-low)] hover:bg-[var(--surface-elevated)] hover:text-[var(--th-mid)]"
                   }`}>
                   {opt.label}
                 </button>
@@ -157,7 +159,7 @@ export function MercadosClient({ events }: MercadosClientProps) {
                   placeholder="Buscar evento..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-10 w-full rounded-xl bg-[var(--th-overlay-5)] pl-8 pr-4 text-sm text-[var(--th-text)] outline-none ring-1 ring-[var(--th-ring)] transition-all placeholder:text-[var(--th-dim)] focus:bg-[var(--th-overlay-8)] focus:ring-[var(--oraklo-color-primary)]"
+                  className="h-10 w-full rounded-xl bg-[var(--input-bg)] pl-8 pr-4 text-sm text-[var(--text)] outline-none ring-1 ring-[var(--border)] transition-all placeholder:text-[var(--text-muted)] focus:ring-[var(--ring)]"
                 />
               </div>
               <p className="text-xs text-[var(--th-dim)]">
@@ -173,7 +175,7 @@ export function MercadosClient({ events }: MercadosClientProps) {
             ) : (
               <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {filtered.map((event) => (
-                  <EventCard key={event.id} event={event} />
+                  <EventCard key={event.id} event={event} onOpen={setDrawerEvent} />
                 ))}
               </div>
             )}
@@ -182,6 +184,8 @@ export function MercadosClient({ events }: MercadosClientProps) {
       </div>
 
       <PublicFooter />
+
+      <EventDrawer event={drawerEvent} onClose={() => setDrawerEvent(null)} />
     </div>
   );
 }

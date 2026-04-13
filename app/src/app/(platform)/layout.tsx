@@ -82,14 +82,16 @@ function NavItem({ href, label, icon, badge, pathname }: {
     <Link href={href}
       className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150 ${
         isActive
-          ? "bg-[var(--oraklo-color-primary)]/18 text-white shadow-[inset_0_0_0_1px_rgba(123,47,247,0.28)]"
-          : "text-white/40 hover:bg-white/5 hover:text-white/75"
+          ? "bg-[var(--accent)]/15 text-[var(--ring)] ring-1 ring-[var(--accent)]/40"
+          : "text-[var(--text-muted)] hover:bg-[var(--surface-elevated)] hover:text-[var(--text-secondary)]"
       }`}>
-      <span className={isActive ? "text-[var(--oraklo-color-primary-glow)]" : "text-inherit"}>{icon}</span>
+      <span className={isActive ? "text-[var(--ring)]" : "text-inherit"}>{icon}</span>
       <span className="flex-1">{label}</span>
       {badge && (
         <span className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold ${
-          isActive ? "bg-[var(--oraklo-color-primary)]/30 text-[var(--oraklo-color-primary-glow)]" : "bg-white/8 text-white/30"
+          isActive
+            ? "bg-[var(--accent)]/25 text-[var(--ring)]"
+            : "bg-[var(--border)] text-[var(--text-muted)]"
         }`}>{badge}</span>
       )}
     </Link>
@@ -115,15 +117,15 @@ export default function PlatformLayout({ children }: { children: ReactNode }) {
   }));
 
   return (
-    <div className="min-h-screen bg-[#0d0714] text-white">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
       <div className="mx-auto grid min-h-screen max-w-[1440px] md:grid-cols-[220px_1fr]">
 
         {/* ══════════════════ SIDEBAR ══════════════════ */}
-        <aside className="hidden flex-col border-r border-white/6 bg-[#0a0614] md:flex">
+        <aside className="hidden flex-col border-r border-[var(--border)] bg-[var(--surface)] md:flex">
           {/* Logo */}
           <div className="flex items-center gap-2 px-5 py-5">
             <Link href="/" className="flex items-center gap-2">
-              <Image src={logoOraklo} alt="ORAKLO" className="h-7 w-auto brightness-0 invert"/>
+              <Image src={logoOraklo} alt="ORAKLO" className="h-7 w-auto logo-invert"/>
             </Link>
             <span className="ml-auto rounded-full bg-emerald-500/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.08em] text-emerald-400 ring-1 ring-emerald-500/20">
               Beta
@@ -132,16 +134,16 @@ export default function PlatformLayout({ children }: { children: ReactNode }) {
 
           {/* Primary nav */}
           <nav className="flex-1 space-y-0.5 px-3 pt-2">
-            <p className="mb-2 px-2 text-[9px] font-bold uppercase tracking-[0.14em] text-white/20">
+            <p className="mb-2 px-2 text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">
               Plataforma
             </p>
             {primaryNav.map((item) => (
               <NavItem key={item.href} pathname={pathname} {...item} />
             ))}
 
-            <div className="my-4 border-t border-white/5" />
+            <div className="my-4 border-t border-[var(--border)]" />
 
-            <p className="mb-2 px-2 text-[9px] font-bold uppercase tracking-[0.14em] text-white/20">
+            <p className="mb-2 px-2 text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">
               Suporte
             </p>
             {secondaryNav.map((item) => (
@@ -158,20 +160,20 @@ export default function PlatformLayout({ children }: { children: ReactNode }) {
               </span>
               <span className="text-[10px] font-semibold text-emerald-400">6 mercados ao vivo</span>
             </div>
-            <p className="mt-1.5 text-[9px] text-white/25">Atualizado agora há pouco</p>
+            <p className="mt-1.5 text-[9px] text-[var(--text-muted)]">Atualizado agora há pouco</p>
           </div>
 
           {/* User */}
-          <div className="border-t border-white/6 p-3">
-            <button className="flex w-full items-center gap-3 rounded-xl p-2 transition-colors hover:bg-white/5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[var(--oraklo-color-primary)] to-[var(--oraklo-color-primary-glow)] text-[11px] font-bold text-white shadow-[0_0_10px_rgba(123,47,247,0.4)]">
+          <div className="border-t border-[var(--border)] p-3">
+            <button type="button" aria-label="Conta do usuário" className="flex w-full items-center gap-3 rounded-xl p-2 transition-colors hover:bg-[var(--surface-elevated)]">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--ring)] text-[11px] font-bold text-white shadow-[0_0_10px_rgba(168,85,247,0.35)]">
                 U
               </div>
               <div className="min-w-0 flex-1 text-left">
-                <p className="truncate text-xs font-semibold text-white/80">Usuário</p>
-                <p className="truncate text-[10px] text-white/30">conta@email.com</p>
+                <p className="truncate text-xs font-semibold text-[var(--text-secondary)]">Usuário</p>
+                <p className="truncate text-[10px] text-[var(--text-muted)]">conta@email.com</p>
               </div>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="text-white/20">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="text-[var(--text-muted)]">
                 <path d="M3 4.5L6 7.5 9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
             </button>
@@ -182,20 +184,20 @@ export default function PlatformLayout({ children }: { children: ReactNode }) {
         <div className="flex min-w-0 flex-col">
 
           {/* ── Top bar ── */}
-          <header className="glass-dark sticky top-0 z-30 flex items-center gap-4 border-b border-white/6 bg-[#0d0714]/80 px-6 py-3 sm:px-8">
+          <header className="glass-dark sticky top-0 z-30 flex items-center gap-4 border-b border-[var(--border)] bg-[var(--bg)]/80 px-6 py-3 sm:px-8">
             {/* Breadcrumb */}
             <nav className="hidden items-center gap-1.5 text-xs md:flex">
-              <Link href="/dashboard" className="text-white/25 transition-colors hover:text-white/60">
+              <Link href="/dashboard" className="text-[var(--text-muted)] transition-colors hover:text-[var(--text-secondary)]">
                 ORAKLO
               </Link>
               {crumbs.map((c) => (
                 <span key={c.href} className="flex items-center gap-1.5">
-                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" className="text-white/15">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" className="text-[var(--border)]">
                     <path d="M2.5 1.5L5.5 4 2.5 6.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
                   </svg>
                   {c.isLast
-                    ? <span className="font-semibold text-white/70">{c.label}</span>
-                    : <Link href={c.href} className="text-white/25 hover:text-white/60">{c.label}</Link>
+                    ? <span className="font-semibold text-[var(--text-secondary)]">{c.label}</span>
+                    : <Link href={c.href} className="text-[var(--text-muted)] hover:text-[var(--text-secondary)]">{c.label}</Link>
                   }
                 </span>
               ))}
@@ -203,17 +205,17 @@ export default function PlatformLayout({ children }: { children: ReactNode }) {
 
             {/* Search */}
             <div className="relative flex-1 md:max-w-xs">
-              <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" width="13" height="13" viewBox="0 0 13 13" fill="none">
                 <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.3"/>
                 <path d="m9.5 9.5 2 2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
               </svg>
               <input type="search" placeholder="Buscar eventos... (⌘K)"
-                className="h-8 w-full rounded-lg bg-white/5 pl-8 pr-3 text-xs text-white outline-none ring-1 ring-white/8 transition-all placeholder:text-white/20 focus:bg-white/8 focus:ring-[var(--oraklo-color-primary)]/50"/>
+                className="h-8 w-full rounded-lg bg-[var(--input-bg)] pl-8 pr-3 text-xs text-[var(--text)] outline-none ring-1 ring-[var(--border)] transition-all placeholder:text-[var(--text-muted)] focus:ring-[var(--ring)]"/>
             </div>
 
             <div className="ml-auto flex items-center gap-2">
               {/* Notifications */}
-              <button className="relative flex h-8 w-8 items-center justify-center rounded-lg text-white/30 transition-colors hover:bg-white/5 hover:text-white/70">
+              <button type="button" aria-label="Notificações" className="relative flex h-8 w-8 items-center justify-center rounded-lg text-[var(--text-muted)] transition-colors hover:bg-[var(--surface)] hover:text-[var(--text-secondary)]">
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                   <path d="M7.5 1.5A4 4 0 003.5 5.5v3l-1 1.5h10l-1-1.5v-3A4 4 0 007.5 1.5z" stroke="currentColor" strokeWidth="1.3"/>
                   <path d="M6 11.5a1.5 1.5 0 003 0" stroke="currentColor" strokeWidth="1.3"/>
@@ -222,7 +224,7 @@ export default function PlatformLayout({ children }: { children: ReactNode }) {
 
               {/* Quick action */}
               <Link href="/events"
-                className="hidden items-center gap-1.5 rounded-lg bg-[var(--oraklo-color-primary)] px-3 py-1.5 text-xs font-bold text-white shadow-[0_0_12px_rgba(123,47,247,0.3)] transition-all hover:bg-[var(--oraklo-color-primary-hover)] sm:flex">
+                className="hidden items-center gap-1.5 rounded-lg bg-[var(--accent)] px-3 py-1.5 text-xs font-bold text-[var(--accent-fg)] shadow-[0_0_12px_rgba(168,85,247,0.25)] transition-all hover:opacity-90 sm:flex">
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                   <path d="M5 1v8M1 5h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>

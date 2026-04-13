@@ -12,7 +12,7 @@ const categoryStyle: Record<string, { bg: string; text: string }> = {
 };
 
 function getCategoryStyle(cat: string) {
-  return categoryStyle[cat] ?? { bg: "bg-white/10", text: "text-white" };
+  return categoryStyle[cat] ?? { bg: "bg-[var(--border)]", text: "text-[var(--text)]" };
 }
 
 interface EventDrawerProps {
@@ -55,20 +55,20 @@ export function EventDrawer({ event, onClose }: EventDrawerProps) {
       {/* Modal container */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="relative w-full max-w-[480px] max-h-[90vh] overflow-y-auto rounded-3xl bg-[#0d0714] ring-1 ring-white/10 shadow-2xl shadow-black/60"
+          className="relative w-full max-w-[480px] max-h-[90vh] overflow-y-auto rounded-3xl bg-[var(--bg)] ring-1 ring-[var(--border)] shadow-2xl shadow-black/60"
           role="dialog"
           aria-modal="true"
           aria-label={event.title}
         >
           {/* Header */}
-          <div className="sticky top-0 z-10 flex items-start justify-between gap-3 border-b border-white/8 bg-[#0d0714] px-5 py-4">
+          <div className="sticky top-0 z-10 flex items-start justify-between gap-3 border-b border-[var(--border)] bg-[var(--bg)] px-5 py-4">
             <div className="min-w-0 flex-1">
               <span
                 className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] ${catStyle.bg} ${catStyle.text}`}
               >
                 {event.category}
               </span>
-              <p className="mt-2 text-sm font-semibold leading-snug text-white line-clamp-3">
+              <p className="mt-2 text-sm font-semibold leading-snug text-[var(--text)] line-clamp-3">
                 {event.title}
               </p>
             </div>
@@ -76,7 +76,7 @@ export function EventDrawer({ event, onClose }: EventDrawerProps) {
               type="button"
               onClick={onClose}
               aria-label="Fechar"
-              className="absolute top-4 right-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/5 text-white/40 ring-1 ring-white/8 transition-all hover:bg-white/10 hover:text-white"
+              className="absolute top-4 right-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--surface)] text-[var(--text-muted)] ring-1 ring-[var(--border)] transition-all hover:bg-[var(--surface-elevated)] hover:text-[var(--text)]"
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
                 <path d="M2 2l8 8M10 2L2 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -87,21 +87,21 @@ export function EventDrawer({ event, onClose }: EventDrawerProps) {
           {/* Body */}
           <div className="space-y-4 px-5 py-5">
             {/* Critério de validação */}
-            <div className="rounded-2xl bg-[#1a0f2e] p-5 ring-1 ring-white/10">
-              <h2 className="text-sm font-semibold text-white">Critério de validação</h2>
-              <p className="mt-2 text-sm leading-6 text-white/55">
+            <div className="rounded-2xl bg-[var(--surface)] p-5 ring-1 ring-[var(--border)]">
+              <h2 className="text-sm font-semibold text-[var(--text)]">Critério de validação</h2>
+              <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
                 O resultado será apurado com base em dados oficiais divulgados por{" "}
-                <strong className="text-white">{event.source}</strong>. A resolução
+                <strong className="text-[var(--text)]">{event.source}</strong>. A resolução
                 ocorre em até 24h após a divulgação do resultado oficial.
               </p>
-              <div className="mt-4 flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2.5 ring-1 ring-white/8">
+              <div className="mt-4 flex items-center gap-2 rounded-xl bg-[var(--input-bg)] px-3 py-2.5 ring-1 ring-[var(--border)]">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden className="shrink-0">
-                  <circle cx="6" cy="6" r="5" stroke="#a78bfa" strokeWidth="1.5" />
-                  <path d="M6 4v3M6 8.5v.5" stroke="#a78bfa" strokeWidth="1.5" strokeLinecap="round" />
+                  <circle cx="6" cy="6" r="5" stroke="var(--ring)" strokeWidth="1.5" />
+                  <path d="M6 4v3M6 8.5v.5" stroke="var(--ring)" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
-                <span className="text-xs text-white/45">
+                <span className="text-xs text-[var(--text-muted)]">
                   Fonte oficial:{" "}
-                  <span className="font-semibold text-white/70">{event.source}</span>
+                  <span className="font-semibold text-[var(--text-secondary)]">{event.source}</span>
                 </span>
               </div>
             </div>

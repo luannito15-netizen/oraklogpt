@@ -1,12 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  --color-oraklo-bg: #f5f2eb;
-  --color-oraklo-text: #1a0f1f;
-  --color-oraklo-primary: #7b2ff7;
-  --color-oraklo-primary-hover: #5a1edc;
-  --color-oraklo-glow: #a66bff;
-
   --font-sans: var(--font-montserrat);
   --font-display: var(--font-anton);
 
@@ -16,91 +10,109 @@
   --spacing-30: 7.5rem;
 }
 
-/* ── Theme tokens ────────────────────────────────────────────────── */
-/*
-  Tiers de texto calibrados para WCAG AA em cada tema:
-  hi  → texto primário   (headings, valores)
-  mid → texto secundário (body, descrições)
-  low → texto terciário  (labels, hints)
-  dim → texto fantasma   (captions, metadados)
-
-  Contraste mínimo testado sobre os fundo de cada tema:
-  Light hi  ≈ 16:1  mid ≈ 7.2:1  low ≈ 4.6:1  dim ≈ 3.2:1 (só large text)
-  Dark  hi  ≈ 14:1  mid ≈ 7.0:1  low ≈ 3.8:1  dim ≈ 2.4:1 (só decorativo)
-*/
+/* ── Layer 1 — Raw palette aliases ──────────────────────────────────────── */
 :root {
-  /* Backgrounds */
-  --th-bg:          #e6e1d5;
-  --th-bg-sub:      #d9d4c6;
-  --th-bg-elevated: #f0ece4;
-  --th-bg-card:     #ffffff;
+  /* Light raw */
+  --color-background-light:        #F4F0E8;
+  --color-surface-light:           #FFFDF8;
+  --color-surface-elevated-light:  #FFFFFF;
+  --color-border-light:            #C8BDB0;
+  --color-text-primary-light:      #1A1423;
+  --color-text-secondary-light:    #3D3349;
+  --color-text-muted-light:        #7A7188;
+  --color-accent-light:            #211621;
+  --color-accent-fg-light:         #FFFFFF;
+  --color-accent-hot-light:        #FF8A00;
+  --color-accent-hot-fg-light:     #FFFFFF;
+  --color-success-light:           #1FA15A;
+  --color-warning-light:           #D97706;
+  --color-danger-light:            #D92D20;
+  --color-info-light:              #2563EB;
+  --color-input-light:             #F0EBE1;
+  --color-ring-light:              #8B5CF6;
 
-  /* Texto */
-  --th-text: #1a0f1f;
-  --th-hi:   #1a0f1f;                    /* 100% — contraste 16:1 */
-  --th-mid:  rgba(26,15,31,0.76);        /* 76%  — contraste 7.3:1 ✓ AA */
-  --th-low:  rgba(26,15,31,0.54);        /* 54%  — contraste 4.6:1 ✓ AA */
-  --th-dim:  rgba(26,15,31,0.38);        /* 38%  — uso restrito: large text */
-
-  /* Bordas e overlays */
-  --th-border: rgba(26,15,31,0.14);
-  --th-ring:   rgba(26,15,31,0.12);
-  --th-overlay-5:  rgba(26,15,31,0.05);
-  --th-overlay-8:  rgba(26,15,31,0.08);
-  --th-overlay-12: rgba(26,15,31,0.12);
+  /* Dark raw */
+  --color-background-dark:         #0B0710;
+  --color-surface-dark:            #1A1328;
+  --color-surface-elevated-dark:   #241B35;
+  --color-border-dark:             #443558;
+  --color-text-primary-dark:       #F8F4EC;
+  --color-text-secondary-dark:     #E2D9EE;
+  --color-text-muted-dark:         #B8AECA;
+  --color-accent-dark:             #A855F7;
+  --color-accent-fg-dark:          #FFFFFF;
+  --color-accent-hot-dark:         #FF9A1F;
+  --color-accent-hot-fg-dark:      #1A1205;
+  --color-success-dark:            #22C55E;
+  --color-warning-dark:            #F59E0B;
+  --color-danger-dark:             #EF4444;
+  --color-info-dark:               #60A5FA;
+  --color-input-dark:              #120C1C;
+  --color-ring-dark:               #C084FC;
 }
 
+/* ── Layer 2 — Semantic tokens (dark default) ────────────────────────────── */
+:root,
 [data-theme="dark"] {
-  /* Backgrounds */
-  --th-bg:          #0d0714;
-  --th-bg-sub:      #0a0614;
-  --th-bg-elevated: #100a1c;
-  --th-bg-card:     #140d24;
+  --bg:               #0B0710;
+  --surface:          #1A1328;
+  --surface-elevated: #241B35;
+  --border:           #443558;
+  --text:             #F8F4EC;
+  --text-secondary:   #E2D9EE;
+  --text-muted:       #B8AECA;
+  --accent:           #A855F7;
+  --accent-fg:        #FFFFFF;
+  --accent-hot:       #FF9A1F;
+  --accent-hot-fg:    #1A1205;
+  --success:          #22C55E;
+  --warning:          #F59E0B;
+  --danger:           #EF4444;
+  --info:             #60A5FA;
+  --input-bg:         #120C1C;
+  --ring:             #C084FC;
 
-  /* Texto */
-  --th-text: #ffffff;
-  --th-hi:   rgba(255,255,255,0.92);
-  --th-mid:  rgba(255,255,255,0.65);
-  --th-low:  rgba(255,255,255,0.40);
-  --th-dim:  rgba(255,255,255,0.22);
+  /* Category accents */
+  --cat-football:     #22C55E;
+  --cat-politics:     #FB7185;
+  --cat-geo:          #67B7CC;
+  --cat-economy:      #F59E0B;
 
-  /* Bordas e overlays */
-  --th-border: rgba(255,255,255,0.08);
-  --th-ring:   rgba(255,255,255,0.10);
-  --th-overlay-5:  rgba(255,255,255,0.05);
-  --th-overlay-8:  rgba(255,255,255,0.08);
-  --th-overlay-12: rgba(255,255,255,0.12);
-}
+  /* Legacy --th-* aliases — keep so untouched pages still work */
+  --th-bg:            #0B0710;
+  --th-bg-sub:        #0B0710;
+  --th-bg-elevated:   #1A1328;
+  --th-bg-card:       #241B35;
+  --th-text:          #F8F4EC;
+  --th-hi:            #F8F4EC;
+  --th-mid:           #E2D9EE;
+  --th-low:           #B8AECA;
+  --th-dim:           rgba(184,174,202,0.55);
+  --th-border:        #443558;
+  --th-ring:          rgba(68,53,88,0.80);
+  --th-overlay-5:     rgba(68,53,88,0.15);
+  --th-overlay-8:     rgba(68,53,88,0.22);
+  --th-overlay-12:    rgba(68,53,88,0.32);
 
-/* Cards brancos recebem sombra no tema claro para se destacar do fundo */
-[data-theme="light"] .bg-\[var\(--th-bg-card\)\] {
-  box-shadow: 0 1px 3px rgba(26,15,31,0.08), 0 4px 16px rgba(26,15,31,0.05);
-}
+  /* Legacy --oraklo-* aliases */
+  --oraklo-color-bg:               #0B0710;
+  --oraklo-color-bg-elevated:      #241B35;
+  --oraklo-color-text:             #F8F4EC;
+  --oraklo-color-text-muted:       #E2D9EE;
+  --oraklo-color-text-subtle:      #B8AECA;
+  --oraklo-color-primary:          #A855F7;
+  --oraklo-color-primary-hover:    #9333EA;
+  --oraklo-color-primary-glow:     #C084FC;
+  --oraklo-color-primary-surface:  rgba(168,85,247,0.12);
+  --oraklo-gradient-primary:       linear-gradient(135deg, #A855F7 0%, #C084FC 50%, #9333EA 100%);
+  --oraklo-color-border:           #443558;
+  --oraklo-color-border-strong:    rgba(68,53,88,0.80);
+  --oraklo-color-sim:              #22C55E;
+  --oraklo-color-sim-surface:      rgba(34,197,94,0.15);
+  --oraklo-color-nao:              #EF4444;
+  --oraklo-color-nao-surface:      rgba(239,68,68,0.15);
 
-:root {
-  /* Brand colors */
-  --oraklo-color-bg: #f5f2eb;
-  --oraklo-color-bg-elevated: #ffffff;
-  --oraklo-color-text: #1a0f1f;
-  --oraklo-color-text-muted: color-mix(in srgb, #1a0f1f 55%, white);
-  --oraklo-color-text-subtle: color-mix(in srgb, #1a0f1f 38%, white);
-  --oraklo-color-primary: #7b2ff7;
-  --oraklo-color-primary-hover: #5a1edc;
-  --oraklo-color-primary-glow: #a66bff;
-  --oraklo-color-primary-surface: color-mix(in srgb, #7b2ff7 10%, white);
-  --oraklo-gradient-primary: linear-gradient(135deg, #7b2ff7 0%, #a66bff 50%, #5a1edc 100%);
-
-  /* Border */
-  --oraklo-color-border: color-mix(in srgb, #1a0f1f 10%, white);
-  --oraklo-color-border-strong: color-mix(in srgb, #1a0f1f 20%, white);
-
-  /* Status colors */
-  --oraklo-color-sim: #16a34a;
-  --oraklo-color-sim-surface: #dcfce7;
-  --oraklo-color-nao: #dc2626;
-  --oraklo-color-nao-surface: #fee2e2;
-
-  /* Spacing */
+  /* Spacing — shared */
   --oraklo-space-1: 0.25rem;
   --oraklo-space-2: 0.5rem;
   --oraklo-space-3: 0.75rem;
@@ -112,17 +124,88 @@
   --oraklo-space-16: 4rem;
   --oraklo-space-20: 5rem;
 
-  /* Radii */
+  /* Radii — shared */
   --oraklo-radius-xs: 0.375rem;
   --oraklo-radius-sm: 0.625rem;
   --oraklo-radius-md: 0.875rem;
   --oraklo-radius-lg: 1.25rem;
   --oraklo-radius-pill: 9999px;
 
-  /* Shadows */
-  --oraklo-shadow-soft: 0 1px 3px rgb(26 15 31 / 0.06), 0 4px 16px rgb(26 15 31 / 0.06);
-  --oraklo-shadow-card: 0 1px 2px rgb(26 15 31 / 0.04), 0 2px 8px rgb(26 15 31 / 0.06);
-  --oraklo-shadow-elevated: 0 4px 12px rgb(26 15 31 / 0.08), 0 16px 40px rgb(26 15 31 / 0.08);
+  /* Shadows — shared */
+  --oraklo-shadow-soft:     0 1px 3px rgb(11 7 16 / 0.25), 0 4px 16px rgb(11 7 16 / 0.20);
+  --oraklo-shadow-card:     0 1px 2px rgb(11 7 16 / 0.18), 0 2px 8px rgb(11 7 16 / 0.20);
+  --oraklo-shadow-elevated: 0 4px 12px rgb(11 7 16 / 0.30), 0 16px 40px rgb(11 7 16 / 0.28);
+}
+
+[data-theme="light"] {
+  --bg:               #F4F0E8;
+  --surface:          #FFFDF8;
+  --surface-elevated: #FFFFFF;
+  --border:           #C8BDB0;
+  --text:             #1A1423;
+  --text-secondary:   #3D3349;
+  --text-muted:       #7A7188;
+  --accent:           #211621;
+  --accent-fg:        #FFFFFF;
+  --accent-hot:       #FF8A00;
+  --accent-hot-fg:    #FFFFFF;
+  --success:          #1FA15A;
+  --warning:          #D97706;
+  --danger:           #D92D20;
+  --info:             #2563EB;
+  --input-bg:         #F0EBE1;
+  --ring:             #8B5CF6;
+
+  /* Category accents */
+  --cat-football:     #1FA15A;
+  --cat-politics:     #E85D75;
+  --cat-geo:          #2E90A6;
+  --cat-economy:      #D97706;
+
+  /* Legacy --th-* aliases */
+  --th-bg:            #F4F0E8;
+  --th-bg-sub:        #EAE5D8;
+  --th-bg-elevated:   #FFFDF8;
+  --th-bg-card:       #FFFFFF;
+  --th-text:          #1A1423;
+  --th-hi:            #1A1423;
+  --th-mid:           #3D3349;
+  --th-low:           #7A7188;
+  --th-dim:           rgba(26,20,35,0.38);
+  --th-border:        #C8BDB0;
+  --th-ring:          rgba(200,189,176,0.90);
+  --th-overlay-5:     rgba(26,20,35,0.05);
+  --th-overlay-8:     rgba(26,20,35,0.08);
+  --th-overlay-12:    rgba(26,20,35,0.12);
+
+  /* Legacy --oraklo-* aliases */
+  --oraklo-color-bg:               #F4F0E8;
+  --oraklo-color-bg-elevated:      #FFFFFF;
+  --oraklo-color-text:             #1A1423;
+  --oraklo-color-text-muted:       #3D3349;
+  --oraklo-color-text-subtle:      #7A7188;
+  --oraklo-color-primary:          #8B5CF6;
+  --oraklo-color-primary-hover:    #7C3AED;
+  --oraklo-color-primary-glow:     #A855F7;
+  --oraklo-color-primary-surface:  rgba(139,92,246,0.10);
+  --oraklo-gradient-primary:       linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #7C3AED 100%);
+  --oraklo-color-border:           #C8BDB0;
+  --oraklo-color-border-strong:    rgba(200,189,176,0.90);
+  --oraklo-color-sim:              #1FA15A;
+  --oraklo-color-sim-surface:      rgba(31,161,90,0.12);
+  --oraklo-color-nao:              #D92D20;
+  --oraklo-color-nao-surface:      rgba(217,45,32,0.12);
+
+  /* Shadows — light adjusted */
+  --oraklo-shadow-soft:     0 1px 3px rgb(26 20 35 / 0.08), 0 4px 16px rgb(26 20 35 / 0.06);
+  --oraklo-shadow-card:     0 1px 2px rgb(26 20 35 / 0.05), 0 2px 8px rgb(26 20 35 / 0.07);
+  --oraklo-shadow-elevated: 0 4px 12px rgb(26 20 35 / 0.09), 0 16px 40px rgb(26 20 35 / 0.08);
+}
+
+/* Cards no tema claro recebem sombra para se destacar */
+[data-theme="light"] .bg-\[var\(--th-bg-card\)\],
+[data-theme="light"] .bg-\[var\(--surface-elevated\)\] {
+  box-shadow: 0 1px 3px rgba(26,20,35,0.08), 0 4px 16px rgba(26,20,35,0.05);
 }
 
 * {
@@ -136,20 +219,20 @@ body {
 
 body {
   margin: 0;
-  background: var(--th-bg);
-  color: var(--oraklo-color-text);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--font-montserrat), "Montserrat", sans-serif;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--oraklo-color-primary) 20%, white);
-  color: var(--oraklo-color-text);
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  color: var(--text);
 }
 
 :focus-visible {
-  outline: 2px solid var(--oraklo-color-primary);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
@@ -235,6 +318,6 @@ body {
   left: 20px;
   z-index: 2;
   border-radius: 0 0 3px 3px;
-  background-image: linear-gradient(to right, #7b2ff7, #a66bff);
-  box-shadow: 0 0 6px 2px rgba(123, 47, 247, 0.55), 0 0 20px 0px rgba(166, 107, 255, 0.25);
+  background-image: linear-gradient(to right, var(--accent), var(--ring));
+  box-shadow: 0 0 6px 2px rgba(168,85,247,0.45), 0 0 20px 0px rgba(192,132,252,0.20);
 }

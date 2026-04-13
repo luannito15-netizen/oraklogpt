@@ -73,7 +73,7 @@ function buildShareText(props: ComprovantePrevisaoProps): string {
 
 function IconWallet() {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-white/30">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-[var(--text-muted)]">
       <rect x="1" y="3" width="12" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
       <path d="M1 6h12" stroke="currentColor" strokeWidth="1.2" />
       <circle cx="10" cy="9" r="1" fill="currentColor" />
@@ -83,7 +83,7 @@ function IconWallet() {
 
 function IconPercent() {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-white/30">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-[var(--text-muted)]">
       <circle cx="4" cy="4" r="1.5" stroke="currentColor" strokeWidth="1.2" />
       <circle cx="10" cy="10" r="1.5" stroke="currentColor" strokeWidth="1.2" />
       <path d="M11 3L3 11" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
@@ -93,7 +93,7 @@ function IconPercent() {
 
 function IconTrend() {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-white/30">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-[var(--text-muted)]">
       <path d="M1 10l4-4 3 3 5-6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M10 4h3v3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -102,7 +102,7 @@ function IconTrend() {
 
 function IconSparkle() {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-white/30">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-[var(--text-muted)]">
       <path d="M7 1v2M7 11v2M1 7h2M11 7h2M3 3l1.5 1.5M9.5 9.5L11 11M11 3l-1.5 1.5M4.5 9.5L3 11" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
       <circle cx="7" cy="7" r="2" stroke="currentColor" strokeWidth="1.2" />
     </svg>
@@ -111,7 +111,7 @@ function IconSparkle() {
 
 function IconCalendar() {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-white/30">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-[var(--text-muted)]">
       <rect x="1" y="2.5" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
       <path d="M1 6h12M4.5 1v3M9.5 1v3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
     </svg>
@@ -120,7 +120,7 @@ function IconCalendar() {
 
 function IconShield() {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-white/30">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 text-[var(--text-muted)]">
       <path d="M7 1l5 2v4c0 3-2.5 5.5-5 6-2.5-.5-5-3-5-6V3L7 1z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
       <path d="M4.5 7l2 2 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -177,22 +177,22 @@ export function ComprovantePrevisao(props: ComprovantePrevisaoProps) {
   const isSim = side === "SIM";
 
   return (
-    <div className="overflow-hidden h-full flex flex-col bg-[#130a24]">
+    <div className="overflow-hidden h-full flex flex-col bg-[var(--surface)]">
       {/* ── Card ──────────────────────────────────────────────── */}
 
         {/* Header strip */}
-        <div className="bg-gradient-to-br from-[#2d1060] to-[#1a0f2e] px-6 py-6 border-b border-white/10">
+        <div className="bg-[var(--surface-elevated)] px-6 py-6 border-b border-[var(--border)]">
           <Image
             src={logoOraklo}
             alt="ORAKLO"
             sizes="(max-width: 768px) 160px, 200px"
-            className="h-8 w-auto brightness-0 invert"
+            className="h-8 w-auto logo-invert"
             priority
           />
-          <p className="mt-2 text-sm font-semibold text-violet-400 tracking-wide">
+          <p className="mt-2 text-sm font-semibold text-[var(--ring)] tracking-wide">
             Comprovante de Previsão
           </p>
-          <p className="mt-0.5 text-xs text-white/40 tabular-nums">
+          <p className="mt-0.5 text-xs text-[var(--text-muted)] tabular-nums">
             {formatDateTime(registeredAt)}
           </p>
         </div>
@@ -201,23 +201,23 @@ export function ComprovantePrevisao(props: ComprovantePrevisaoProps) {
         <div className="px-5 pt-5 pb-0">
 
           {/* Event block */}
-          <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/35">
+          <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">
             Evento
           </p>
-          <p className="mt-1.5 text-xl font-black text-white leading-tight line-clamp-2">
+          <p className="mt-1.5 text-xl font-black text-[var(--text)] leading-tight line-clamp-2">
             {eventTitle}
           </p>
           <div className="mt-2 flex items-center gap-2">
-            <span className="rounded-full ring-1 ring-white/15 px-2 py-0.5 text-[10px] text-white/50 uppercase tracking-wide">
+            <span className="rounded-full ring-1 ring-[var(--border)] px-2 py-0.5 text-[10px] text-[var(--text-muted)] uppercase tracking-wide">
               {eventCategory}
             </span>
           </div>
-          <p className="mt-1.5 text-sm text-white/50">
+          <p className="mt-1.5 text-sm text-[var(--text-muted)]">
             Encerra em {eventDeadline}
           </p>
 
           {/* Side badge */}
-          <p className="mt-5 text-[9px] font-bold uppercase tracking-[0.14em] text-white/35">
+          <p className="mt-5 text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">
             Previsão Registrada
           </p>
           <div
@@ -250,39 +250,39 @@ export function ComprovantePrevisao(props: ComprovantePrevisaoProps) {
         </div>
 
         {/* Dashed separator */}
-        <div className="mx-5 mt-5 border-t border-dashed border-white/15" />
+        <div className="mx-5 mt-5 border-t border-dashed border-[var(--border)]" />
 
         {/* Financial breakdown */}
         <div className="px-5 py-4 space-y-2.5">
           <div className="flex justify-between items-center">
-            <span className="flex items-center gap-2 text-xs text-white/45">
+            <span className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
               <IconWallet />
               Valor registrado
             </span>
-            <span className="text-xs font-semibold text-white tabular-nums">
+            <span className="text-xs font-semibold text-[var(--text)] tabular-nums">
               {formatBRL(amount)}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="flex items-center gap-2 text-xs text-white/45">
+            <span className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
               <IconPercent />
               Taxa plataforma
             </span>
-            <span className="text-xs text-white/45 tabular-nums">
+            <span className="text-xs text-[var(--text-muted)] tabular-nums">
               {formatBRL(fee)}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="flex items-center gap-2 text-xs text-white/45">
+            <span className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
               <IconTrend />
               Cotação
             </span>
-            <span className="text-xs font-semibold text-[#a78bfa] tabular-nums">
+            <span className="text-xs font-semibold text-[var(--ring)] tabular-nums">
               {formatCotacao(cotacao)}
             </span>
           </div>
-          <div className="flex justify-between items-center pt-1 border-t border-white/10">
-            <span className="flex items-center gap-2 text-xs text-white/80 font-semibold">
+          <div className="flex justify-between items-center pt-1 border-t border-[var(--border)]">
+            <span className="flex items-center gap-2 text-xs text-[var(--text-secondary)] font-semibold">
               <IconSparkle />
               Retorno estimado
             </span>
@@ -293,32 +293,32 @@ export function ComprovantePrevisao(props: ComprovantePrevisaoProps) {
         </div>
 
         {/* Dashed separator */}
-        <div className="mx-5 border-t border-dashed border-white/15" />
+        <div className="mx-5 border-t border-dashed border-[var(--border)]" />
 
         {/* Event metadata */}
         <div className="px-5 py-4 space-y-2.5">
           <div className="flex justify-between items-center">
-            <span className="flex items-center gap-2 text-xs text-white/45">
+            <span className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
               <IconCalendar />
               Prazo do evento
             </span>
-            <span className="text-xs font-semibold text-white">
+            <span className="text-xs font-semibold text-[var(--text)]">
               em {eventDeadline}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="flex items-center gap-2 text-xs text-white/45">
+            <span className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
               <IconShield />
               Fonte de validação
             </span>
-            <span className="text-xs font-semibold text-white uppercase tracking-wide">
+            <span className="text-xs font-semibold text-[var(--text)] uppercase tracking-wide">
               {eventSource}
             </span>
           </div>
         </div>
 
         {/* Bottom strip — status, ID, tagline, and action buttons */}
-        <div className="border-t border-white/[0.08] px-5 py-4">
+        <div className="border-t border-[var(--border)] px-5 py-4">
           {/* Status pill */}
           <div className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 px-3 py-1 ring-1 ring-amber-500/20">
             <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
@@ -326,13 +326,13 @@ export function ComprovantePrevisao(props: ComprovantePrevisaoProps) {
           </div>
 
           {/* Position ID */}
-          <p className="mt-3 font-mono text-xs text-white/40">
-            <span className="text-violet-500/70">#</span>
+          <p className="mt-3 font-mono text-xs text-[var(--text-muted)]">
+            <span className="text-[var(--accent)]/70">#</span>
             {truncateId(positionId).replace(/^#/, "")}
           </p>
 
           {/* Tagline */}
-          <p className="mt-3 text-center text-[11px] italic text-white/30 leading-relaxed">
+          <p className="mt-3 text-center text-[11px] italic text-[var(--text-muted)] leading-relaxed">
             &ldquo;Previsão registrada e auditável pelo ORAKLO.&rdquo;
           </p>
 
@@ -341,7 +341,7 @@ export function ComprovantePrevisao(props: ComprovantePrevisaoProps) {
             <button
               type="button"
               onClick={handleShare}
-              className="w-full rounded-xl py-2.5 text-xs font-semibold text-white/70 ring-1 ring-white/15 transition-all hover:ring-white/30 hover:text-white flex items-center justify-center"
+              className="w-full rounded-xl py-2.5 text-xs font-semibold text-[var(--text-secondary)] ring-1 ring-[var(--border)] transition-all hover:ring-[var(--ring)] hover:text-[var(--text)] flex items-center justify-center"
             >
               <IconShare />
               {shareLabel}
@@ -350,7 +350,7 @@ export function ComprovantePrevisao(props: ComprovantePrevisaoProps) {
 
           <a
             href="/events"
-            className="mt-2 block text-center text-sm text-white/40 hover:text-white/70 underline underline-offset-4 transition-colors"
+            className="mt-2 block text-center text-sm text-[var(--text-muted)] hover:text-[var(--text-secondary)] underline underline-offset-4 transition-colors"
           >
             Ver outras previsões →
           </a>

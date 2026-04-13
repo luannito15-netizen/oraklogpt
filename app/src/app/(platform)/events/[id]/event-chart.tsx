@@ -140,23 +140,23 @@ export function EventChart({ eventId, initialPrice }: EventChartProps) {
   }
 
   return (
-    <div className="rounded-2xl bg-[#1a0f2e] p-5 ring-1 ring-white/8">
+    <div className="rounded-2xl bg-[var(--surface)] p-5 ring-1 ring-[var(--border)]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/30">
+          <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">
             Cotação ao longo do tempo
           </p>
-          <p className="mt-0.5 text-xs text-white/50">
+          <p className="mt-0.5 text-xs text-[var(--text-muted)]">
             {hasData ? `${points.length} pontos` : "Aguardando movimentos"}
           </p>
         </div>
         <div className="flex items-center gap-4 text-[10px]">
-          <span className="flex items-center gap-1.5 text-white/40">
+          <span className="flex items-center gap-1.5 text-[var(--text-muted)]">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
             SIM
           </span>
-          <span className="flex items-center gap-1.5 text-white/40">
+          <span className="flex items-center gap-1.5 text-[var(--text-muted)]">
             <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
             NÃO
           </span>
@@ -167,7 +167,7 @@ export function EventChart({ eventId, initialPrice }: EventChartProps) {
       <div className="relative h-40 w-full">
         {loading ? (
           <div className="flex h-full items-center justify-center">
-            <span className="text-[10px] text-white/20">Carregando histórico...</span>
+            <span className="text-[10px] text-[var(--text-muted)]">Carregando histórico...</span>
           </div>
         ) : (
           <svg

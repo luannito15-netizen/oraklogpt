@@ -193,8 +193,8 @@ export function ProbabilityChart({ data, height = H }: ProbabilityChartProps) {
 
       {/* Hover tooltip */}
       {hover !== null && hoverSim !== null && (
-        <div className="pointer-events-none absolute left-4 top-2 rounded-xl bg-white/8 px-3 py-2 text-xs backdrop-blur-sm ring-1 ring-white/10">
-          <p className="text-white/40">{data[hover].time}</p>
+        <div className="pointer-events-none absolute left-4 top-2 rounded-xl bg-[var(--surface-elevated)] px-3 py-2 text-xs backdrop-blur-sm ring-1 ring-[var(--border)]">
+          <p className="text-[var(--text-muted)]">{data[hover].time}</p>
           <div className="mt-1 flex items-center gap-3">
             <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />

@@ -36,8 +36,8 @@ export function DashboardChart() {
       <div className="absolute inset-0 flex flex-col justify-between pb-6 pt-3 pointer-events-none">
         {[100, 75, 50, 25, 0].map((v) => (
           <div key={v} className="flex items-center gap-2">
-            <span className="w-10 text-right text-[9px] text-white/20 hidden">R${v}</span>
-            <div className="flex-1 border-t border-white/[0.04]" />
+            <span className="w-10 text-right text-[9px] text-[var(--text-muted)] hidden">R${v}</span>
+            <div className="flex-1 border-t border-[var(--border)]" />
           </div>
         ))}
       </div>
@@ -96,7 +96,7 @@ export function DashboardChart() {
 
       {/* Empty state overlay */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <p className="text-xs font-semibold text-white/20">
+        <p className="text-xs font-semibold text-[var(--text-muted)]">
           Registre sua primeira previsão para ver o histórico
         </p>
       </div>

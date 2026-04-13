@@ -1,9 +1,8 @@
 import { supabase } from "./supabase/client";
 import type { EventCardData } from "@/components/ui/event-card";
 
-// image_url excluded: view must be recreated after ALTER TABLE (run migration 004b)
 const VIEW_COLUMNS =
-  "id, title, status, category, source, deadline_at, yes_amount, no_amount, total_volume, yes_percent, no_percent";
+  "id, title, status, category, source, deadline_at, yes_amount, no_amount, total_volume, yes_percent, no_percent, image_url";
 
 function toEventCardData(row: Record<string, unknown>): EventCardData {
   const deadlineAtRaw = row.deadline_at as string;
@@ -37,7 +36,7 @@ function toEventCardData(row: Record<string, unknown>): EventCardData {
     totalVolume,
     yesPercent,
     noPercent,
-    imageUrl: null,
+    imageUrl: (row.image_url as string | null) ?? null,
   };
 }
 

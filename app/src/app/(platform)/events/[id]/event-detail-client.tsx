@@ -37,25 +37,25 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
         <div className="flex flex-1 items-center justify-between rounded-xl bg-emerald-500/15 px-4 py-3 ring-1 ring-emerald-500/25">
           <div>
             <p className="text-xs font-bold text-emerald-400">SIM</p>
-            <p className="mt-0.5 text-lg font-black text-white">
+            <p className="mt-0.5 text-lg font-black text-[var(--text)]">
               {cotacao(simPercent)}
             </p>
           </div>
           <div className="text-right">
             <p className="text-[10px] text-emerald-400">▲</p>
-            <p className="text-xs font-semibold text-white/50">{simPercent}%</p>
+            <p className="text-xs font-semibold text-[var(--text-muted)]">{simPercent}%</p>
           </div>
         </div>
         <div className="flex flex-1 items-center justify-between rounded-xl bg-orange-500/15 px-4 py-3 ring-1 ring-orange-500/25">
           <div>
             <p className="text-xs font-bold text-orange-400">NÃO</p>
-            <p className="mt-0.5 text-lg font-black text-white">
+            <p className="mt-0.5 text-lg font-black text-[var(--text)]">
               {cotacao(naoPercent)}
             </p>
           </div>
           <div className="text-right">
             <p className="text-[10px] text-orange-400">▼</p>
-            <p className="text-xs font-semibold text-white/50">{naoPercent}%</p>
+            <p className="text-xs font-semibold text-[var(--text-muted)]">{naoPercent}%</p>
           </div>
         </div>
       </div>
@@ -72,22 +72,22 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
       </div>
 
       {/* Volume / Deadline / Source metadata */}
-      <div className="mt-5 grid grid-cols-3 gap-4 border-t border-white/8 pt-5">
+      <div className="mt-5 grid grid-cols-3 gap-4 border-t border-[var(--border)] pt-5">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">Volume</p>
-          <p className="mt-1 text-sm font-bold text-white">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--text-muted)]">Volume</p>
+          <p className="mt-1 text-sm font-bold text-[var(--text)]">
             R$ {volume.toLocaleString("pt-BR")}
           </p>
         </div>
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">Encerra</p>
-          <p className="mt-1 text-sm font-bold text-white">em {event.deadline}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--text-muted)]">Encerra</p>
+          <p className="mt-1 text-sm font-bold text-[var(--text)]">em {event.deadline}</p>
         </div>
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--text-muted)]">
             {participantCount !== null ? "Participantes" : "Fonte"}
           </p>
-          <p className="mt-1 text-sm font-bold text-white">
+          <p className="mt-1 text-sm font-bold text-[var(--text)]">
             {participantCount !== null ? participantCount.toLocaleString("pt-BR") : event.source}
           </p>
         </div>

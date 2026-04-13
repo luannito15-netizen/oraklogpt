@@ -202,7 +202,7 @@ export default async function PublicHomePage() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
             <div className="absolute inset-0 rounded-2xl bg-[var(--oraklo-color-primary)] opacity-20 blur-2xl" />
-            <div className="relative overflow-hidden rounded-2xl ring-2 ring-[var(--oraklo-color-primary)]/60">
+            <div className="relative overflow-hidden rounded-2xl">
               <Image src={metodoMulher} alt="Pessoa consultando previsões no ORAKLO" className="h-full w-full object-cover" />
             </div>
           </div>

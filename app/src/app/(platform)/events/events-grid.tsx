@@ -21,11 +21,11 @@ interface EventsGridProps {
 
 // ─── Section header ───────────────────────────────────────────────────────────
 
-function SectionHeader({ label, dotClass }: { label: string; dotClass: string }) {
+function SectionHeader({ label, dotClass, accent }: { label: string; dotClass: string; accent?: boolean }) {
   return (
-    <div className="flex items-center gap-2 mb-4">
+    <div className={`flex items-center gap-2 mb-4 ${accent ? "pl-3 border-l-2 border-red-500/60" : ""}`}>
       <span className={`h-2 w-2 rounded-full ${dotClass}`} />
-      <h2 className="text-sm font-bold uppercase tracking-[0.1em] text-white/60">{label}</h2>
+      <h2 className={`text-sm font-bold uppercase tracking-[0.1em] ${accent ? "text-red-400" : "text-[var(--text-secondary)]"}`}>{label}</h2>
     </div>
   );
 }
@@ -62,30 +62,30 @@ function EventList({
           key={e.id}
           type="button"
           onClick={() => onOpen(e)}
-          className="flex w-full items-center gap-4 rounded-2xl bg-[#140d24] px-5 py-4 text-left ring-1 ring-white/8 transition-all hover:ring-[var(--oraklo-color-primary)]/30"
+          className="flex w-full items-center gap-4 rounded-2xl bg-[var(--surface)] px-5 py-4 text-left ring-1 ring-[var(--border)] transition-all hover:ring-[var(--accent)]/40"
         >
           <div className="flex-1 min-w-0">
-            <p className="text-[9px] font-bold uppercase tracking-[0.1em] text-white/25">{e.category}</p>
-            <p className="mt-0.5 truncate text-sm font-semibold text-white/80">{e.title}</p>
+            <p className="text-[9px] font-bold uppercase tracking-[0.1em] text-[var(--text-muted)]">{e.category}</p>
+            <p className="mt-0.5 truncate text-sm font-semibold text-[var(--text-secondary)]">{e.title}</p>
           </div>
           <div className="flex items-center gap-6 shrink-0">
             <div className="text-center">
-              <p className="text-[9px] text-white/20">SIM</p>
+              <p className="text-[9px] text-[var(--text-muted)]">SIM</p>
               <p className="text-sm font-bold text-emerald-400">{e.simPercent}%</p>
             </div>
             <div className="text-center">
-              <p className="text-[9px] text-white/20">NÃO</p>
+              <p className="text-[9px] text-[var(--text-muted)]">NÃO</p>
               <p className="text-sm font-bold text-orange-400">{100 - e.simPercent}%</p>
             </div>
             <div className="text-center hidden sm:block">
-              <p className="text-[9px] text-white/20">Volume</p>
-              <p className="text-xs font-semibold text-white/50">R$ {(e.volume / 1000).toFixed(1)}k</p>
+              <p className="text-[9px] text-[var(--text-muted)]">Volume</p>
+              <p className="text-xs font-semibold text-[var(--text-muted)]">R$ {(e.volume / 1000).toFixed(1)}k</p>
             </div>
             <div className="text-center hidden md:block">
-              <p className="text-[9px] text-white/20">Encerra</p>
-              <p className="text-xs font-semibold text-white/50">{e.deadline}</p>
+              <p className="text-[9px] text-[var(--text-muted)]">Encerra</p>
+              <p className="text-xs font-semibold text-[var(--text-muted)]">{e.deadline}</p>
             </div>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-white/15">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-[var(--border)]">
               <path d="M3.5 7h7M8 4l2.5 3L8 10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
             </svg>
           </div>
@@ -140,8 +140,8 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
 
   if (initialEvents.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 rounded-2xl bg-[#140d24] py-20 text-center ring-1 ring-white/8">
-        <p className="text-sm font-semibold text-white/40">Nenhum evento disponível no momento.</p>
+      <div className="flex flex-col items-center justify-center gap-4 rounded-2xl bg-[var(--surface)] py-20 text-center ring-1 ring-[var(--border)]">
+        <p className="text-sm font-semibold text-[var(--text-muted)]">Nenhum evento disponível no momento.</p>
       </div>
     );
   }
@@ -158,15 +158,15 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
         {/* ── Page header ── */}
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h1 className="font-[family-name:var(--font-anton)] text-2xl text-white">Mercados</h1>
-            <p className="mt-0.5 text-xs text-white/30">
+            <h1 className="font-[family-name:var(--font-anton)] text-2xl text-[var(--text)]">Mercados</h1>
+            <p className="mt-0.5 text-xs text-[var(--text-muted)]">
               {initialEvents.length} eventos abertos · R$ {(totalVolume / 1000).toFixed(1)}k em volume
             </p>
           </div>
           {/* View toggle */}
-          <div className="flex items-center gap-1 rounded-xl bg-white/5 p-1 ring-1 ring-white/8">
+          <div className="flex items-center gap-1 rounded-xl bg-[var(--surface)] p-1 ring-1 ring-[var(--border)]">
             <button type="button" aria-label="Visualização em grade" onClick={() => setView("grid")}
-              className={`rounded-lg p-2 transition-all ${view === "grid" ? "bg-white/10 text-white" : "text-white/25 hover:text-white/50"}`}>
+              className={`rounded-lg p-2 transition-all ${view === "grid" ? "bg-[var(--accent)]/20 text-[var(--text)] ring-1 ring-[var(--accent)]/50" : "text-[var(--text-muted)] hover:bg-[var(--surface-elevated)] hover:text-[var(--text-secondary)]"}`}>
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
                 <rect x="1" y="1" width="4.5" height="4.5" rx="1" fill="currentColor"/>
                 <rect x="7.5" y="1" width="4.5" height="4.5" rx="1" fill="currentColor"/>
@@ -175,7 +175,7 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
               </svg>
             </button>
             <button type="button" aria-label="Visualização em lista" onClick={() => setView("list")}
-              className={`rounded-lg p-2 transition-all ${view === "list" ? "bg-white/10 text-white" : "text-white/25 hover:text-white/50"}`}>
+              className={`rounded-lg p-2 transition-all ${view === "list" ? "bg-[var(--accent)]/20 text-[var(--text)] ring-1 ring-[var(--accent)]/50" : "text-[var(--text-muted)] hover:bg-[var(--surface-elevated)] hover:text-[var(--text-secondary)]"}`}>
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
                 <path d="M1 3h11M1 6.5h11M1 10h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
@@ -184,15 +184,15 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
         </div>
 
         {/* ── Stats strip ── */}
-        <div className="grid grid-cols-3 divide-x divide-white/6 overflow-hidden rounded-2xl bg-[#140d24] ring-1 ring-white/8">
+        <div className="grid grid-cols-3 divide-x divide-[var(--border)] overflow-hidden rounded-2xl bg-[var(--surface)] ring-1 ring-[var(--border)]">
           {[
             { label: "Eventos abertos", value: initialEvents.length.toString() },
             { label: "Volume total",    value: `R$ ${(totalVolume / 1000).toFixed(1)}k` },
             { label: "Participações",   value: "1.240" },
           ].map((s) => (
             <div key={s.label} className="px-5 py-3.5 text-center">
-              <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-white/20">{s.label}</p>
-              <p className="mt-1 font-[family-name:var(--font-anton)] text-xl text-white">{s.value}</p>
+              <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">{s.label}</p>
+              <p className="mt-1 font-[family-name:var(--font-anton)] text-xl text-[var(--text)]">{s.value}</p>
             </div>
           ))}
         </div>
@@ -201,13 +201,13 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
         <div className="flex flex-wrap items-center gap-3">
           {/* Search */}
           <div className="relative min-w-[200px] flex-1">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" width="12" height="12" viewBox="0 0 12 12" fill="none">
               <circle cx="5.5" cy="5.5" r="4" stroke="currentColor" strokeWidth="1.3"/>
               <path d="m9 9 2 2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
             </svg>
             <input value={search} onChange={(e) => setSearch(e.target.value)}
               type="search" placeholder="Buscar evento..."
-              className="h-9 w-full rounded-xl bg-white/5 pl-8 pr-3 text-xs text-white outline-none ring-1 ring-white/8 placeholder:text-white/20 focus:ring-[var(--oraklo-color-primary)]/50"/>
+              className="h-9 w-full rounded-xl bg-[var(--input-bg)] pl-8 pr-3 text-xs text-[var(--text)] outline-none ring-1 ring-[var(--border)] placeholder:text-[var(--text-muted)] focus:ring-[var(--ring)]"/>
           </div>
 
           {/* Category pills */}
@@ -216,8 +216,8 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
               <button type="button" key={cat} onClick={() => setCategory(cat)}
                 className={`rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.08em] transition-all ${
                   category === cat
-                    ? "bg-[var(--oraklo-color-primary)]/20 text-[var(--oraklo-color-primary-glow)] ring-1 ring-[var(--oraklo-color-primary)]/30"
-                    : "text-white/30 hover:bg-white/5 hover:text-white/60"
+                    ? "bg-[var(--accent)]/20 text-[var(--ring)] ring-1 ring-[var(--accent)]/50"
+                    : "text-[var(--text-muted)] hover:bg-[var(--surface-elevated)] hover:text-[var(--text-secondary)]"
                 }`}>
                 {cat}
               </button>
@@ -227,12 +227,12 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
           {/* Sort */}
           <div className="relative ml-auto">
             <select aria-label="Ordenar eventos" value={sort} onChange={(e) => setSort(e.target.value)}
-              className="h-9 appearance-none rounded-xl bg-white/5 pl-3 pr-7 text-[10px] font-semibold text-white/50 outline-none ring-1 ring-white/8 transition-all focus:ring-[var(--oraklo-color-primary)]/50 hover:bg-white/8">
+              className="h-9 appearance-none rounded-xl bg-[var(--input-bg)] pl-3 pr-7 text-[10px] font-semibold text-[var(--text-muted)] outline-none ring-1 ring-[var(--border)] transition-all focus:ring-[var(--ring)] hover:bg-[var(--surface)]">
               {sortOptions.map((o) => (
-                <option key={o.value} value={o.value} className="bg-[#1a0f2e]">{o.label}</option>
+                <option key={o.value} value={o.value} className="bg-[var(--surface)]">{o.label}</option>
               ))}
             </select>
-            <svg className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-white/25" width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <svg className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" width="10" height="10" viewBox="0 0 10 10" fill="none">
               <path d="M2 3.5L5 6.5 8 3.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
             </svg>
           </div>
@@ -241,23 +241,23 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
         {/* Active filter chips */}
         {isFiltering && (
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[10px] text-white/25">Filtros ativos:</span>
+            <span className="text-[10px] text-[var(--text-muted)]">Filtros ativos:</span>
             {category !== "Todos" && (
               <button type="button" aria-label={`Remover filtro: ${category}`} onClick={() => setCategory("Todos")}
-                className="flex items-center gap-1.5 rounded-full bg-[var(--oraklo-color-primary)]/15 px-2.5 py-1 text-[10px] font-semibold text-[var(--oraklo-color-primary-glow)] ring-1 ring-[var(--oraklo-color-primary)]/25">
+                className="flex items-center gap-1.5 rounded-full bg-[var(--accent)]/10 px-2.5 py-1 text-[10px] font-semibold text-[var(--ring)] ring-1 ring-[var(--accent)]/25">
                 {category}
                 <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><path d="M2 2l4 4M6 2L2 6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
               </button>
             )}
             {search && (
               <button type="button" aria-label={`Remover busca: ${search}`} onClick={() => setSearch("")}
-                className="flex items-center gap-1.5 rounded-full bg-white/8 px-2.5 py-1 text-[10px] font-semibold text-white/50 ring-1 ring-white/10">
+                className="flex items-center gap-1.5 rounded-full bg-[var(--surface)] px-2.5 py-1 text-[10px] font-semibold text-[var(--text-muted)] ring-1 ring-[var(--border)]">
                 &ldquo;{search}&rdquo;
                 <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"><path d="M2 2l4 4M6 2L2 6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
               </button>
             )}
             <button type="button" onClick={() => { setCategory("Todos"); setSearch(""); }}
-              className="text-[10px] text-white/25 hover:text-white/50 transition-colors">
+              className="text-[10px] text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors">
               Limpar tudo
             </button>
           </div>
@@ -265,19 +265,19 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
 
         {/* ── Results ── */}
         {sorted.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-4 rounded-2xl bg-[#140d24] py-16 text-center ring-1 ring-white/8">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="text-white/20">
+          <div className="flex flex-col items-center justify-center gap-4 rounded-2xl bg-[var(--surface)] py-16 text-center ring-1 ring-[var(--border)]">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--surface-elevated)]">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="text-[var(--text-muted)]">
                 <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.3"/>
                 <path d="m13 13 3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
             </div>
             <div>
-              <p className="text-sm font-semibold text-white/40">Nenhum evento encontrado</p>
-              <p className="mt-1 text-xs text-white/20">Tente ajustar os filtros ou busca</p>
+              <p className="text-sm font-semibold text-[var(--text-muted)]">Nenhum evento encontrado</p>
+              <p className="mt-1 text-xs text-[var(--text-muted)]">Tente ajustar os filtros ou busca</p>
             </div>
             <button type="button" onClick={() => { setCategory("Todos"); setSearch(""); }}
-              className="rounded-xl bg-white/5 px-4 py-2 text-xs font-semibold text-white/40 ring-1 ring-white/8 hover:bg-white/8 hover:text-white/60 transition-colors">
+              className="rounded-xl bg-[var(--surface-elevated)] px-4 py-2 text-xs font-semibold text-[var(--text-muted)] ring-1 ring-[var(--border)] hover:ring-[var(--ring)] hover:text-[var(--text-secondary)] transition-colors">
               Limpar filtros
             </button>
           </div>
@@ -289,7 +289,7 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
           <div className="space-y-8">
             {hot.length > 0 && (
               <section>
-                <SectionHeader label="Em Alta" dotClass={`${URGENCY_COLORS.hot.dot} animate-pulse`} />
+                <SectionHeader label="Em Alta" dotClass={`${URGENCY_COLORS.hot.dot} animate-pulse`} accent />
                 <EventHotHero event={hot[0]} onOpen={setDrawerEvent} />
                 {hot.length > 1 && (
                   <div className="mt-3">
@@ -324,7 +324,7 @@ export function EventsGrid({ initialEvents }: EventsGridProps) {
 
         {/* Result count */}
         {sorted.length > 0 && (
-          <p className="text-center text-[10px] text-white/20">
+          <p className="text-center text-[10px] text-[var(--text-muted)]">
             Exibindo {sorted.length} de {initialEvents.length} eventos
           </p>
         )}
