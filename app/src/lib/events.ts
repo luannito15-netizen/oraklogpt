@@ -36,7 +36,7 @@ function toEventCardData(row: Record<string, unknown>): EventCardData {
     totalVolume,
     yesPercent,
     noPercent,
-    imageUrl: (row.image_url as string | null) ?? null,
+    imageUrl: (row.image_url as string | null) ?? `https://picsum.photos/seed/${row.id as string}/800/400`,
   };
 }
 
@@ -47,7 +47,10 @@ export async function getOpenEvents(): Promise<EventCardData[]> {
     .eq("status", "open")
     .order("deadline_at", { ascending: true });
 
-  if (error) throw error;
+  if (error) {
+    console.error("[getOpenEvents] Supabase error:", JSON.stringify(error, null, 2));
+    throw error;
+  }
   if (!data) return [];
 
   return data.map((row) => toEventCardData(row as Record<string, unknown>));

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { EventCardData } from "@/components/ui/event-card";
+import { EventCard } from "@/components/ui/event-card";
 import { getOpenEvents } from "@/lib/events";
 
 // ── TickerStrip ──────────────────────────────────────────────────────────────
@@ -32,60 +33,6 @@ function TickerStrip({ events }: { events: EventCardData[] }) {
   );
 }
 
-// ── FeaturedEventCard ────────────────────────────────────────────────────────
-function FeaturedEventCard({ event, prominent }: { event: EventCardData; prominent?: boolean }) {
-  const nao = 100 - event.simPercent;
-  const cotSim = event.simPercent > 0 ? (0.95 / (event.simPercent / 100)).toFixed(2) : "—";
-  const cotNao = nao > 0 ? (0.95 / (nao / 100)).toFixed(2) : "—";
-
-  return (
-    <Link
-      href={`/events/${event.id}`}
-      data-cat={event.category}
-      className={`group relative overflow-hidden rounded-2xl bg-[var(--surface)] ring-1 ring-[var(--border)] transition-all duration-200 hover:ring-[color-mix(in_srgb,var(--accent)_40%,transparent)] hover:-translate-y-1 block ${prominent ? "p-6" : "p-5"}`}
-    >
-      {/* Category + deadline */}
-      <div className="flex items-center justify-between mb-3">
-        <span className="event-card-badge rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wide">
-          {event.category}
-        </span>
-        <span className="text-[10px] text-[var(--text-muted)]">{event.deadline}</span>
-      </div>
-
-      {/* Title */}
-      <p className={`font-black leading-snug text-[var(--text)] line-clamp-2 mb-4 ${prominent ? "text-base" : "text-sm"}`}>
-        {event.title}
-      </p>
-
-      {/* SIM/NÃO distribution bar */}
-      <div className="mb-4">
-        <div className={`flex w-full overflow-hidden rounded-full ${prominent ? "h-3" : "h-2"}`}>
-          <div className="bg-emerald-500 transition-all duration-500" style={{ width: `${event.simPercent}%` }} />
-          <div className="flex-1 bg-orange-500/50" />
-        </div>
-        <div className="mt-1.5 flex justify-between text-[10px] text-[var(--text-muted)]">
-          <span className="text-emerald-400 font-bold">SIM {event.simPercent}%</span>
-          <span className="text-orange-400 font-bold">NÃO {nao}%</span>
-        </div>
-      </div>
-
-      {/* SIM / NÃO cotações */}
-      <div className="grid grid-cols-2 gap-2">
-        <div className="rounded-xl bg-emerald-500/10 px-3 py-2 ring-1 ring-emerald-500/20">
-          <p className="text-[9px] font-bold text-emerald-400 uppercase">SIM</p>
-          <p className="text-base font-black text-[var(--text)]">{cotSim}×</p>
-          <p className="text-[9px] text-emerald-400">{event.simPercent}%</p>
-        </div>
-        <div className="rounded-xl bg-orange-500/10 px-3 py-2 ring-1 ring-orange-500/20">
-          <p className="text-[9px] font-bold text-orange-400 uppercase">NÃO</p>
-          <p className="text-base font-black text-[var(--text)]">{cotNao}×</p>
-          <p className="text-[9px] text-orange-400">{nao}%</p>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
 // ── HeroSection ──────────────────────────────────────────────────────────────
 function HeroSection({ events }: { events: EventCardData[] }) {
   return (
@@ -112,17 +59,10 @@ function HeroSection({ events }: { events: EventCardData[] }) {
 
       {/* Featured event cards */}
       {events.length > 0 ? (
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
-          {/* Card principal — lidera */}
-          <div className="flex-1 min-w-0">
-            <FeaturedEventCard event={events[0]} prominent />
-          </div>
-          {/* Card secundário — apoia */}
-          {events[1] && (
-            <div className="sm:w-[240px] shrink-0">
-              <FeaturedEventCard event={events[1]} />
-            </div>
-          )}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {events.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
         </div>
       ) : (
         <div className="flex h-32 items-center justify-center rounded-2xl bg-[var(--surface)] ring-1 ring-[var(--border)]">
